@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Quotation List{% endblock %}
+
+{% block quotationlist_content %}
+
+	<!--bottom-header-->
+	<!--start-breadcrumbs-->
+{#	<div class="breadcrumbs">#}
+{#		<div class="container">#}
+{#			<div class="breadcrumbs-main">#}
+{#				<ol class="breadcrumb">#}
+{#					<li><a href="{% url 'common:index' %}">Home</a></li>#}
+{#					<li class="active">Checkout</li>#}
+{#				</ol>#}
+{#			</div>#}
+{#		</div>#}
+{#	</div>#}
+	<!--end-breadcrumbs-->
+	<!--start-ckeckout-->
+	<div class="ckeckout">
+		<div class="container">
+			<div class="ckeckout-top">
+			<div class=" cart-items heading">
+
+<script>
+                    function fadeout(obj){
+                    $(document).ready(function(c) {
+					$(document.getElementById(obj.id)).on('click', function(c){
+						$(document.getElementById(obj.id)).fadeOut('slow', function(c){
+							$(document.getElementById(obj.id)).remove();
+						});
+						});	  
+					})
+				};
+			   </script>
+<ul class="nav nav-tabs memenu skyblue">
+          <li class="active">
+              <a href="{% url 'customize:quotationlist' %}">Opened Quotation ({{ quotationlist.count }})</a></li>
+          <li ><a href={%  url 'customize:myquotationlist' %} >My Quotation ({{ myquotationlist.count }})</a></li>
+        </ul>
+			<div class="in-check" >
+				<ul class="unit">
+                    <li><span></span></li>
+					<li><span>Quotation ID</span></li>
+					<li><span>Product Name</span></li>
+{#					<li><span>Customer Name</span></li>#}
+					<li><span>Create Date</span></li>
+					<div class="clearfix"> </div>
+				</ul>
+
+       {% for items in quotationlist %}
+				<ul id = "{{ items.id }}" class="cart-header">
+					<div id = "{{ items.id }}"  onclick="fadeout(this)"> </div>
+						<li><img src="../../media/{{  items.req_image }}" class="img-responsive" alt="" style="width:100px"></li>
+						<li><span>{{ items.quotation_id }}</span></li>
+						<li><span>{{ items.category_name }}</span></li>
+{#                        <li><span>{{ items.customer_id }}</span></li>#}
+						<li><span>{{ items.create_date }}</span></li>
+						<li> <a href="{% url 'customize:quotationlist_detail' items.quotation_id %}" class="add-cart cart-check"> OPEN</a></li>
+                        <li><div class=""></div></li>
+					<div class="clearfix"> </div>
+
+				</ul> {% endfor %}
+
+			</div>
+			</div>  
+		 </div>
+		</div>
+	</div>
+	<!--end-ckeckout-->
+	<!--end-footer-text-->
+	<div>
+		<script type="text/javascript">
+									$(document).ready(function() {
+										/*
+										var defaults = {
+								  			containerID: 'toTop', // fading element id
+											containerHoverID: 'toTopHover', // fading element hover id
+											scrollSpeed: 1200,
+											easingType: 'linear'
+								 		};
+										*/
+
+										$().UItoTop({ easingType: 'easeOutQuart' });
+
+									});
+								</script>
+		<a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+	</div>
+	<!--end-footer-text-->	
+{% endblock %}

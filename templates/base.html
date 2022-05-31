@@ -1,0 +1,138 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+{% block metas %}
+{#theme-style#}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Customize clouth Vest T shirt sports" />
+{% endblock %}
+
+{% block top_include %}
+ <script src="{% static '/js/jquery-1.11.0.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" media="all" href="{% static '/css/bootstrap.css' %}"/>
+<link rel="stylesheet" type="text/css" media="all" href="{% static '/css/bootstrap-checkbox.min.css' %}"/>
+{#<link rel="stylesheet" type="text/css" media="all" href="{% static '/css/pretty-checkbox.min.css' %}"/>#}
+<link href="{% static '/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static '/css/pretty-checkbox.min.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
+{# jQuery (necessary for Bootstrap's JavaScript plugins) #}
+
+{#theme-style#}
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+{#fonts#}
+
+{#//fonts#}
+<script type="text/javascript" src="{% static '/js/move-top.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/base.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/easing.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+					jQuery(document).ready(function($) {
+						$(".scroll").click(function(event){
+							event.preventDefault();
+							$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+						});
+					});
+				</script>
+{# start menu #}
+<script src="{% static '/js/simpleCart.min.js' %}"> </script>
+<link href="{% static '/css/memenu.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static '/css/twitter-bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="{% static '/js/memenu.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/simpleCart.js' %}"></script>
+
+
+
+<script>$(document).ready(function(){$(".memenu").memenu();});</script>
+{# FlexSlider #}
+<script defer src="{% static 'js/jquery.flexslider.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/flexslider.css' %}" type="text/css" media="screen" />
+
+    {% block head_script %}
+    {% endblock %}
+{% endblock %}
+<title>{% block head_title %}{% endblock %}</title>
+{% block head_style %}{% endblock %}
+</head>
+
+
+{#<link href='http://fonts.useso.com/css?family=Alegreya+Sans+SC:100,300,400,500,700,800,900,100italic,300italic,400italic,500italic,700italic,800italic,900italic' rel='stylesheet' type='text/css'>#}
+{#<link href='http://fonts.useso.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>#}
+
+
+{# Custom Theme files #}
+
+
+<body>
+    <style>
+        .border-r{
+            border-radius: 15px;
+        }
+    </style>
+	<div class="top-header">
+	<div class="container">
+		<div class="top-header-main">
+			<div class="col-md-4 top-header-left">
+{#				Disable Search bar#}
+{#				<div class="search-bar">#}
+{#					<input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">#}
+{#					<input type="submit" value="">#}
+{#				</div>#}
+			</div>
+			<div class="navbar col-md-4 navbar-fixed-top ">
+				<a href="{% url 'common:index' %}"><img src="{% static '/images/logo-4.png' %}" alt="" /></a>
+			</div>
+			<div class="col-md-4 top-header-right">
+
+{#				Disable cart #}
+
+{#							<img src="images/cart-1.png" alt="" />#}
+
+{#						<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>#}
+{#						<div class="clearfix"> </div>#}
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+
+{% block header_part %}
+{#    top-header#}
+
+{#top-header#}
+{% endblock %}
+
+    {% include 'common/navbar.html' %}
+
+
+    {% block carousel %}{% endblock %}
+    {% block banner %}{% endblock %}
+{#	banner-starts#}
+
+
+
+
+
+    {% block main_content %}
+    {% endblock %}
+
+    {% block product_content %}    {% endblock %}
+    {% block login %}    {% endblock %}
+    {% block signup %}   {% endblock %}
+    {% block test %}   {% endblock %}
+    {% block base_content %}{% endblock %}
+    {% block logout %}{% endblock %}
+    {% block quotationlist_content %}{% endblock %}
+{#	end-shoes#}
+
+    {% block special_introduction %}{% endblock %}
+
+    {% block cart_content %}{% endblock %}
+    </div>
+{% block footer %}
+
+ {% endblock  %}
+</body>
+</html>

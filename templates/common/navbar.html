@@ -1,0 +1,108 @@
+{% load static  %}
+{% load cache %}
+{#{% load blog_tags static %}#}
+
+<nav class="navbar  fixed-top  navbar-default nav-divider">
+
+            <div class="col-md-12 top-header-middle" >
+
+                <div class="top-nav" style="margin:20px">
+                    <a href="{% url 'common:index' %}"><img src="{% static '/images/logo-4.png' %}" alt="" /></a>
+
+				<ul class="memenu skyblue" style="padding-top: 20px"><li class="active"><a href="{% url 'common:index' %}">Home</a></li>
+					<li class="grid"><a href="{% url 'common:products' %}">VEST</a></li>
+                    <li class="grid"><a href="{% url 'common:products' %}">T shirt</a></li>
+					<li class="grid"><a href="{% url 'common:products' %}">Sports</a></li>
+					<li class="grid"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+					<li class="grid"><a href="{% url 'accounts:dashboardn' %}">Dashboardn</a></li>
+					<li class="grid"><a href="{% url 'accounts:test' %}">Test</a></li>
+					<li class="grid"><a href="{% url 'order:checkout' %}">checkout</a></li>
+{#                        if it's staff, then show quotation list#}
+                    {% if user.is_authenticated %}
+                            <li class="grid"><a class= "address" href="{% url 'customize:quotationlist' %}" >Quotation</a></li>
+{#                        {% endif %}#}
+
+{#                  if it's customer or staff, then show dropdown list  #}
+{#                    {% if user.is_authenticated %}#}
+{#                        <li class="grid pull-right"><a href="{% url 'accounts:profile' %}">True</a></li>#}
+                            <li class="pull-right">
+{#				            <div class="cart">#}
+						    <a href="{%  url 'order:cartmaster' user.id %}">
+                                <img src="{% static 'images/cart-1.png' %}" alt=""/></a></li>
+                        <li class="grid dropdown pull-right"><a class="dropdown-toggle" data-toggle="dropdown" href="#">{{ user.username }}</a>
+                            <ul class="dropdown-menu">
+{#                          <li><a href="#" id="navbarDropdown" role="button" data-toggle="dropdown"#}
+{#                                   aria-haspopup="true" aria-expanded="false" title="{{ user.username }}，欢迎回来！">#}
+{#                                    {% if msgnum > 0%}#}
+{#                                    <span class="get-msg text-center">{{ msgnum }}</span>#}
+{#                                    {% endif %}#}
+{#                                    {% get_user_avatar_tag user %}#}
+{#                          </a></li>#}
+
+                            <li><a class=" dropdown-item pl-3" href="{% url 'accounts:profile' %}" >
+                                <i class="fa fa-fw fa-user text-info mr-2"></i>个人资料</a></li>
+
+                            <li>{% if user.is_staff %}
+                                        <a class=" dropdown-item pl-3 mt-0 rounded-0 border-0" href="/xadmin/"><i
+                                                class="fa fa-fw fa-key text-info mr-2"></i>后台管理</a>
+                                        {% endif %}</li>
+
+                            <li><a class="dropdown-item pl-3  mt-0 rounded-0 border-0" href="#">
+                                <i class="fa fa-fw fa-bell text-info mr-2"></i>消息
+                                            {% if msgnum > 0 %}
+                                            <i class="fa fa-fw fa-key text-info mr-2">{{ msgnum }}</i>
+                                            {% endif %}
+                                        </a></li>
+
+                            <li><a class="dropdown-item pl-4  mt-0 rounded-0 border-0" href="{% url 'account_logout' %}">
+                                <i  class="fa fa-fw fa-sign-out text-info mr-2"></i>退出</a></li>
+				            </ul>
+
+{#                        <li class="pull-right">#}
+{#				            <div class="cart">#}
+{#						    <a href="{%  url 'order:cartmaster' %}">#}
+{#                                <img src="{% static 'images/cart-1.png' %}" alt=""/></a></li>#}
+{#                                    <div class="total">#}
+{#							    <span class="simpleCart_total"></span> #}
+{#                                        (<span id="simpleCart_quantity" class="simpleCart_quantity"></span> items)</div>#}
+{#						<p><a href="javascript:;" class="simpleCart_empty">Empty Cart</a></p>#}
+
+						<div class="clearfix"> </div>
+
+{#			</div>#}
+                        </li>
+
+                    {% else %}
+
+                        <li class="grid pull-right"><a class="" href="{% url 'account_signup' %}?next={{ request.path }}">Sign Up</a></li>
+                        <li class="grid pull-right "><a class="" href="{% url 'account_login' %}?next={{ request.path }}">Sign In</a></li>
+
+            {% endif %}
+
+                </ul>
+
+
+
+
+{#            	<div class=" breadcrumbs" >#}
+{#		<div class="container ">#}
+{#                    <div class="col-sm-2 "></div>#}
+{#			<div class="col-sm-8 align-items-center">#}
+{#				<ol class=" breadcrumb " >#}
+{#					<li><a href="{% url 'common:index' %}">Home</a></li>#}
+{#					<li class="active">{% block breadcrumb %}{% endblock %}</li>#}
+{#				</ol>#}
+{#			</div>#}
+{#		</div>#}
+	</div>
+	</div>
+
+
+{#			</div>#}
+
+{#    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"#}
+{#            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">#}
+{#        <span class="navbar-toggler-icon"></span>#}
+{#    </button>#}
+
+</nav>

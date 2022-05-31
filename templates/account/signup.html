@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Login{% endblock %}
+
+{% block signup %}
+
+	<!--start-breadcrumbs-->
+	<div class="breadcrumbs">
+		<div class="container">
+			<div class="breadcrumbs-main">
+				<ol class="breadcrumb">
+					<li><a href="index.html">Home</a></li>
+					<li class="active">Account</li>
+				</ol>
+			</div>
+		</div>
+	</div>
+	<!--end-breadcrumbs-->
+	<!--start-account-->
+	<div class="account">
+		<div class="container">
+			<div class="account-bottom">
+				<div class="col-md-6 account-left">
+                <div class="card-header bg-white py-2">
+                	<div class="account-top heading">
+						<h3>NEW CUSTOMERS</h3>
+					</div>
+                 <div class="card-body">
+					<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+                           {% csrf_token %}
+                    {{ form|crispy }}
+
+					<div class="address new">
+						<input type="submit" value="submit" style ="font-size: xx-small">
+					</div>
+                         {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                            {% endif %}
+					</form>
+				</div>
+				</div>
+				</div>
+
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!--end-account-->
+
+
+{% endblock %}

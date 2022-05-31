@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Quotation List{% endblock %}
+
+{% block cart_content %}
+
+
+	<!--end-breadcrumbs-->
+	<!--start-ckeckout-->
+	<div class="single contact" >
+{#    fisrt row#}
+{#    <div class="row">#}
+		<div class="container-fluid">
+{#        left place holder#}
+{#           <div class="col-sm-2">#}
+{#              </div>#}
+            <div class="col-md-7 col-sm-offset-2" >
+                <ul class="nav nav-tabs memenu skyblue">
+                    <li class="active">
+                    <a >Shopping Cart ({{ Cartlist.count }})</a>
+                    </li>
+                </ul>
+                <!-- Loop cart items -->
+                {% for items in Cartlist %}
+                <div class="d-flex justify-content-center align-items-center h-100">
+
+                        <div class="row mt-4">
+                            <div class="shadow col-md-12 mb-4">
+                                <div class="col-md-1 d-flex justify-content-center ">
+                                    <div class="btn-group align-self-center" role="group" aria-label="Basic checkbox toggle button group">
+                                        <input type="checkbox" class="btn-check " id={{ items.cart_id }} autocomplete="off" >
+        {#                                <label class="btn btn-outline-primary" for="btncheck1" style="display: none">Checkbox 1</label>#}
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 mt-4 mb-4">
+                                    <img src="../../media/{{ items.req_image }}" class="img-fluid border-r" alt="Generic placeholder image">
+                                </div>
+                                <div class="col-md-8 d-flex mt-4 mb-4" >
+                                    <div class="col-md-1 mt-4">
+                                        <div>
+                                            <p class="lead font-weight-bold text-info mb-4 pb-2" >Sleeve</p>
+                                            <p class="lead fw-normal mb-0">{{ items.sleeve }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1 d-flex  mt-4">
+                                        <div>
+                                             <p class="lead font-weight-bold text-info mb-4 pb-2">Color</p>
+                                             <p class="lead fw-normal mb-0">{{ items.color }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 d-flex  mt-4">
+                                        <div>
+                                          <p class="lead font-weight-bold text-info mb-4 pb-2">Quantity</p>
+                                          <p class="lead fw-normal mb-0">{{ items.quantity }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2  mt-4">
+                                        <div>
+                                          <p class="lead font-weight-bold text-info mb-4 pb-2">Gender</p>
+                                          <p class="lead fw-normal mb-0">{{ items.gender }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1 mt-4">
+                                        <div>
+                                          <p class="lead font-weight-bold text-info mb-4 pb-2">Size</p>
+                                          <p class="lead fw-normal mb-0">{{ items.size }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2 mt-4">
+                                        <div>
+                                          <p class="lead font-weight-bold text-info mb-4 pb-2">price</p>
+                                          <p class="lead fw-normal mb-0">{{ items.price }}</p>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-2 mt-4">
+                                         <div>
+                                          <p class="lead font-weight-bold text-info mb-4 pb-2">description</p>
+                                          <p class="lead fw-normal mb-0">{{ items.description }}</p>
+                                        </div>
+                                     </div>
+                                </div>
+                            <div class="address small col-md-1 ">
+                                <form onSubmit="if(!confirm('Do you want to delete the item?')){return false;}" id="safe_delete" action="{% url 'order:deletecartitem' items.cart_id %}" method="POST" >
+                                    {% csrf_token %}
+                                    <input class="border-r " type="submit" value="Delete" style ="font-size: xx-small;">
+                                </form>
+                            </div>
+                    </div><!--end row -->
+
+                    </div>
+                </div>
+                    {% endfor %}
+                <hr>
+{#             <form onSubmit="if(!confirm('Do you want to delete the item?')){return false;}" id="safe_delete" action="{% url 'order:deletecartitem' items.cart_id %}" method="POST" >#}
+             <div class="address col-md-3 col-md-offset-9 mt-1">
+                 <div>
+                     <h3 class="address">Subtotal:</h3>
+                 </div>
+                 <hr>
+                <form id="safe_delete" action="#" method="POST" >
+                       {% csrf_token %}
+                       <input class="border-r pull-right" type="submit" value="Check Out" >
+                </form>
+             </div>
+          </div>
+
+        </div><!-- end contract-->
+
+
+	<!--end-ckeckout-->
+	<!--end-footer-text-->
+	<div>
+		<a href="#home" id="toTop" class="scroll" style="display: block;"> <span id="toTopHover" style="opacity: 1;"> </span></a>
+	</div>
+	<!--end-footer-text-->	
+{% endblock %}

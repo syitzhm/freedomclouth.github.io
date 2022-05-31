@@ -1,0 +1,271 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Single{% endblock %}
+
+{% block header_part %}
+
+{% endblock %}
+
+{% block main_content %}
+    <script>
+
+
+
+        // Can also be used with $(document).ready()
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation : "slide",
+                controlNav: "thumbnails"
+            });
+        });
+
+        function preview_image(event) {
+            var reader        = new FileReader();
+                reader.onload = function () {
+                var output     = document.getElementById('output_image');
+                    output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        };
+
+     {#   $(document).ready(function(){#}
+     {#    $("#addtocart").click(function(){#}
+     {#     $.ajax({#}
+     {#       url:'/json',#}
+     {#       datatype: 'json',#}
+     {#       success:function(json){#}
+     {#         var  TableItem = "";#}
+     {#         for (i=0;i<json.data.length;i++)#}
+     {#         {#}
+     {#              console.log(json.data[i]['quotation_id'])#}
+     {#           TableItem +='<div class="media-body">' +#}
+     {#                       '<div class="text-muted mb-2 f-12">' +#}
+     {#                       '<span>'+ json.data[i]['quotation_id'] +'</span>'+#}
+     {#                       '<span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>time</span>'+#}
+     {#                       '</div><h2 class="mt-0 font-weight-bold text-info f-17">'+#}
+     {#                       '<a href="#" target="_blank">'+json.data[i]['quotation_id']+'</a>'+#}
+     {#                       '</h2><p class="d-none d-sm-block mb-2 f-15">quotationlist</p>'+#}
+     {#                       '<p class="d-block d-sm-none mb-2 f-15">quotationlist</p>' +#}
+     {#                       '<div class="text-muted mb-0 f-12">' +#}
+     {#                       '<span><i class="fa fa-eye ml-2 mr-1"></i>'+json.data[i]['quotation_id']+'</span>' +#}
+     {#                       '</div></div>'#}
+     {##}
+     {#         $('#cart').html(TableItem);#}
+     {##}
+     {#         }#}
+     {##}
+     {#         }#}
+     {#       }#}
+     {#     )#}
+     {##}
+     {##}
+     {#   });#}
+     {#})#}
+    </script>
+    {% for items in quotationdetail %}
+        {% if forloop.first %}
+            <div class = "single contact">{#  single contract#}
+                {#            <div class="row">#}
+                <div class = "container-fluid">{#  container #}
+                        <div class = "col-sm-2" ></div>{#  col-md-6 left column#}{# end left col-md-6 #}
+
+                        {% comment %} start middle column {% endcomment %}
+                        <div class = "col-md-6 single-top-left" >
+                            <h1 class = "card-title font-weight-bold text-info">
+                                Customer: {{ items.customer_id }}, Quotation: {{ items.quotation_id }}</h1>
+                            {# title of quotation #}
+                            <hr>
+                            <div class = "row" style = > {# content middle row1 #}
+
+                               {# <div class = "col-sm-2"></div> quotation detail placeholder left of row1 #}
+                                    {#start quotation pic middle middle1 column of row 1#}
+                                <div class = "col-md-4 single-top-right">
+                                            {# middle left col-md-5#}
+                                            <div class      = "flexslider">
+                                                <ul  class      = "slides">
+                                                    <li  data-thumb = "../../media/{{ items.req_image }} ">
+                                                        <img src        = "../../media/{{ items.req_image }}"/>
+                                                    </li>
+                                                    <li  data-thumb = "{% static 'images/s2.jpg' %}">
+                                                        <img src        = "{% static 'images/s2.jpg' %}"/>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                </div>
+                                    {# end quotation pic middle middle1 column of row 1 #}
+
+                                    {# start quotation detail middle middle 2 column of row 1#}
+                                <div class = "col-md-8 single-top-right " >{# right quotation detail column #}
+                                    <h2>Part Number: {{ items.part_number }}</h2>
+                                    <hr>
+
+                                    <ul class="unitqa">
+                                            <li><span>Sleeve</span></li>
+                                            <li><span>Size</span></li>
+                                            <li><span>Gender</span></li>
+                                            <li><span>Color</span></li>
+                                            <li><span style="width: 30%">Special Requirement</span></li>
+                                            <div class="clearfix"></div>
+                                        </ul>
+
+                                    <ul class="unitqa" style="background-color: white">
+                                            <li><span style="width:15%">{{ items.sleeve }}</span></li>
+                                            <li><span style="width:15%">{{ items.size }}</span></li>
+                                            <li><span style="width:15%"> {{ items.gender }}</span></li>
+                                            <li><ul class = "product-colors">
+                                                <li><a class = {{ items.color }}><span> </span></a></li></ul></li>
+                                            <li><span style="min-width: 20%"> {{ items.description }}</span></li>
+                                            <li><span >
+                                                <form method  = "POST" action = "{% url 'order:SaveToCart' items.quotation_id %}" enctype = "multipart/form-data">
+                                        <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                                        {% csrf_token %}
+                                        <div   class = "address" style = "">
+                                            <input id = "addtocart" class ="float:right" style ="font-size: xx-small" type  = "submit" value  = "ADD TO CART"/>
+                                        </div>
+                                    </form></span></li>
+                                            <div class="clearfix"></div>
+                                        </ul>
+
+
+                                </div>{# end right quotation detail column #}
+
+                            </div> {# end  quotation detail row #}
+
+                            <!-- start presend feedback row -->
+                            <div  class   = "row" > {# present feedback row#}
+                                <div  class   = "col-md-1"></div> {# left present feedback place holder of row2 #}
+                                <div  class   = "col-md-10 " >{# present feedback middle column #}
+                                    <form method  = "POST" action     = "{% url 'customize:quotation_feedback' items.quotation_id %}"
+                                         enctype = "multipart/form-data">
+{#                                      <!-- Django中需要POST数据的地方都必须有csrf_token -->#}
+                                                {% csrf_token %}
+
+                                        <div class = "col-md-2" >{# present feedback pic middle left column#}
+
+                                            <div class = "address">{# address #}
+                                            <!-- 标签 -->
+                                                <span>Feedback</span>
+                                                <div   id         = "wrapper">{# wrapper#}
+                                                    <input type       = "file" id                  = "file" name = "images" multiple = "multiple"
+                                                        accept     = "image/*" aria-describedby = "inputGroupFileAddon04"
+                                                        aria-label = "Upload"
+                                                     style      = "max-width: 50%" onchange  = "preview_image(event)">
+                                                    <img   id         = "output_image" style      = "max-width: 100px;max-height:300px; padding-top: 10px">
+                                                </div>
+                                                {#  end wrapper#}
+                                             </div>
+                                        </div>{# present feedback pic middle left column #}
+
+                                        <div class = "col-sm-8" >{# present feedback textbox middle middle column#}
+
+                                                <div class = "address">
+                                                            {#   <!-- 标签 -->#}
+                                                    <span>Desciption</span>
+                                                    <textarea class = "form-control" type = "text" id = "body" name = "desc_feedback"
+                                                      rows  = "8"
+                                                      style = "margin-bottom: 10px"></textarea>
+                                                </div>
+
+                                        </div>{# present feedback textbox middle middle column#}
+
+                                        <div class = "card-body " style="position: relative;">{# present feedback button middle right column#}
+
+                                                <div   class = "address " style=" position: absolute; bottom: 0; right: 0">
+                                                    <input type  = "submit" value  = "submit" style=" position: absolute; bottom: 0; right: 0"/>
+                                                 </div>
+
+                                        </div>{# end present feedback button middle right column#}
+                                     </form>
+                                </div>{# end present feedback middle column #}
+
+                            </div>{# end present feedback row #}
+                            {% comment %} start historic feedback row {% endcomment %}
+                            <div class = "row" >
+                                <div class="col-md-12 single-top-left" >{#start historic feedback table  #}
+                                    <div class="in-check">
+                                        <ul class="unit">
+                                            <li><span>Feedback pic</span></li>
+                                            <li><span>Quotation ID</span></li>
+                                            <li><span>Product Name</span></li>
+                                            <li><span>Create Date</span></li>
+                                            <div class="clearfix"></div>
+                                        </ul>
+                                    </div>
+
+                                {% for quofeedback in quoinprog %}
+                                    <ul id="{{ quofeedback.id }}" class="cart-header">
+                                    <div id="{{ quofeedback.id }}"></div>
+                                        <li><img src="../../media/{{ quofeedback.feedback_image }}" class="img-responsive"
+                                             alt="" style="width:100px"></a>
+                                         </li>
+                                        <li><span style="width:40px">{{ quofeedback.quotation_id }}</span></li>
+                                        <li><span style="width:40px">{{ quofeedback.desc_feedback }}</span></li>
+                                        <li><span style="width:40px">{{ quofeedback.create_date|date:'m-d' }}</span></li>
+                                            <span style="width:20px">
+                                                <a href="{% url 'customize:quofeedback_detail' quofeedback.quotation_id %}"
+                                            class="add-cart cart-check"> OPEN</a></span>
+
+                                        <div class="clearfix"></div>
+
+                                    </ul>
+                                {% endfor %}
+                                </div>{#end historic feedback table  #}
+                            </div> {% comment %} end historic feedback row {% endcomment %}
+                        </div>{#  end middle quotation detail and feedback#}
+
+
+                        {% comment %} right cart colunm {% endcomment %}
+                         <div id = "cart" class = "col-md-4 single-top-left" ><h3>Right Cart</h3>
+                        {#{% for items in quotationlist %}#}
+                        <div id = "quotationdata" class="media mb-1 mb-sm-2 p-2 p-lg-3">
+{#                    <div class="align-self-center mr-2 mr-lg-3 w-25 modal-open">#}
+{#                        <a href="{{ items.get_absolute_url }}" target="_blank">#}
+{#                            <img class="w-100 article-img" src="{{ items.req_image }}" alt="{{ items.quotation_id }}">#}
+{#                        </a>#}
+{#                    </div>#}
+                    <div class="media-body">
+                        {% if items.is_top %}<img class="float-right top-article-img" src="{% static 'blog/img/TOP.png' %}">{% endif %}
+                        <div class="text-muted mb-2 f-12">
+{#                            {% get_user_avatar_tag article.author %}#}
+                            <span>{{ items.quotation_id }}</span>
+                            <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ items.create_date}}</span>
+                        </div>
+                        <h2 class="mt-0 font-weight-bold text-info f-17">
+                            <a href="{{ items.get_absolute_url }}" target="_blank">{{ items.quotation_id}}</a>
+                        </h2>
+                        <p class="d-none d-sm-block mb-2 f-15">quotationlist</p>
+                        <p class="d-block d-sm-none mb-2 f-15">quotationlist</p>
+                        <div class="text-muted mb-0 f-12">
+                            <a class="cate" href="{{ items.category_name }}" title="查看当前分类下更多文章">
+                                <i class="fa fa-book mr-1"></i>{{ items.category_name }}</a>
+                            <span><i class="fa fa-eye ml-2 mr-1"></i>{{ items.items.quotation_id }}</span>
+                            <a href="{{ items.get_absolute_url }}#comment-block" target="_blank" title="查看文章评论"></a>
+{#                                <i class="fa fa-comments ml-2 mr-1"></i>{% get_comment_count article %}</a>#}
+                        </div>
+                    </div>
+    </div>
+{#{% endfor %}#}
+
+                        </div>
+                        {#  end right col-md-6#}
+
+
+                </div>
+                {# end container-fluid #}
+            </div>{# end first row #}
+            </div>{# end single contract #}
+
+
+
+
+
+
+        {% endif %}
+    {% endfor %}
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Home{% endblock %}
+
+
+
+{% block carousel %}
+
+ {% include 'common/carousel.html' %}
+
+{% endblock %}
+
+{% block banner %}
+    <style>
+
+    .middle {
+            float: none;
+            display: inline-block;
+            vertical-align: middle;
+            }
+
+    </style>
+<!--start-banner-bottom-->
+	<div class="banner-bottom">
+		<div class="container-fluid">
+			<div class="banner-bottom-top d-flex justify-content-center" >
+
+                <div class="col-md-12 align-self-center ">
+{#                    <div class="col-md-2 center-block" style="background-color: red"></div>#}
+                    <div class="col-md-2" ></div>
+                    <div class="col-md-3" >
+                        <div class="bnr-one">
+                            <div class="">
+                                <img src="{% static '/images/b-1.jpg' %}" alt="" />
+                            </div>
+                            <div class="b-btn" style="padding-right: 15px; float:right" >
+                                    <a href="{% url 'customize:customize' "categoryA" %}" >SHOP NOW</a>
+                                </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 ">
+					<div class="bnr-one">
+                        <div class="">
+							<img src="{% static '/images/b-2.jpg' %}" alt="" />
+						</div>
+                        <div class="" >
+							<div class="b-btn" style="padding-right: 15px; float:right">
+								<a href="{% url 'customize:customize' "categoryB" %}">SHOP NOW</a>
+							</div>
+                            <div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+                <div class="col-md-3 ">
+					<div class="bnr-one">
+                        <div class="">
+							<img src="{% static '/images/b-1.jpg' %}" alt="" />
+						</div>
+                        <div class="" >
+							<div class="b-btn" style="padding-right: 15px; float:right">
+								<a href="{% url 'customize:customize' "categoryC" %}">SHOP NOW</a>
+							</div>
+                            <div class="clearfix"> </div>
+						</div>
+
+					</div>
+				</div>
+				</div>
+
+
+{#				<div class="clearfix"> </div>#}
+			</div>
+		</div>
+	</div>
+    <!--start-shoes-->
+	<div class="shoes">
+		<div class="container">
+			<div class="product-one">
+				<div class="col-md-3 product-left">
+					<div class="p-one simpleCart_shelfItem">
+							<a href="{% url 'common:single' %}">
+								<img src="{% static '/images/shoes-1.png' %}" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4>Sample</h4>
+<!--						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>-->
+
+					</div>
+				</div>
+				<div class="col-md-3 product-left">
+					<div class="p-one simpleCart_shelfItem">
+						<a href="{% url 'common:single' %}">
+								<img src="{% static '/images/shoes-2.png' %}" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4>Sample</h4>
+<!--						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>-->
+
+					</div>
+				</div>
+				<div class="col-md-3 product-left">
+					<div class="p-one simpleCart_shelfItem">
+
+<!--						<a href="{% url 'common:single' %}">-->
+								<img src="{% static '/images/shoes-3.png' %}" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4>Sample</h4>
+<!--						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>-->
+
+
+					</div>
+				</div>
+				<div class="col-md-3 product-left">
+					<div class="p-one simpleCart_shelfItem">
+
+						<a href="{% url 'common:single' %}">
+								<img src="{% static '/images/shoes-4.png' %}" alt="" />
+								<div class="mask">
+									<span>Quick View</span>
+								</div>
+							</a>
+						<h4>Sample</h4>
+<!--						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>-->
+
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
+
+{% block special_introduction %}
+    {#	start-abt-shoe#}
+	<div class="abt-shoe">
+		<div class="container">
+			<div class="abt-shoe-main">
+				<div class="col-md-4 abt-shoe-left">
+					<div class="abt-one">
+						<a href="{% url 'common:single' %}}"><img src="{% static 'images/abt-1.jpg' %}" alt="" /></a>
+						<h4><a href="single.html">Special introduction</a></h4>
+						<p>Put the special introduction in this place  </p>
+					</div>
+				</div>
+				<div class="col-md-4 abt-shoe-left">
+					<div class="abt-one">
+						<a href="{% url 'common:single' %}}"><img src="{% static 'images/abt-2.jpg' %}" alt="" /></a>
+						<h4><a href="single.html">Special introduction</a></h4>
+						<p>Put the special introduction in this place </p>
+					</div>
+				</div>
+				<div class="col-md-4 abt-shoe-left">
+					<div class="abt-one">
+						<a href="{% url 'common:single' %}}"><img src="{% static 'images/abt-3.jpg' %}" alt="" /></a>
+						<h4><a href="single.html">Special introduction</a></h4>
+						<p>Put the special introduction in this place </p>
+					</div>
+				</div>
+				<div class="clearfix"> </div>
+			</div>
+		</div>
+	</div>
+{#	end-abt-shoe#}
+{% endblock %}
+	<!--end-banner-bottom-->

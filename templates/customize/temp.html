@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Quotation Detail{% endblock %}
+
+{% block header_part %}
+
+{% endblock %}
+
+
+
+
+<!--top-header-->
+    {% block main_content %}
+	<!--start-breadcrumbs-->
+ {% for items in quotationdetail %}
+                    {% if forloop.first %}
+{#	<div class="breadcrumbs">#}
+{#		<div class="container">#}
+{#			<div class="breadcrumbs-main">#}
+{#				<ol class="breadcrumb">#}
+{#					<li><a href="{% url 'common:index' %}">Home</a></li>#}
+{#					<li class="active">Quotation:{{ items.quotation_id }}</li>#}
+{#				</ol>#}
+{#			</div>#}
+{#		</div>#}
+{#	</div>#}
+	<!--end-breadcrumbs-->
+
+	<!--start-single-->
+	<div class="single contact">
+		<div class="container">
+            <div class="single-main">
+				<div class="col-md-9 single-main-left">
+				<div class="sngl-top">
+                    <h1 class="card-title font-weight-bold text-info">Customer: {{ items.customer_id }},Quotation:{{ items.quotation_id }}</h1>
+					<div class="col-md-5 single-top-left">
+						<div class="flexslider">
+							<ul class="slides">
+								<li data-thumb="../../media/{{ items.req_image }}   ">
+									<img src="{{ items.image }}" />
+								</li>
+								<li data-thumb="{% static 'images/s2.jpg' %}">
+									<img src="{% static 'images/s2.jpg' %}" />
+								</li>
+{#								<li data-thumb="{% static 'images/s3.jpg' %}">#}
+{#									<img src="{% static 'images/s3.jpg' %}" />#}
+{#								</li>#}
+{#								<li data-thumb="{% static 'images/s4.jpg' %}">#}
+{#									<img src="{% static 'images/s4.jpg' %}" />#}
+{#								</li>#}
+							</ul>
+						</div>
+
+
+	<script>
+// Can also be used with $(document).ready()
+$(window).load(function() {
+  $('.flexslider').flexslider({
+    animation: "slide",
+    controlNav: "thumbnails"
+  });
+});
+</script>
+				</div>
+
+
+{#                    feedback detail#}
+				<div class="col-md-7 single-top-right">
+					<div class="details-left-info simpleCart_shelfItem">
+                        <form method="POST" action="" enctype="multipart/form-data">
+                    <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                    {% csrf_token %}
+						<h2>Part Number: {{ items.part_number }}</h2>
+                            <hr>
+						<h2 class="quick " style="font-size: 18px">Sleeve: </h2>
+                        <p class="quick_desc" style="font-size: 16px">
+							{{ items.sleeve }}
+						</p>
+
+						<h2 class="quick"  style="font-size: 18px">Size: </h2>
+                         <p class="quick_desc"  style="font-size: 16px">
+							{{ items.size }}
+						</p>
+
+						<h2 class="quick"  style="font-size: 18px">Gender: </h2>
+                        <p class="quick_desc"  style="font-size: 16px">
+							{{ items.gender }}
+						</p>
+
+                        <h2 class="quick" style="font-size: 18px">Color: </h2>
+                         <label for={{ items.color }}></label>
+                         <ul class="product-colors">
+
+                                <li><a class={{ items.color }} ><span> </span></a></li>
+                         </ul>
+                        <br>
+
+{#						<h2 class="quick" style="font-size: 18px">Style: </h2>#}
+{#                        <p class="quick_desc">#}
+{#							<img src="../../media/{{ items.req_image }}" style="width:120px;height:80px;" alt="">#}
+{#						</p>#}
+							<h3>Special Requirement</h3>
+                         <p class="quick_desc" style="font-size: 18px">
+							{{ items.description }}
+						</p>
+                             <input type="submit" value="PLACE TO CART" style="padding-bottom:10px"/>
+                            </form>
+			        </div>
+		        </div>
+
+    {#              end feedback detail#}
+
+
+		        <div class="clearfix"></div><hr>
+{#	</div>#}
+
+                        <div class="shadow contaner">
+                        <form  method="POST" action="{% url 'customize:quotation_feedback' items.quotation_id %}" enctype="multipart/form-data">
+                                <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                                {% csrf_token %}
+                        <div class="row">
+
+                            <div class="col-sm-2 " >
+{#                                <div class="address">#}
+{#                                <span>Feedback Date:</span>#}
+{#                                {{ items.create_date|date:"Y-M-d h:i" }}  </div>#}
+
+                            </div>
+
+                        {#feed back#}
+                        <div class="col-sm-8 " >
+                            <div class="address" >
+                                <!-- 标签 -->
+                                     <span>Feedback</span>
+                                           <div id="wrapper">
+                                            <input type="file" id="file" name="images" multiple="multiple"
+                                                       accept="image/*" aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                                       style="max-width: 50%" onchange="preview_image(event)">
+                                            <img id="output_image"/>
+                                        </div>
+
+                             </div>
+
+                             <div class="address">
+                            <!-- 标签 -->
+                            <span>Desciption</span>
+                            <textarea class="form-control " type="text" id="body" name="desc_feedback" rows="8" style="margin-bottom: 10px"></textarea>
+
+                             </div>
+                        </div>
+
+                        <div class="col-sm-2 " style="position:relative">
+                            <div class="address " style="position: absolute; bottom:10px">
+                                <input type="submit" value="submit" style="padding-bottom:10px"/>
+                            </div>
+                        </div>
+
+                        </div>
+                         </form>
+
+                        </div>
+                            <hr>
+                    <div class="in-check" >
+				<ul class="unit">
+					<li><span>Feedback pic</span></li>
+					<li><span>Quotation ID</span></li>
+					<li><span>Product Name</span></li>
+					<li><span>Create Date</span></li>
+					<div class="clearfix"> </div>
+				</ul>
+                  {% for quofeedback in quoinprog %}
+                    <ul id = "{{ quofeedback.id }}" class="cart-header">
+					<div id = "{{ quofeedback.id }}" > </div>
+						<li ><img src="../../media/{{  quofeedback.feedback_image }}" class="img-responsive" alt="" style="width:100px"></a>
+						</li>
+						<li><span style="width:40px">{{ quofeedback.quotation_id }}</span></li>
+						<li><span style="width:40px">{{ quofeedback.desc_feedback }}</span></li>
+						<li><span style="width:40px" >{{ quofeedback.create_date|date:'m-d' }}</span></li>
+                        <span style="width:20px"> <a href="{% url 'customize:quofeedback_detail' quofeedback.quotation_id %}" class="add-cart cart-check"> OPEN</a></span>
+{#                        <li><div class=""></div></li>#}
+
+					<div class="clearfix"> </div>
+
+				    </ul>
+                  {% endfor %}
+                    </div>
+
+				    <div class="clearfix"> </div>
+			</div>
+		</div>
+		</div>
+		</div>
+	</div>
+        {% endif %}
+        {% endfor %}
+{% endblock %}
+	<!--end-single-->

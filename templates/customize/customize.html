@@ -1,0 +1,258 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head_title %}Products{% endblock %}
+{% block head_style %}
+<style>
+      #wrapper
+{
+ text-align:center;
+ margin:0 auto;
+ padding:0px;
+ width:995px;
+}
+#output_image
+{
+ max-width:300px;
+}
+    </style>
+
+    {% endblock %}
+
+{% block head_script %}
+     <script>
+function preview_image(event)
+{
+ var reader = new FileReader();
+ reader.onload = function()
+ {
+  var output = document.getElementById('output_image');
+  output.src = reader.result;
+ }
+ reader.readAsDataURL(event.target.files[0]);
+}
+    </script>
+{% endblock %}
+
+{% block product_content %}
+
+
+    <!--bottom-header-->
+    <!--start-breadcrumbs-->
+{#    <div class="breadcrumbs">#}
+{#        <div class="container">#}
+{#            <div class="breadcrumbs-main">#}
+{#                <ol class="breadcrumb">#}
+{#                    <li><a href="{% url 'common:index' %}">Home</a></li>#}
+                    {% block breadcrumb %}<li class="active">Customize</li>{% endblock %}
+{#                </ol>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <!--end-breadcrumbs-->
+
+    <!--add and select-->
+    <div class="account">
+        <div class="container">
+            <div class="col-lg-8">
+                <h1 class="card-title font-weight-bold text-info">Select Your Style</h1>
+{#                {% for catelist1 in Category %}#}
+{#                {% if forloop.first  %}#}
+                    <h1 class="card-title font-weight-bold text-info" style ="display:none">{{ catename }} AA</h1>
+
+                <Hr>
+                <!-- 提交文章的表单 -->
+{#                <form method="POST" action="{% url 'customize:save' quotationlist.category_name %}" enctype="multipart/form-data">#}
+                <form method="POST" action="{% url 'customize:save' catename %}" enctype="multipart/form-data">
+                    <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                    {% csrf_token %}
+                    <div class="address">
+                        <!-- 标签 -->
+
+                        <label class ="size text-info">Sleeve:</label>
+                        <div class="radio radio-info radio-inline">
+                            <input type="radio" id="sleeve-long" value="Long" name="sleeve" checked>
+                            <label for="sleeve-long"> Long Sleeve </label>
+                        </div>
+                        <div class="radio radio-info radio-inline">
+                            <input type="radio" id="sleeve-short" value="short" name="sleeve">
+                            <label for="sleeve-short"> Short Sleeve </label>
+                        </div>
+                        <div class="radio radio-info radio-inline">
+                            <input type="radio" id="sleeve-no" value="no" name="sleeve">
+                            <label for="sleeve-no"> No Sleeve </label>
+                        </div>
+                    </div>
+                    <div class="address">
+                        <!-- 标签 -->
+                        <label class ="size text-info">Color：</label>
+                        <ul class="product-colors">
+                            <div class="radio radio-info radio-inline">
+                            <input type="radio" id="color1" value="color1" name="color" checked>
+                            <label for="color1">  <li><a class="color1" ><span> </span></a></li> </label>
+
+                        </div>
+                            <div class="radio radio-info radio-inline">
+                            <input type="radio" id="color2" value="color2" name="color">
+                            <label for="color2"> <li><a class="color2" ><span> </span></a></li> </label>
+
+                        </div>
+                            <div class="radio radio-info radio-inline">
+                            <input type="radio" id="color3" value="color3" name="color">
+                            <label for="color3"> <li><a class="color3" ><span> </span></a></li> </label>
+
+                        </div>                  
+                            <div class="radio radio-info radio-inline">
+                            <input type="radio" id="color4" value="color4" name="color">
+                            <label for="color4"> <li><a class="color4" ><span> </span></a></li> </label>
+
+                        </div>                            
+                            <div class="radio radio-info radio-inline">
+                            <input type="radio" id="color5" value="color5" name="color">
+                            <label for="color5"> <li><a class="color5" ><span> </span></a></li> </label>
+
+                        </div>
+                            <div class="radio radio-info radio-inline">
+                            <input type="radio" id="color6" value="color6" name="color">
+                            <label for="color6"> <li><a class="color6" ><span> </span></a></li> </label>
+
+                        </div>                            
+                            <div class="radio radio-info radio-inline">
+                            <input type="radio" id="color7" value="color7" name="color">
+                            <label for="color7"> <li><a class="color7" ><span> </span></a></li> </label>
+
+                        </div>                          
+                            <div class="radio radio-info radio-inline">
+                            <input type="radio" id="color8" value="color8" name="color">
+                            <label for="color8"> <li><a class="color8" ><span> </span></a></li> </label>
+
+                        </div>
+
+                            <div class="clear"></div>
+                        </ul>
+                    </div>
+
+                    <div class="address">
+                        <!-- 标签 -->
+                        <label class ="size text-info">Size：</label>
+                        <ul class="size">
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="XS" value="XS" name="size">
+                                <label for="XS"> XS </label>
+                            </div>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="S" value="S" name="size">
+                                <label for="S"> S </label>
+                            </div>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="M" value="M" name="size">
+                                <label for="M"> M </label>
+                            </div>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="L" value="L" name="size">
+                                <label for="L"> L </label>
+                            </div>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="XL" value="XL" name="size">
+                                <label for="XL"> XL </label>
+                            </div>
+
+                        </ul>
+
+                    </div>
+
+                    <div class="address">
+                        <!-- 标签 -->
+                         <label class ="size text-info">Gender：</label>
+                        <ul class="size">
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="Male" value="Male" name="gender">
+                                <label for="Male"> Male </label>
+                            </div>
+                            <div class="radio radio-info radio-inline">
+                                <input type="radio" id="Female" value="Female" name="gender">
+                                <label for="Female"> Female </label>
+                            </div>
+                        </ul>
+                    </div>
+
+
+                    <div class="address">
+                        <!-- 标签 -->
+                        <label class ="size text-info">Style：</label>
+
+                        <div class="col-8">
+                            <!-- 文本框 -->
+                            <div class="row">
+
+                                {% for imagelist in catelist %}
+
+                                    <div class="radio radio-info radio-inline">
+                                        <input type="radio" id={{ imagelist.style }} name="imagelist" tabindex="0" class="hidden" value={{ imagelist.part_number }}>
+                                        <label for={{ imagelist.style }}> {{ imagelist.part_number }} </label>
+                                        <div class="shadow card" style="padding:5px;" id="image">
+                                            <img src="../../media/{{ imagelist.style }}" style="width:120px;height:80px;" alt="">
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                  <div class="address">
+{#                        <div class="col-8">#}
+                            <!-- 标签 -->
+                            <label class ="size text-info">Quantity：</label>
+                           <div class="col-8">
+                                <!-- 文本框 -->
+                                <input class="form-control" type="text" id="quantity" name="quantity"
+                                       style="max-width: 50%">
+                            </div>
+
+{#                        </div>#}
+                    </div>
+
+                    <div class="address">
+                            <!-- 标签 -->
+                        <label class ="size text-info">Upload Style or Logo：</label>
+
+                        <div id="wrapper">
+                            <input type="file" id="file" name="images" multiple="multiple"
+                                       accept="image/*" aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                       style="max-width: 50%" onchange="preview_image(event)">
+                            <img id="output_image"/>
+                            </div>
+
+
+                    </div>
+                    <div class="address">
+                        <div class="col-8">
+                            <!-- 标签 -->
+                            <span>Desciption</span>
+                            <textarea class="shadow form-control " type="text" id="body" name="description" rows="8"
+                                      style=" width: 100%"></textarea>
+
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-2">
+                        <!-- 标签 -->
+                    </div>
+                    <div class="address">
+                        <input type="submit" value="submit"/>
+                    </div>
+
+
+                </form>
+            </div>
+
+            <!--end select-->
+{#                {% endif %}#}
+{#                {% endfor %}#}
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!--end-product-->
+    <!--start-footer-->
+{% endblock %}

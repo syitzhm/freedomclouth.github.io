@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load crispy_forms_filters %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+{%  block test %}
+
+    <div class="account">
+		<div class="container">
+			<div class="account-bottom">
+                <div class="col-md-6 account-left">
+                    <table id ="example">
+    <tbody id = "test">
+                    </table>
+<button type="button"  class="btn btn-success " id="btnTerminalSvr" onclick="myrefresh()">Test</button>
+
+                </div>
+                </div>
+                </div>
+                </div>
+
+
+
+<script type="text/javascript">
+
+
+    $('#btnTerminalSvr').click (function (){
+       $.ajax({
+            url:'/json',
+            "data":
+                {s:"quotation_id"},
+
+            dataType:'json',
+            timeout:10000,
+            success:function(data){
+                alert(data.data.length);
+                $('#test').append(
+                    "<tr>\n" +
+                    "<td>quoation_id</td>\n" +
+                    "<td>sleeve</td></tr>"
+              );
+                for(var i = 0; i < 5; i++) {
+                alert(data[i].data[0])
+                $('#test').append(
+                   "<tr>\n" +
+                    "<td>" + data[i].data[0].quotation_id + "</td>\n" +
+                    "<td>" + data[i].data[1] +"</td></tr>"
+                )
+            }
+            }
+
+            });
+
+
+    });
+
+</script>
+
+{#    <script>#}
+{#        function myrefresh() {#}
+{#            alert("哎呦，没反应！");#}
+{#            var str="";#}
+{#            for (var i=0; i<5; i++){#}
+{#                str+= "<tr><td>"+i+"</td><td>"+i+"</td><td>"+i+"</td><td>"+i+"</td><td>"+i+"</td><td>"+i+"</td></tr>"#}
+{#            }#}
+{#            alert(str);#}
+{#            $("#test").html(str)#}
+{#                }#}
+{##}
+{##}
+{#    </script>#}
+
+{% endblock %}
