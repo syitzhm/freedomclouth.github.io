@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from .cart import Cart
 
 # Create your views here.
 
@@ -18,6 +19,11 @@ def cartmasterview(request,user_id):
 
 class checkout(generic.TemplateView):
     template_name = "order/checkout.html"
+
+def checkcart(request):
+    cart = Cart(request)
+    print("======>cart",cart)
+    return render(request,'order/checkout.html')
 
 
 def SaveToCart(request,slug):

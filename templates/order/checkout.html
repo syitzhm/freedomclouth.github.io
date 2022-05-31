@@ -57,7 +57,7 @@
         <div class="account col-md-8 order-md-1">
             <div class ="container">
             <h4 class=" mb-3">Shipping address</h4>
-            <form class="needs-validation" novalidate="">
+
                 <div class="row">
                     <div class="address col-md-6 mb-3">
                         <label for="firstName">First name</label>
@@ -164,11 +164,15 @@
 {#                </div>#}
 {#                <hr class="mb-4"> #}
                     <div class="address">
-                    <input class="border-r" type="submit" value="Continue to checkout">
-                    </div>
-            </form>
+{#                           <form  id="safe_delete" action="#" method="POST" >#}
+                                <form  id="safe_delete" action="{% url 'order:checkcart' %}" method="POST" >
+                                    {% csrf_token %}
+                                <input class="border-r" type="submit" value="Continue to checkout">
+                     </form></div>
+
         </div>
     </div>
 
+</div>
 </div>
 {% endblock %}
