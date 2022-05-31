@@ -20,6 +20,8 @@ from django.urls import path
 
 from common import Views
 from common.Views import Index
+app_name="common"
+
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
