@@ -29,6 +29,19 @@
             reader.readAsDataURL(event.target.files[0]);
         };
 
+        function addtocart(obj) {
+            alert(obj.id);
+            var tempid="new"+obj.id;
+            Jtempid="#new"+obj.id
+            alert(Jtempid)
+            jtemptext=$(Jtempid).val()
+
+            textvalue=document.getElementById(tempid).value;
+            alert(jtemptext);
+            temp = obj.id
+            $("#cart").html(jtemptext)
+        };
+
      {#   $(document).ready(function(){#}
      {#    $("#addtocart").click(function(){#}
      {#     $.ajax({#}
@@ -105,6 +118,8 @@
                                             <li><span>Size</span></li>
                                             <li><span>Gender</span></li>
                                             <li><span>Color</span></li>
+                                            <li><span>Quantity</span></li>
+
                                             <li><span style="width: 30%">Special Requirement</span></li>
                                             <div class="clearfix"></div>
                                         </ul>
@@ -114,16 +129,20 @@
                                             <li><span style="width:15%">{{ items.size }}</span></li>
                                             <li><span style="width:15%"> {{ items.gender }}</span></li>
                                             <li><ul class = "product-colors">
-                                                <li><a class = {{ items.color }}><span> </span></a></li></ul></li>
+                                            <li><a class = {{ items.color }}><span> </span></a></li></ul></li>
+                                            <li><span style="width:15%"> {{ items.quantity }}</span></li>
                                             <li><span style="min-width: 20%"> {{ items.description }}</span></li>
                                             <li><span >
-                                                <form method  = "POST" action = "{% url 'order:SaveToCart' items.quotation_id %}" enctype = "multipart/form-data">
+{#                                                <form method  = "POST" action = "#" enctype = "multipart/form-data">#}
+{#                                                <form method  = "POST" action = "{% url 'order:SaveToCart' items.quotation_id %}" enctype = "multipart/form-data">#}
                                         <!-- Django中需要POST数据的地方都必须有csrf_token -->
-                                        {% csrf_token %}
+{#                                        {% csrf_token %}#}
                                         <div   class = "address" style = "">
-                                            <input id = "addtocart" class ="float:right" style ="font-size: xx-small" type  = "submit" value  = "ADD TO CART"/>
+                                            <input id = "new{{ items.quotation_id }}" type="text"/>
+                                            <input id = "{{ items.quotation_id }}" class ="float:right" style ="font-size: xx-small" onclick="addtocart(this)"  type  = "submit" value  = "ADD TO CART"/>
                                         </div>
-                                    </form></span></li>
+{#                                    </form>#}
+                                            </span></li>
                                             <div class="clearfix"></div>
                                         </ul>
 
@@ -224,26 +243,25 @@
 {#                            <img class="w-100 article-img" src="{{ items.req_image }}" alt="{{ items.quotation_id }}">#}
 {#                        </a>#}
 {#                    </div>#}
-                    <div class="media-body">
-                        {% if items.is_top %}<img class="float-right top-article-img" src="{% static 'blog/img/TOP.png' %}">{% endif %}
+                    <div id ="cart" class="media-body">
                         <div class="text-muted mb-2 f-12">
-{#                            {% get_user_avatar_tag article.author %}#}
-                            <span>{{ items.quotation_id }}</span>
                             <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ items.create_date}}</span>
                         </div>
                         <h2 class="mt-0 font-weight-bold text-info f-17">
-                            <a href="{{ items.get_absolute_url }}" target="_blank">{{ items.quotation_id}}</a>
+                            {{ items.quotation_id}}
                         </h2>
-                        <p class="d-none d-sm-block mb-2 f-15">quotationlist</p>
-                        <p class="d-block d-sm-none mb-2 f-15">quotationlist</p>
+                        <span><label>Quantity:</label></span><span><h2 class="mt-0 font-weight-bold text-info f-17">
+                            {{ items.quantity }}
+                        </h2></span>
+{#                        <p class="d-block d-sm-none mb-2 f-15">quotationlist</p>#}
                         <div class="text-muted mb-0 f-12">
-                            <a class="cate" href="{{ items.category_name }}" title="查看当前分类下更多文章">
+                            <a class="cate" href="{{ items.category_name }}" >
                                 <i class="fa fa-book mr-1"></i>{{ items.category_name }}</a>
                             <span><i class="fa fa-eye ml-2 mr-1"></i>{{ items.items.quotation_id }}</span>
-                            <a href="{{ items.get_absolute_url }}#comment-block" target="_blank" title="查看文章评论"></a>
-{#                                <i class="fa fa-comments ml-2 mr-1"></i>{% get_comment_count article %}</a>#}
+
                         </div>
                     </div>
+
     </div>
 {#{% endfor %}#}
 
