@@ -8,6 +8,35 @@
 {% endblock %}
 
 {% block main_content %}
+    <style>
+    .addcart {
+	background: #97262a;
+	color: #FFF;
+	font-size: 14px;
+	padding: 0.5em 1.2em;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	display: inline-block;
+	text-transform: uppercase;
+	border: none;
+	outline: yellowgreen;
+	margin-left: 10px;
+    border-radius: 15px;
+    }
+
+    .table thead tr th {
+        text-align:center;
+        font-size: 12px;
+    }
+    .table tbody tr td {
+        text-align:center;
+        font-size: 12px;
+    }
+
+    </style>
+
     <script>
 
 
@@ -30,51 +59,39 @@
         };
 
         function addtocart(obj) {
-            alert(obj.id);
-            var tempid="new"+obj.id;
-            Jtempid="#new"+obj.id
-            alert(Jtempid)
+            newobj= obj.id.substring(3)
+            Jtempid="#qty"+newobj
             jtemptext=$(Jtempid).val()
+            TableItem =     '<div id="cart'+ newobj + '" class="">' +
+                            '<div class="mt-0 font-weight-bold text-info" style ="font-size: large">' +
+                            '<a>'+ $("#categoryname").val() +'</a>' +
+                            '</div>' +
+                            '<label class="mt-0 font-weight-bold text-muted " style ="font-size: larger">'+
+                            '<a  > Quantity: '+ jtemptext +'</a></label>' +
+                            '<div class="text-muted mb-0 f-12">' +
+                            '<a id ="del'+ newobj + '" href="javascript:;" onclick="deletecartitem(this)" >Delete</a>'
+                            '</div></div>'
 
-            textvalue=document.getElementById(tempid).value;
-            alert(jtemptext);
-            temp = obj.id
-            $("#cart").html(jtemptext)
+                    $("#cart").append(TableItem)
+
+            disablebutton="#btn"+ newobj+""
+            if ($(disablebutton).is(":disabled")==false) {
+
+                    $(disablebutton).attr("disabled",true)
+                    $(disablebutton).css("background-color","#686565")
+                }
+
         };
 
-     {#   $(document).ready(function(){#}
-     {#    $("#addtocart").click(function(){#}
-     {#     $.ajax({#}
-     {#       url:'/json',#}
-     {#       datatype: 'json',#}
-     {#       success:function(json){#}
-     {#         var  TableItem = "";#}
-     {#         for (i=0;i<json.data.length;i++)#}
-     {#         {#}
-     {#              console.log(json.data[i]['quotation_id'])#}
-     {#           TableItem +='<div class="media-body">' +#}
-     {#                       '<div class="text-muted mb-2 f-12">' +#}
-     {#                       '<span>'+ json.data[i]['quotation_id'] +'</span>'+#}
-     {#                       '<span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>time</span>'+#}
-     {#                       '</div><h2 class="mt-0 font-weight-bold text-info f-17">'+#}
-     {#                       '<a href="#" target="_blank">'+json.data[i]['quotation_id']+'</a>'+#}
-     {#                       '</h2><p class="d-none d-sm-block mb-2 f-15">quotationlist</p>'+#}
-     {#                       '<p class="d-block d-sm-none mb-2 f-15">quotationlist</p>' +#}
-     {#                       '<div class="text-muted mb-0 f-12">' +#}
-     {#                       '<span><i class="fa fa-eye ml-2 mr-1"></i>'+json.data[i]['quotation_id']+'</span>' +#}
-     {#                       '</div></div>'#}
-     {##}
-     {#         $('#cart').html(TableItem);#}
-     {##}
-     {#         }#}
-     {##}
-     {#         }#}
-     {#       }#}
-     {#     )#}
-     {##}
-     {##}
-     {#   });#}
-     {#})#}
+        function deletecartitem(obj){
+            newobj= obj.id.substring(3)
+            $("#cart" + newobj +"").remove()
+            if ($(disablebutton).is(":disabled")==true) {
+                $("#btn" + newobj + "").attr("disabled", false)
+                 $(disablebutton).css("background-color","#97262a")
+            }
+        }
+
     </script>
     {% for items in quotationdetail %}
         {% if forloop.first %}
@@ -93,7 +110,7 @@
 
                                {# <div class = "col-sm-2"></div> quotation detail placeholder left of row1 #}
                                     {#start quotation pic middle middle1 column of row 1#}
-                                <div class = "col-md-4 single-top-right">
+                                <div class = "col-md-3 single-top-right">
                                             {# middle left col-md-5#}
                                             <div class      = "flexslider">
                                                 <ul  class      = "slides">
@@ -110,41 +127,47 @@
 
                                     {# start quotation detail middle middle 2 column of row 1#}
                                 <div class = "col-md-8 single-top-right " >{# right quotation detail column #}
-                                    <h2>Part Number: {{ items.part_number }}</h2>
+                                    <input id = "categoryname" type="text" value ="{{ items.category_name }}" style="display: none"/>
+                                    <h2 >Part Number: {{ items.part_number }}</h2>
                                     <hr>
+                                    <div class="table-responsive">
+                                    <table class="table table-hover">
+                                    <thead class=" align-items-center mx-auto">
+                                            <tr>
+                                              <th class= "text-center" scope="col">Sleeve</th>
+                                              <th class= "text-center" scope="col">Size</th>
+                                              <th class= "text-center" scope="col">Gender</th>
+                                              <th class= "text-center" scope="col">Color</th>
+                                              <th class= "text-center" scope="col">Quantity</th>
+                                              <th class= "text-center" scope="col">Special Requirement</th>
+                                              <th class= "text-center" scope="col">button</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr>
+                                              <td class= "text-center" id = "sleeve"{{ items.quotation_id }}  >{{ items.sleeve }}</td>
+                                              <td class= "text-center" id = "size"{{ items.quotation_id }} >{{ items.size }}</td>
+                                              <td class= "text-center" id = "gender"{{ items.quotation_id }} > {{ items.gender }}</td>
+                                              <td class= "text-center" ><ul class = "product-colors">
+                                                    <li><a id = "color"{{ items.quotation_id }} class = {{ items.color }}><span> </span></a></li></ul></td>
+                                              <td class= "text-center" id = "" > <input id = "qty{{ items.quotation_id }}" type="number" style="max-width: 50%" value =1 /></td>
+                                              <td class= "text-center" id = "desc"{{ items.quotation_id }} > {{ items.description }}</td>
+                                              <td class= "text-center " > <div  style = "">
+                                             <input id = "btn{{ items.quotation_id }}" class ="addcart" style ="font-size: xx-small;" onclick="addtocart(this)"  type  = "submit" value  = "Add to cart"/>
+                                        </div></td>
+                                            </tr>
+                                          </tbody>
+                                </table>
+                                    </div>
 
-                                    <ul class="unitqa">
-                                            <li><span>Sleeve</span></li>
-                                            <li><span>Size</span></li>
-                                            <li><span>Gender</span></li>
-                                            <li><span>Color</span></li>
-                                            <li><span>Quantity</span></li>
-
-                                            <li><span style="width: 30%">Special Requirement</span></li>
-                                            <div class="clearfix"></div>
-                                        </ul>
-
-                                    <ul class="unitqa" style="background-color: white">
-                                            <li><span style="width:15%">{{ items.sleeve }}</span></li>
-                                            <li><span style="width:15%">{{ items.size }}</span></li>
-                                            <li><span style="width:15%"> {{ items.gender }}</span></li>
-                                            <li><ul class = "product-colors">
-                                            <li><a class = {{ items.color }}><span> </span></a></li></ul></li>
-                                            <li><span style="width:15%"> {{ items.quantity }}</span></li>
-                                            <li><span style="min-width: 20%"> {{ items.description }}</span></li>
-                                            <li><span >
 {#                                                <form method  = "POST" action = "#" enctype = "multipart/form-data">#}
 {#                                                <form method  = "POST" action = "{% url 'order:SaveToCart' items.quotation_id %}" enctype = "multipart/form-data">#}
                                         <!-- Django中需要POST数据的地方都必须有csrf_token -->
 {#                                        {% csrf_token %}#}
-                                        <div   class = "address" style = "">
-                                            <input id = "new{{ items.quotation_id }}" type="text"/>
-                                            <input id = "{{ items.quotation_id }}" class ="float:right" style ="font-size: xx-small" onclick="addtocart(this)"  type  = "submit" value  = "ADD TO CART"/>
-                                        </div>
+
 {#                                    </form>#}
-                                            </span></li>
                                             <div class="clearfix"></div>
-                                        </ul>
+
 
 
                                 </div>{# end right quotation detail column #}
@@ -202,6 +225,9 @@
                             {% comment %} start historic feedback row {% endcomment %}
                             <div class = "row" >
                                 <div class="col-md-12 single-top-left" >{#start historic feedback table  #}
+
+
+
                                     <div class="in-check">
                                         <ul class="unit">
                                             <li><span>Feedback pic</span></li>
@@ -244,22 +270,25 @@
 {#                        </a>#}
 {#                    </div>#}
                     <div id ="cart" class="media-body">
-                        <div class="text-muted mb-2 f-12">
-                            <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ items.create_date}}</span>
-                        </div>
-                        <h2 class="mt-0 font-weight-bold text-info f-17">
-                            {{ items.quotation_id}}
-                        </h2>
-                        <span><label>Quantity:</label></span><span><h2 class="mt-0 font-weight-bold text-info f-17">
-                            {{ items.quantity }}
-                        </h2></span>
-{#                        <p class="d-block d-sm-none mb-2 f-15">quotationlist</p>#}
-                        <div class="text-muted mb-0 f-12">
-                            <a class="cate" href="{{ items.category_name }}" >
-                                <i class="fa fa-book mr-1"></i>{{ items.category_name }}</a>
-                            <span><i class="fa fa-eye ml-2 mr-1"></i>{{ items.items.quotation_id }}</span>
+{#                        <div class="row">#}
+                            <div class="text-muted mb-2 f-12">
+                                <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ items.create_date}}</span>
+                            </div>
+                            <h2 class="mt-0 font-weight-bold text-info f-17">
+                                {{ items.quotation_id}}
+                            </h2>
+                            <span><label>Quantity:</label></span><span><h2 class="mt-0 font-weight-bold text-info f-17">
+                                {{ items.quantity }}
+                            </h2></span>
+    {#                        <p class="d-block d-sm-none mb-2 f-15">quotationlist</p>#}
+                            <div class="text-muted mb-0 f-12">
+                                <a class="cate" href="{{ items.category_name }}" >
+                                    <i class="fa fa-book mr-1"></i>{{ items.category_name }}</a>
+                                <span><i class="fa fa-eye ml-2 mr-1"></i>{{ items.items.quotation_id }}</span>
 
-                        </div>
+                            </div>
+{#                        </div>#}
+
                     </div>
 
     </div>
@@ -273,17 +302,6 @@
                 {# end container-fluid #}
             </div>{# end first row #}
             </div>{# end single contract #}
-
-
-
-
-
-
         {% endif %}
     {% endfor %}
-
-
-
-
-
 {% endblock %}
