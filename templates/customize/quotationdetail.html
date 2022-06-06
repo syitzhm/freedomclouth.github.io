@@ -8,112 +8,91 @@
 {% endblock %}
 
 {% block main_content %}
-    <style>
-    .addcart {
-	background: #97262a;
-	color: #FFF;
-	font-size: 14px;
-	padding: 0.5em 1.2em;
-	transition: 0.5s all;
-	-webkit-transition: 0.5s all;
-	-moz-transition: 0.5s all;
-	-o-transition: 0.5s all;
-	display: inline-block;
-	text-transform: uppercase;
-	border: none;
-	outline: yellowgreen;
-	margin-left: 10px;
-    border-radius: 15px;
-    }
-
-    .table thead tr th {
-        text-align:center;
-        font-size: 12px;
-    }
-    .table tbody tr td {
-        text-align:center;
-        font-size: 12px;
-    }
-
-    </style>
 
     <script>
+   function validate(){
+       alert("click")
+     if (err > 0){
+        swal({ title: "Warning!",
+        text: "Some entries are missing.\nDo you still want to save this?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#5cb85c",
+        confirmButtonText: "Yes!",
+        cancelButtonText: "Cancel!",
+        closeOnConfirm: true,
+        closeOnCancel: true },
+        function(isConfirm){
+            if (isConfirm) {
+                document.forms['RegForm'].submit();
 
-
-
-        // Can also be used with $(document).ready()
-        $(window).load(function () {
-            $('.flexslider').flexslider({
-                animation : "slide",
-                controlNav: "thumbnails"
-            });
+            } else {
+                return false;
+             }
         });
-
-        function preview_image(event) {
-            var reader        = new FileReader();
-                reader.onload = function () {
-                var output     = document.getElementById('output_image');
-                    output.src = reader.result;
-            }
-            reader.readAsDataURL(event.target.files[0]);
-        };
-
-        function addtocart(obj) {
-            newobj= obj.id.substring(3)
-            Jtempid="#qty"+newobj
-            jtemptext=$(Jtempid).val()
-            TableItem =     '<div id="cart'+ newobj + '" class="">' +
-                            '<div class="mt-0 font-weight-bold text-info" style ="font-size: large">' +
-                            '<a>'+ $("#categoryname").val() +'</a>' +
-                            '</div>' +
-                            '<label class="mt-0 font-weight-bold text-muted " style ="font-size: larger">'+
-                            '<a  > Quantity: '+ jtemptext +'</a></label>' +
-                            '<div class="text-muted mb-0 f-12">' +
-                            '<a id ="del'+ newobj + '" href="javascript:;" onclick="deletecartitem(this)" >Delete</a>'
-                            '</div></div>'
-
-                    $("#cart").append(TableItem)
-
-            disablebutton="#btn"+ newobj+""
-            if ($(disablebutton).is(":disabled")==false) {
-
-                    $(disablebutton).attr("disabled",true)
-                    $(disablebutton).css("background-color","#686565")
-                }
-
-        };
-
-        function deletecartitem(obj){
-            newobj= obj.id.substring(3)
-            $("#cart" + newobj +"").remove()
-            if ($(disablebutton).is(":disabled")==true) {
-                $("#btn" + newobj + "").attr("disabled", false)
-                 $(disablebutton).css("background-color","#97262a")
-            }
-        }
-
+     }
+}
     </script>
-    {% for items in quotationdetail %}
-        {% if forloop.first %}
-            <div class = "single contact">{#  single contract#}
-                {#            <div class="row">#}
-                <div class = "container-fluid">{#  container #}
-                        <div class = "col-sm-2" ></div>{#  col-md-6 left column#}{# end left col-md-6 #}
+    <script>
+</script>
 
+
+        {#function addtocart(obj) {#}
+        {#    newobj= obj.id.substring(3)#}
+        {#    Jtempid="#qty"+newobj#}
+        {#    jtemptext=$(Jtempid).val()#}
+        {#    TableItem =     '<div id="cart'+ newobj + '" class="">' +#}
+        {#                    '<div class="mt-0 font-weight-bold text-info" style ="font-size: large">' +#}
+        {#                    '<a>'+ $("#categoryname").val() +'</a>' +#}
+        {#                    '</div>' +#}
+        {#                    '<label class="mt-0 font-weight-bold text-muted " style ="font-size: larger">'+#}
+        {#                    '<a  > Quantity: '+ jtemptext +'</a></label>' +#}
+        {#                    '<div class="text-muted mb-0 f-12">' +#}
+        {#                    '<a id ="del'+ newobj + '" href="javascript:;" onclick="deletecartitem(this)" >Delete</a>'#}
+        {#                    '</div></div>'#}
+        {##}
+        {#            $("#cart").append(TableItem)#}
+        {##}
+        {#    disablebutton="#btn"+ newobj+""#}
+        {#    if ($(disablebutton).is(":disabled")==false) {#}
+        {#            $(disablebutton).attr("disabled",true)#}
+        {#            $(disablebutton).css("background-color","#686565")#}
+        {#        }#}
+        {##}
+
+
+        {#function deletecartitem(obj){#}
+        {#    newobj= obj.id.substring(3)#}
+        {#    $("#cart" + newobj +"").remove()#}
+        {#    if ($(disablebutton).is(":disabled")==true) {#}
+        {#        $("#btn" + newobj + "").attr("disabled", false)#}
+        {#         $(disablebutton).css("background-color","#97262a")#}
+        {#    }#}
+        {##}
+        {#    $('#exampleModal').on('shown.bs.modal', function () {#}
+        {#        alert("点了没有")#}
+        {#      $('#myInput').focus()#}
+        {#    })}#}
+{#    </script>#}
+
+            <div class = "ckeckout mt-10">{#  single contract#}
+                {#            <div class="row">#}
+                <div class = "container justify-content-center  align-items-center">{#  container #}
+                        {#  col-md-6 left column#}{# end left col-md-6 #}
+                    {% for items in quotationdetail %}
+                        {% if forloop.first %}
                         {% comment %} start middle column {% endcomment %}
-                        <div class = "col-md-6 single-top-left" >
-                            <h1 class = "card-title font-weight-bold text-info">
+                        <div class = "col-md-12 col-sm-offset-2 " >
+                            <h1 class = "card-title font-weight-bold text-info" style="display:none">
                                 Customer: {{ items.customer_id }}, Quotation: {{ items.quotation_id }}</h1>
                             {# title of quotation #}
-                            <hr>
-                            <div class = "row" style = > {# content middle row1 #}
-
+                            <div class = "row"> {# content middle row1 #}
                                {# <div class = "col-sm-2"></div> quotation detail placeholder left of row1 #}
                                     {#start quotation pic middle middle1 column of row 1#}
-                                <div class = "col-md-3 single-top-right">
+                                <div class = "col-md-3 ">
                                             {# middle left col-md-5#}
-                                            <div class      = "flexslider">
-                                                <ul  class      = "slides">
+                                            <div class  = "flexslider">
+                                                <ul  class   = "slides">
                                                     <li  data-thumb = "../../media/{{ items.req_image }} ">
                                                         <img src        = "../../media/{{ items.req_image }}"/>
                                                     </li>
@@ -126,48 +105,74 @@
                                     {# end quotation pic middle middle1 column of row 1 #}
 
                                     {# start quotation detail middle middle 2 column of row 1#}
-                                <div class = "col-md-8 single-top-right " >{# right quotation detail column #}
+                                <div class = "col-md-8 " >{# right quotation detail column #}
                                     <input id = "categoryname" type="text" value ="{{ items.category_name }}" style="display: none"/>
-                                    <h2 >Part Number: {{ items.part_number }}</h2>
-                                    <hr>
-                                    <div class="table-responsive">
-                                    <table class="table table-hover">
-                                    <thead class=" align-items-center mx-auto">
-                                            <tr>
-                                              <th class= "text-center" scope="col">Sleeve</th>
-                                              <th class= "text-center" scope="col">Size</th>
-                                              <th class= "text-center" scope="col">Gender</th>
-                                              <th class= "text-center" scope="col">Color</th>
-                                              <th class= "text-center" scope="col">Quantity</th>
-                                              <th class= "text-center" scope="col">Special Requirement</th>
-                                              <th class= "text-center" scope="col">button</th>
+                                    <h3 class="card-title font-weight-bold text-info" >Part Number: {{ items.part_number }}</h3>
+                                    <div class="table-responsive" style="overflow-x:hidden">
+                                    <form name = "RegForm" id = "RegForm" onsubmit="return validate()" method  = "POST" action = "{% url 'order:SaveToCart' %}" enctype = "multipart/form-data">
+                                        <table class="table col-md-7" style="">
+                                            <thead class=" align-items-center mx-auto">
+                                            <tr >
+                                              <th class= "text-center" scope="col" style ="max-width: 5%"></th>
+                                              <th class= "text-center" scope="col" style ="max-width: 15%">Sleeve</th>
+                                              <th class= "text-center" scope="col" style ="max-width: 15%">Size</th>
+                                              <th class= "text-center" scope="col" style ="max-width: 15%">Gender</th>
+                                              <th class= "text-center" scope="col" style ="max-width: 15%" >Color</th>
+                                              <th class= "text-center"  style ="max-width: 30%" scope="col">Quantity</th>
+                                              <th class= "text-center " scope="col" style ="max-width: 30%" >Special Requirement</th>
                                             </tr>
-                                          </thead>
+                                          </thead> 
                                           <tbody>
                                             <tr>
-                                              <td class= "text-center" id = "sleeve"{{ items.quotation_id }}  >{{ items.sleeve }}</td>
-                                              <td class= "text-center" id = "size"{{ items.quotation_id }} >{{ items.size }}</td>
-                                              <td class= "text-center" id = "gender"{{ items.quotation_id }} > {{ items.gender }}</td>
-                                              <td class= "text-center" ><ul class = "product-colors">
+                                               <td class= "text-center" style ="max-width: 5%"><input id = 'checktocart' name = 'checktocart' value="{{ items.quotation_id }}" type="checkbox"> </td>
+                                              <td class= "text-center" id = "sleeve"{{ items.quotation_id }} style ="max-width: 15%" >{{ items.sleeve }}</td>
+                                              
+                                              <td class= "text-center" id = "size"{{ items.quotation_id }} style ="max-width: 15%">{{ items.size }}</td>
+                                              <td class= "text-center" id = "gender"{{ items.quotation_id }} style ="max-width: 15%"> {{ items.gender }}</td>
+                                              <td class= "text-center" style ="max-width: 30%" ><ul class = "product-colors">
                                                     <li><a id = "color"{{ items.quotation_id }} class = {{ items.color }}><span> </span></a></li></ul></td>
-                                              <td class= "text-center" id = "" > <input id = "qty{{ items.quotation_id }}" type="number" style="max-width: 50%" value =1 /></td>
-                                              <td class= "text-center" id = "desc"{{ items.quotation_id }} > {{ items.description }}</td>
-                                              <td class= "text-center " > <div  style = "">
-                                             <input id = "btn{{ items.quotation_id }}" class ="addcart" style ="font-size: xx-small;" onclick="addtocart(this)"  type  = "submit" value  = "Add to cart"/>
-                                        </div></td>
+                                              <td class= "text-center"  style ="max-width: 30%"  id = "" > <input style ="overflow:hidden;background-color:red;max-width: 30% " id = "qty{{ items.quotation_id }}" type="number"   value =1 /></td>
+                                              {% comment %} <td class= "text-center " style ="overflow:hidden" id = "desc"{{ items.quotation_id }} > {{ items.description }}</td> {% endcomment %}
+
                                             </tr>
                                           </tbody>
-                                </table>
-                                    </div>
+                                        </table>
 
-{#                                                <form method  = "POST" action = "#" enctype = "multipart/form-data">#}
-{#                                                <form method  = "POST" action = "{% url 'order:SaveToCart' items.quotation_id %}" enctype = "multipart/form-data">#}
+
+
                                         <!-- Django中需要POST数据的地方都必须有csrf_token -->
-{#                                        {% csrf_token %}#}
+                                        {% csrf_token %}
+                                        <button id="btncart" name ="addtocart" class ="addcart" style ="font-size: xx-small;"  type="submit" value  = "Add to cart" >
+                            Add to cart
+                                    </button>
+                                        </form>
 
-{#                                    </form>#}
+                                    </div>
+                                        </div>
                                             <div class="clearfix"></div>
+{#                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">#}
+{#                                                    Launch demo modal#}
+{#                                            </button>#}
+{#                                            <!--start modal-->#}
+{#                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#                                          <div class="modal-dialog">#}
+{#                                            <div class="modal-content">#}
+{#                                              <div class="modal-header">#}
+{#                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>#}
+{#                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
+{#                                              </div>#}
+{#                                              <div class="modal-body">#}
+{#                                                ...#}
+{#                                              </div>#}
+{#                                              <div class="modal-footer">#}
+{#                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>#}
+{#                                                <button type="button" class="btn btn-primary">Save changes</button>#}
+{#                                              </div>#}
+{#                                            </div>#}
+{#                                          </div>#}
+{#                                    </div>#}
 
+                                            <!-- end modal-->
 
 
                                 </div>{# end right quotation detail column #}
@@ -263,33 +268,33 @@
                         {% comment %} right cart colunm {% endcomment %}
                          <div id = "cart" class = "col-md-4 single-top-left" ><h3>Right Cart</h3>
                         {#{% for items in quotationlist %}#}
-                        <div id = "quotationdata" class="media mb-1 mb-sm-2 p-2 p-lg-3">
+                            <div id = "quotationdata" class="media mb-1 mb-sm-2 p-2 p-lg-3">
 {#                    <div class="align-self-center mr-2 mr-lg-3 w-25 modal-open">#}
 {#                        <a href="{{ items.get_absolute_url }}" target="_blank">#}
 {#                            <img class="w-100 article-img" src="{{ items.req_image }}" alt="{{ items.quotation_id }}">#}
 {#                        </a>#}
 {#                    </div>#}
-                    <div id ="cart" class="media-body">
+{#                                <div id ="cart" class="media-body">#}
 {#                        <div class="row">#}
-                            <div class="text-muted mb-2 f-12">
-                                <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ items.create_date}}</span>
-                            </div>
-                            <h2 class="mt-0 font-weight-bold text-info f-17">
-                                {{ items.quotation_id}}
-                            </h2>
-                            <span><label>Quantity:</label></span><span><h2 class="mt-0 font-weight-bold text-info f-17">
-                                {{ items.quantity }}
-                            </h2></span>
+{#                                <div class="text-muted mb-2 f-12">#}
+{#                                    <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ items.create_date}}</span>#}
+{#                                </div>#}
+{#                                <h2 class="mt-0 font-weight-bold text-info f-17">#}
+{#                                    {{ items.quotation_id}}#}
+{#                                </h2>#}
+{#                                    <span><label>Quantity:</label></span>#}
+{#                                    <span>#}
+{#                                    <h2 class="mt-0 font-weight-bold text-info f-17">#}
+{#                                            {{ items.quantity }}#}
+{#                                        </h2></span>#}
     {#                        <p class="d-block d-sm-none mb-2 f-15">quotationlist</p>#}
-                            <div class="text-muted mb-0 f-12">
-                                <a class="cate" href="{{ items.category_name }}" >
-                                    <i class="fa fa-book mr-1"></i>{{ items.category_name }}</a>
-                                <span><i class="fa fa-eye ml-2 mr-1"></i>{{ items.items.quotation_id }}</span>
-
-                            </div>
-{#                        </div>#}
-
-                    </div>
+{#                                <div class="text-muted mb-0 f-12">#}
+{#                                    <a class="cate" href="{{ items.category_name }}" >#}
+{#                                        <i class="fa fa-book mr-1"></i>{{ items.category_name }}</a>#}
+{#                                    <span><i class="fa fa-eye ml-2 mr-1"></i>{{ items.items.quotation_id }}</span>#}
+{#    #}
+{#                                </div>#}
+{#                        </div>
 
     </div>
 {#{% endfor %}#}

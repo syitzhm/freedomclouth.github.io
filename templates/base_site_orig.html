@@ -1,0 +1,43 @@
+{% load static  %}
+
+
+<script src="{% static '/js/jquery-1.11.0.min.js' %}"></script>
+{#<link rel="stylesheet" type="text/css" media="all" href="{% static '/css/bootstrap.css' %}"/>#}
+{#<link rel="stylesheet" type="text/css" media="all" href="{% static '/css/bootstrap-checkbox.min.css' %}"/>#}
+{#<link rel="stylesheet" type="text/css" media="all" href="{% static '/css/pretty-checkbox.min.css' %}"/>#}
+<link href="{% static '/css/style.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static '/css/pretty-checkbox.min.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
+<link rel="stylesheet" href="https://webapps1.chicago.gov/cdn/Bootstrap-3.3.7/bootstrap.min.css">
+{# jQuery (necessary for Bootstrap's JavaScript plugins) #}
+{#<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>#}
+{#theme-style#}
+{#<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>#}
+{#fonts#}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+{#//fonts#}
+<script type="text/javascript" src="{% static '/js/move-top.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/base.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/easing.js' %}"></script>
+{#<script type="text/javascript" src="{% static '/js/bootstrap.min.js' %}"></script>#}
+<script type="text/javascript">
+					jQuery(document).ready(function($) {
+						$(".scroll").click(function(event){
+							event.preventDefault();
+							$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+						});
+					});
+				</script>
+{# start menu #}
+<script src="{% static '/js/simpleCart.min.js' %}"> </script>
+<link href="{% static '/css/memenu.css' %}" rel="stylesheet" type="text/css" media="all" />
+<link href="{% static '/css/twitter-bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+<script type="text/javascript" src="{% static '/js/memenu.js' %}"></script>
+<script type="text/javascript" src="{% static '/js/simpleCart.js' %}"></script>
+
+
+
+<script>$(document).ready(function(){$(".memenu").memenu();});</script>
+{# FlexSlider #}
+<script defer src="{% static 'js/jquery.flexslider.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/flexslider.css' %}" type="text/css" media="screen" />

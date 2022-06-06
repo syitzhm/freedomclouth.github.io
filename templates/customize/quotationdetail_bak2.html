@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head_title %}Single{% endblock %}
+
+{% block header_part %}
+
+{% endblock %}
+
+{% block main_content %}
+    <style>
+    .addcart {
+	background: #97262a;
+	color: #FFF;
+	font-size: 14px;
+	padding: 0.5em 1.2em;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	display: inline-block;
+	text-transform: uppercase;
+	border: none;
+	outline: yellowgreen;
+	margin-left: 10px;
+    border-radius: 15px;
+    }
+
+    .table thead tr th {
+        text-align:center;
+        font-size: 12px;
+    }
+    .table tbody tr td {
+        text-align:center;
+        font-size: 12px;
+    }
+
+    </style>
+
+    <script>
+
+
+
+        // Can also be used with $(document).ready()
+        $(window).load(function () {
+            $('.flexslider').flexslider({
+                animation : "slide",
+                controlNav: "thumbnails"
+            });
+        });
+
+        function preview_image(event) {
+            var reader        = new FileReader();
+                reader.onload = function () {
+                var output     = document.getElementById('output_image');
+                    output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        };
+
+        function addtocart(obj) {
+            newobj= obj.id.substring(3)
+            Jtempid="#qty"+newobj
+            jtemptext=$(Jtempid).val()
+            TableItem =     '<div id="cart'+ newobj + '" class="">' +
+                            '<div class="mt-0 font-weight-bold text-info" style ="font-size: large">' +
+                            '<a>'+ $("#categoryname").val() +'</a>' +
+                            '</div>' +
+                            '<label class="mt-0 font-weight-bold text-muted " style ="font-size: larger">'+
+                            '<a  > Quantity: '+ jtemptext +'</a></label>' +
+                            '<div class="text-muted mb-0 f-12">' +
+                            '<a id ="del'+ newobj + '" href="javascript:;" onclick="deletecartitem(this)" >Delete</a>'
+                            '</div></div>'
+
+                    $("#cart").append(TableItem)
+
+            disablebutton="#btn"+ newobj+""
+            if ($(disablebutton).is(":disabled")==false) {
+
+                    $(disablebutton).attr("disabled",true)
+                    $(disablebutton).css("background-color","#686565")
+                }
+
+        };
+
+        function deletecartitem(obj){
+            newobj= obj.id.substring(3)
+            $("#cart" + newobj +"").remove()
+            if ($(disablebutton).is(":disabled")==true) {
+                $("#btn" + newobj + "").attr("disabled", false)
+                 $(disablebutton).css("background-color","#97262a")
+            }
+        }
+
+    </script>
+    {% for items in quotationdetail %}
+        {% if forloop.first %}
+            <div class = "single contact">{#  single contract#}
+                {#            <div class="row">#}
+                <div class = "container-fluid">{#  container #}
+                        <div class = "col-sm-2" ></div>{#  col-md-6 left column#}{# end left col-md-6 #}
+
+                        {% comment %} start middle column {% endcomment %}
+                        <div class = "col-md-6 single-top-left" >
+                            <h1 class = "card-title font-weight-bold text-info">
+                                Customer: {{ items.customer_id }}, Quotation: {{ items.quotation_id }}</h1>
+                            {# title of quotation #}
+                            <hr>
+                            <div class = "row" style = > {# content middle row1 #}
+
+                               {# <div class = "col-sm-2"></div> quotation detail placeholder left of row1 #}
+                                    {#start quotation pic middle middle1 column of row 1#}
+                                <div class = "col-md-3 single-top-right">
+                                            {# middle left col-md-5#}
+                                            <div class      = "flexslider">
+                                                <ul  class      = "slides">
+                                                    <li  data-thumb = "../../media/{{ items.req_image }} ">
+                                                        <img src        = "../../media/{{ items.req_image }}"/>
+                                                    </li>
+                                                    <li  data-thumb = "{% static 'images/s2.jpg' %}">
+                                                        <img src        = "{% static 'images/s2.jpg' %}"/>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                </div>
+                                    {# end quotation pic middle middle1 column of row 1 #}
+
+                                    {# start quotation detail middle middle 2 column of row 1#}
+                                <div class = "col-md-8 single-top-right " >{# right quotation detail column #}
+                                    <input id = "categoryname" type="text" value ="{{ items.category_name }}" style="display: none"/>
+                                    <h2 >Part Number: {{ items.part_number }}</h2>
+                                    <hr>
+                                    <div class="table-responsive">
+                                    <table class="table table-hover">
+                                    <thead class=" align-items-center mx-auto">
+                                            <tr>
+                                              <th class= "text-center" scope="col">Sleeve</th>
+                                              <th class= "text-center" scope="col">Size</th>
+                                              <th class= "text-center" scope="col">Gender</th>
+                                              <th class= "text-center" scope="col">Color</th>
+                                              <th class= "text-center" scope="col">Quantity</th>
+                                              <th class= "text-center" scope="col">Special Requirement</th>
+                                              <th class= "text-center" scope="col">button</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            <tr>
+                                              <td class= "text-center" id = "sleeve"{{ items.quotation_id }}  >{{ items.sleeve }}</td>
+                                              <td class= "text-center" id = "size"{{ items.quotation_id }} >{{ items.size }}</td>
+                                              <td class= "text-center" id = "gender"{{ items.quotation_id }} > {{ items.gender }}</td>
+                                              <td class= "text-center" ><ul class = "product-colors">
+                                                    <li><a id = "color"{{ items.quotation_id }} class = {{ items.color }}><span> </span></a></li></ul></td>
+                                              <td class= "text-center" id = "" > <input id = "qty{{ items.quotation_id }}" type="number" style="max-width: 50%" value =1 /></td>
+                                              <td class= "text-center" id = "desc"{{ items.quotation_id }} > {{ items.description }}</td>
+                                              <td class= "text-center " > <div  style = "">
+                                             <input id = "btn{{ items.quotation_id }}" class ="addcart" style ="font-size: xx-small;" onclick="addtocart(this)"  type  = "submit" value  = "Add to cart"/>
+                                        </div></td>
+                                            </tr>
+                                          </tbody>
+                                </table>
+                                    </div>
+
+{#                                                <form method  = "POST" action = "#" enctype = "multipart/form-data">#}
+{#                                                <form method  = "POST" action = "{% url 'order:SaveToCart' items.quotation_id %}" enctype = "multipart/form-data">#}
+                                        <!-- Django中需要POST数据的地方都必须有csrf_token -->
+{#                                        {% csrf_token %}#}
+
+{#                                    </form>#}
+                                            <div class="clearfix"></div>
+
+
+
+                                </div>{# end right quotation detail column #}
+
+                            </div> {# end  quotation detail row #}
+
+                            <!-- start presend feedback row -->
+                            <div  class   = "row" > {# present feedback row#}
+                                <div  class   = "col-md-1"></div> {# left present feedback place holder of row2 #}
+                                <div  class   = "col-md-10 " >{# present feedback middle column #}
+                                    <form method  = "POST" action     = "{% url 'customize:quotation_feedback' items.quotation_id %}"
+                                         enctype = "multipart/form-data">
+{#                                      <!-- Django中需要POST数据的地方都必须有csrf_token -->#}
+                                                {% csrf_token %}
+
+                                        <div class = "col-md-2" >{# present feedback pic middle left column#}
+
+                                            <div class = "address">{# address #}
+                                            <!-- 标签 -->
+                                                <span>Feedback</span>
+                                                <div   id         = "wrapper">{# wrapper#}
+                                                    <input type       = "file" id                  = "file" name = "images" multiple = "multiple"
+                                                        accept     = "image/*" aria-describedby = "inputGroupFileAddon04"
+                                                        aria-label = "Upload"
+                                                     style      = "max-width: 50%" onchange  = "preview_image(event)">
+                                                    <img   id         = "output_image" style      = "max-width: 100px;max-height:300px; padding-top: 10px">
+                                                </div>
+                                                {#  end wrapper#}
+                                             </div>
+                                        </div>{# present feedback pic middle left column #}
+
+                                        <div class = "col-sm-8" >{# present feedback textbox middle middle column#}
+
+                                                <div class = "address">
+                                                            {#   <!-- 标签 -->#}
+                                                    <span>Desciption</span>
+                                                    <textarea class = "form-control" type = "text" id = "body" name = "desc_feedback"
+                                                      rows  = "8"
+                                                      style = "margin-bottom: 10px"></textarea>
+                                                </div>
+
+                                        </div>{# present feedback textbox middle middle column#}
+
+                                        <div class = "card-body " style="position: relative;">{# present feedback button middle right column#}
+
+                                                <div   class = "address " style=" position: absolute; bottom: 0; right: 0">
+                                                    <input type  = "submit" value  = "submit" style=" position: absolute; bottom: 0; right: 0"/>
+                                                 </div>
+
+                                        </div>{# end present feedback button middle right column#}
+                                     </form>
+                                </div>{# end present feedback middle column #}
+
+                            </div>{# end present feedback row #}
+                            {% comment %} start historic feedback row {% endcomment %}
+                            <div class = "row" >
+                                <div class="col-md-12 single-top-left" >{#start historic feedback table  #}
+
+
+
+                                    <div class="in-check">
+                                        <ul class="unit">
+                                            <li><span>Feedback pic</span></li>
+                                            <li><span>Quotation ID</span></li>
+                                            <li><span>Product Name</span></li>
+                                            <li><span>Create Date</span></li>
+                                            <div class="clearfix"></div>
+                                        </ul>
+                                    </div>
+
+                                {% for quofeedback in quoinprog %}
+                                    <ul id="{{ quofeedback.id }}" class="cart-header">
+                                    <div id="{{ quofeedback.id }}"></div>
+                                        <li><img src="../../media/{{ quofeedback.feedback_image }}" class="img-responsive"
+                                             alt="" style="width:100px"></a>
+                                         </li>
+                                        <li><span style="width:40px">{{ quofeedback.quotation_id }}</span></li>
+                                        <li><span style="width:40px">{{ quofeedback.desc_feedback }}</span></li>
+                                        <li><span style="width:40px">{{ quofeedback.create_date|date:'m-d' }}</span></li>
+                                            <span style="width:20px">
+                                                <a href="{% url 'customize:quofeedback_detail' quofeedback.quotation_id %}"
+                                            class="add-cart cart-check"> OPEN</a></span>
+
+                                        <div class="clearfix"></div>
+
+                                    </ul>
+                                {% endfor %}
+                                </div>{#end historic feedback table  #}
+                            </div> {% comment %} end historic feedback row {% endcomment %}
+                        </div>{#  end middle quotation detail and feedback#}
+
+
+                        {% comment %} right cart colunm {% endcomment %}
+                         <div id = "cart" class = "col-md-4 single-top-left" ><h3>Right Cart</h3>
+                        {#{% for items in quotationlist %}#}
+                        <div id = "quotationdata" class="media mb-1 mb-sm-2 p-2 p-lg-3">
+{#                    <div class="align-self-center mr-2 mr-lg-3 w-25 modal-open">#}
+{#                        <a href="{{ items.get_absolute_url }}" target="_blank">#}
+{#                            <img class="w-100 article-img" src="{{ items.req_image }}" alt="{{ items.quotation_id }}">#}
+{#                        </a>#}
+{#                    </div>#}
+                    <div id ="cart" class="media-body">
+{#                        <div class="row">#}
+                            <div class="text-muted mb-2 f-12">
+                                <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ items.create_date}}</span>
+                            </div>
+                            <h2 class="mt-0 font-weight-bold text-info f-17">
+                                {{ items.quotation_id}}
+                            </h2>
+                            <span><label>Quantity:</label></span><span><h2 class="mt-0 font-weight-bold text-info f-17">
+                                {{ items.quantity }}
+                            </h2></span>
+    {#                        <p class="d-block d-sm-none mb-2 f-15">quotationlist</p>#}
+                            <div class="text-muted mb-0 f-12">
+                                <a class="cate" href="{{ items.category_name }}" >
+                                    <i class="fa fa-book mr-1"></i>{{ items.category_name }}</a>
+                                <span><i class="fa fa-eye ml-2 mr-1"></i>{{ items.items.quotation_id }}</span>
+
+                            </div>
+{#                        </div>#}
+
+                    </div>
+
+    </div>
+{#{% endfor %}#}
+
+                        </div>
+                        {#  end right col-md-6#}
+
+
+                </div>
+                {# end container-fluid #}
+            </div>{# end first row #}
+            </div>{# end single contract #}
+        {% endif %}
+    {% endfor %}
+{% endblock %}
