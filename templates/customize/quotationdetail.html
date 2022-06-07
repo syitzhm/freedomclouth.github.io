@@ -9,31 +9,42 @@
 
 {% block main_content %}
 
-    <script>
-   function validate(){
-       alert("click")
-     if (err > 0){
-        swal({ title: "Warning!",
-        text: "Some entries are missing.\nDo you still want to save this?",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#5cb85c",
-        confirmButtonText: "Yes!",
-        cancelButtonText: "Cancel!",
-        closeOnConfirm: true,
-        closeOnCancel: true },
-        function(isConfirm){
-            if (isConfirm) {
-                document.forms['RegForm'].submit();
 
-            } else {
-                return false;
-             }
-        });
-     }
-}
+   <script>
+        function SveFrm(){
+            swal(
+                {title:"您确定要删除这条数据吗",
+                    text:"删除后将无法恢复，请谨慎操作！",
+                    type:"warning",
+                    showCancelButton:true,
+                    confirmButtonColor:"#DD6B55",
+                    confirmButtonText:"确定删除！",
+                    cancelButtonText:"取消",
+                    closeOnConfirm:false,
+                    closeOnCancel:false
+                }).then((isConfirm) =>
+                {
+                    if(isConfirm)
+                    {
+                        swal({title:"删除成功！",
+                            text:"您已经永久删除了这条数据。",
+                            type:"success"}).then((value)=>{
+                                document.forms['RegForm'].submit()
+                                })
+                    }
+                    else{
+                        swal({title:"已取消",
+                            text:"您取消了删除操作！",
+                            type:"error"})
+                    }
+                }
+            )
+        }
     </script>
+
     <script>
+ {#document.forms['RegForm'].submit();window.location="/"#}
+
 </script>
 
 
@@ -109,7 +120,7 @@
                                     <input id = "categoryname" type="text" value ="{{ items.category_name }}" style="display: none"/>
                                     <h3 class="card-title font-weight-bold text-info" >Part Number: {{ items.part_number }}</h3>
                                     <div class="table-responsive" style="overflow-x:hidden">
-                                    <form name = "RegForm" id = "RegForm" onsubmit="return validate()" method  = "POST" action = "{% url 'order:SaveToCart' %}" enctype = "multipart/form-data">
+                                    <form name = "RegForm" id = "RegForm" method  = "POST" action = "{% url 'order:SaveToCart' %}" enctype = "multipart/form-data">
                                         <table class="table col-md-7" style="">
                                             <thead class=" align-items-center mx-auto">
                                             <tr >
@@ -142,7 +153,7 @@
 
                                         <!-- Django中需要POST数据的地方都必须有csrf_token -->
                                         {% csrf_token %}
-                                        <button id="btncart" name ="addtocart" class ="addcart" style ="font-size: xx-small;"  type="submit" value  = "Add to cart" >
+                                        <button id="btncart" name ="addtocart" class ="addcart" style ="font-size: xx-small;" onclick="SveFrm()" type="button"  >
                             Add to cart
                                     </button>
                                         </form>
