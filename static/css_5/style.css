@@ -51,6 +51,22 @@ ul.unititem a.add-cart {
 	font-size: 10px;
 
 }
+
+.button-c {
+	background: #8c2830;
+	color: #FFF;
+	font-size: 0.8em;
+	padding: 0.5em 1em;
+	transition: 0.5s all;
+	-webkit-transition: 0.5s all;
+	-moz-transition: 0.5s all;
+	-o-transition: 0.5s all;
+	cursor: pointer;
+	outline: none;
+	text-transform: uppercase;
+	border: none;
+	border-radius: 15px;
+}
 /*--End Missed style--*/
 
 

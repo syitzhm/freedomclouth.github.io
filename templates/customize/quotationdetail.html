@@ -12,33 +12,36 @@
 
    <script>
         function SveFrm(){
-            swal(
-                {title:"您确定要删除这条数据吗",
-                    text:"删除后将无法恢复，请谨慎操作！",
-                    type:"warning",
-                    showCancelButton:true,
-                    confirmButtonColor:"#DD6B55",
-                    confirmButtonText:"确定删除！",
-                    cancelButtonText:"取消",
-                    closeOnConfirm:false,
-                    closeOnCancel:false
-                }).then((isConfirm) =>
-                {
-                    if(isConfirm)
-                    {
-                        swal({title:"删除成功！",
-                            text:"您已经永久删除了这条数据。",
-                            type:"success"}).then((value)=>{
-                                document.forms['RegForm'].submit()
-                                })
-                    }
-                    else{
-                        swal({title:"已取消",
-                            text:"您取消了删除操作！",
-                            type:"error"})
-                    }
+            Swal.fire({
+              title: 'Would you like to put these into cart?',
+              icon: 'question',
+              type:'question',
+              inputValue: 1,
+              showCancelButton:true,
+              cancelButtonText:'No',
+              confirmButtonText:
+                'Yes',
+            })
+             .then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                       title: 'Thanks for shopping!',
+                      icon: 'success',
+                      type:'success',
+                      showCancelButton:false,
+                      cancelButtonText:'No',
+                      confirmButtonText:
+                        'Go To Cart',
+                        }).then((result)=>{
+                          document.forms['RegForm'].submit();
+                    })
                 }
-            )
+                    else if (result.isDismissed) {
+                    return false;
+                    }
+
+    });
+
         }
     </script>
 
@@ -116,21 +119,22 @@
                                     {# end quotation pic middle middle1 column of row 1 #}
 
                                     {# start quotation detail middle middle 2 column of row 1#}
-                                <div class = "col-md-8 " >{# right quotation detail column #}
+                                <div class = "col-md-8 " style="padding:10px;">{# right quotation detail column #}
                                     <input id = "categoryname" type="text" value ="{{ items.category_name }}" style="display: none"/>
                                     <h3 class="card-title font-weight-bold text-info" >Part Number: {{ items.part_number }}</h3>
-                                    <div class="table-responsive" style="overflow-x:hidden">
+                                    <div class="table-responsive" style="overflow-x:hidden;">
                                     <form name = "RegForm" id = "RegForm" method  = "POST" action = "{% url 'order:SaveToCart' %}" enctype = "multipart/form-data">
-                                        <table class="table col-md-7" style="">
-                                            <thead class=" align-items-center mx-auto">
+                                        {% csrf_token %}
+                                        <table class="table" style="width: 100%">
+                                            <thead class=" align-items-center mx-auto" style="">
                                             <tr >
-                                              <th class= "text-center" scope="col" style ="max-width: 5%"></th>
-                                              <th class= "text-center" scope="col" style ="max-width: 15%">Sleeve</th>
-                                              <th class= "text-center" scope="col" style ="max-width: 15%">Size</th>
-                                              <th class= "text-center" scope="col" style ="max-width: 15%">Gender</th>
-                                              <th class= "text-center" scope="col" style ="max-width: 15%" >Color</th>
-                                              <th class= "text-center"  style ="max-width: 30%" scope="col">Quantity</th>
-                                              <th class= "text-center " scope="col" style ="max-width: 30%" >Special Requirement</th>
+                                              <th class= "text-center" scope="col" style ="width: 5%"></th>
+                                              <th class= "text-center" scope="col" style ="width: 15%">Sleeve</th>
+                                              <th class= "text-center" scope="col" style ="width: 15%">Size</th>
+                                              <th class= "text-center" scope="col" style ="width: 15%">Gender</th>
+                                              <th class= "text-center" scope="col" style ="width: 15%" >Color</th>
+                                              <th class= "text-center"  style ="width: 15%" scope="col">Quantity</th>
+                                              <th class= "text-center " scope="col" style ="width: 30%" >Special Requirement</th>
                                             </tr>
                                           </thead> 
                                           <tbody>
@@ -142,65 +146,36 @@
                                               <td class= "text-center" id = "gender"{{ items.quotation_id }} style ="max-width: 15%"> {{ items.gender }}</td>
                                               <td class= "text-center" style ="max-width: 30%" ><ul class = "product-colors">
                                                     <li><a id = "color"{{ items.quotation_id }} class = {{ items.color }}><span> </span></a></li></ul></td>
-                                              <td class= "text-center"  style ="max-width: 30%"  id = "" > <input style ="overflow:hidden;background-color:red;max-width: 30% " id = "qty{{ items.quotation_id }}" type="number"   value =1 /></td>
+                                              <td class= "text-center"  style ="max-width: 30%"  id = "" > <input style ="overflow:hidden;max-width: 25% " id = "qty{{ items.quotation_id }}" type="number"   value =1 /></td>
                                               {% comment %} <td class= "text-center " style ="overflow:hidden" id = "desc"{{ items.quotation_id }} > {{ items.description }}</td> {% endcomment %}
 
                                             </tr>
                                           </tbody>
                                         </table>
+                                           <!-- Django中需要POST数据的地方都必须有csrf_token -->
 
-
-
-                                        <!-- Django中需要POST数据的地方都必须有csrf_token -->
-                                        {% csrf_token %}
-                                        <button id="btncart" name ="addtocart" class ="addcart" style ="font-size: xx-small;" onclick="SveFrm()" type="button"  >
-                            Add to cart
-                                    </button>
+                                            <button id="btncart" name ="button-c" class ="button-c pull-right" style ="font-size: x-small;" onclick="SveFrm()" type="button"  >
+                                                Add to cart
+                                            </button>
                                         </form>
 
                                     </div>
                                         </div>
-                                            <div class="clearfix"></div>
-{#                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">#}
-{#                                                    Launch demo modal#}
-{#                                            </button>#}
-{#                                            <!--start modal-->#}
-{#                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
-{#                                          <div class="modal-dialog">#}
-{#                                            <div class="modal-content">#}
-{#                                              <div class="modal-header">#}
-{#                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>#}
-{#                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>#}
-{#                                              </div>#}
-{#                                              <div class="modal-body">#}
-{#                                                ...#}
-{#                                              </div>#}
-{#                                              <div class="modal-footer">#}
-{#                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>#}
-{#                                                <button type="button" class="btn btn-primary">Save changes</button>#}
-{#                                              </div>#}
-{#                                            </div>#}
-{#                                          </div>#}
-{#                                    </div>#}
-
-                                            <!-- end modal-->
-
 
                                 </div>{# end right quotation detail column #}
 
                             </div> {# end  quotation detail row #}
 
                             <!-- start presend feedback row -->
-                            <div  class   = "row" > {# present feedback row#}
-                                <div  class   = "col-md-1"></div> {# left present feedback place holder of row2 #}
-                                <div  class   = "col-md-10 " >{# present feedback middle column #}
-                                    <form method  = "POST" action     = "{% url 'customize:quotation_feedback' items.quotation_id %}"
-                                         enctype = "multipart/form-data">
-{#                                      <!-- Django中需要POST数据的地方都必须有csrf_token -->#}
-                                                {% csrf_token %}
 
-                                        <div class = "col-md-2" >{# present feedback pic middle left column#}
+                                <form method  = "POST" action     = "{% url 'customize:quotation_feedback' items.quotation_id %}"
+                                                 enctype = "multipart/form-data">
+        {#                                      <!-- Django中需要POST数据的地方都必须有csrf_token -->#}
+                                                        {% csrf_token %}
 
+                                <div  class   = "col-md-12 " style="">{# present feedback middle column #}
+                                <div  class   = "shadow row mt-2" style="border: 2px"> {# present feedback row#}
+                                        <div class = "col-md-3" style="padding: 10px">{# present feedback pic middle left column#}
                                             <div class = "address">{# address #}
                                             <!-- 标签 -->
                                                 <span>Feedback</span>
@@ -208,14 +183,14 @@
                                                     <input type       = "file" id                  = "file" name = "images" multiple = "multiple"
                                                         accept     = "image/*" aria-describedby = "inputGroupFileAddon04"
                                                         aria-label = "Upload"
-                                                     style      = "max-width: 50%" onchange  = "preview_image(event)">
+                                                     onchange  = "preview_image(event)">
                                                     <img   id         = "output_image" style      = "max-width: 100px;max-height:300px; padding-top: 10px">
                                                 </div>
                                                 {#  end wrapper#}
                                              </div>
                                         </div>{# present feedback pic middle left column #}
 
-                                        <div class = "col-sm-8" >{# present feedback textbox middle middle column#}
+                                        <div class = "col-md-6" style="">{# present feedback textbox middle middle column#}
 
                                                 <div class = "address">
                                                             {#   <!-- 标签 -->#}
@@ -227,17 +202,18 @@
 
                                         </div>{# present feedback textbox middle middle column#}
 
-                                        <div class = "card-body " style="position: relative;">{# present feedback button middle right column#}
+                                        <div class = "col-md-2" style="position: relative;">{# present feedback button middle right column#}
 
-                                                <div   class = "address " style=" position: absolute; bottom: 0; right: 0">
-                                                    <input type  = "submit" value  = "submit" style=" position: absolute; bottom: 0; right: 0"/>
+                                                <div   class = " " style=" position: absolute; bottom: 0; right: 0">
+                                                    <input class="button-c" type  = "submit" value  = "submit" style=" position: absolute; bottom: 10px; right: 30px"/>
                                                  </div>
 
                                         </div>{# end present feedback button middle right column#}
-                                     </form>
+
                                 </div>{# end present feedback middle column #}
 
                             </div>{# end present feedback row #}
+                                </form>
                             {% comment %} start historic feedback row {% endcomment %}
                             <div class = "row" >
                                 <div class="col-md-12 single-top-left" >{#start historic feedback table  #}
@@ -274,41 +250,6 @@
                                 </div>{#end historic feedback table  #}
                             </div> {% comment %} end historic feedback row {% endcomment %}
                         </div>{#  end middle quotation detail and feedback#}
-
-
-                        {% comment %} right cart colunm {% endcomment %}
-                         <div id = "cart" class = "col-md-4 single-top-left" ><h3>Right Cart</h3>
-                        {#{% for items in quotationlist %}#}
-                            <div id = "quotationdata" class="media mb-1 mb-sm-2 p-2 p-lg-3">
-{#                    <div class="align-self-center mr-2 mr-lg-3 w-25 modal-open">#}
-{#                        <a href="{{ items.get_absolute_url }}" target="_blank">#}
-{#                            <img class="w-100 article-img" src="{{ items.req_image }}" alt="{{ items.quotation_id }}">#}
-{#                        </a>#}
-{#                    </div>#}
-{#                                <div id ="cart" class="media-body">#}
-{#                        <div class="row">#}
-{#                                <div class="text-muted mb-2 f-12">#}
-{#                                    <span><i class="fa fa-calendar-times-o ml-2 mr-1"></i>{{ items.create_date}}</span>#}
-{#                                </div>#}
-{#                                <h2 class="mt-0 font-weight-bold text-info f-17">#}
-{#                                    {{ items.quotation_id}}#}
-{#                                </h2>#}
-{#                                    <span><label>Quantity:</label></span>#}
-{#                                    <span>#}
-{#                                    <h2 class="mt-0 font-weight-bold text-info f-17">#}
-{#                                            {{ items.quantity }}#}
-{#                                        </h2></span>#}
-    {#                        <p class="d-block d-sm-none mb-2 f-15">quotationlist</p>#}
-{#                                <div class="text-muted mb-0 f-12">#}
-{#                                    <a class="cate" href="{{ items.category_name }}" >#}
-{#                                        <i class="fa fa-book mr-1"></i>{{ items.category_name }}</a>#}
-{#                                    <span><i class="fa fa-eye ml-2 mr-1"></i>{{ items.items.quotation_id }}</span>#}
-{#    #}
-{#                                </div>#}
-{#                        </div>
-
-    </div>
-{#{% endfor %}#}
 
                         </div>
                         {#  end right col-md-6#}
