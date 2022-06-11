@@ -654,8 +654,8 @@ ol.breadcrumb {
 }
 /*--end-product--*/
 /*--start-checkout--*/
-.ckeckout{
-	padding:6em 0px;
+.checkout{
+	padding-top:6em 0px;
 }
 a.add-cart {
 	text-decoration: none;

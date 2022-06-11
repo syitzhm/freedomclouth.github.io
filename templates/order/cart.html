@@ -4,20 +4,21 @@
 {% block head_title %}Quotation List{% endblock %}
 
 {% block cart_content %}
-<script>$(document).ready(function(c) {
+<script>
 
-					$('.close1').on('click', function(c){
-					    alert("click");
-						$('#cart-header').fadeOut('slow', function(c){
-							$('#cart-header').remove();
-						});
-						});
-					});
+         function fadeout(obj){
+
+                        $(document.getElementById(obj.id)).on('click', function(c){
+                            $(document.getElementById(obj.id)).fadeOut('slow', function(c){
+                                $(document.getElementById(obj.id)).remove();
+                            });
+                            });	  
+                        };
 			   </script>
 
 	<!--end-breadcrumbs-->
 	<!--start-ckeckout-->
-	<div class="ckeckout mt-10" >
+	<div class="checkout" >
 {#    fisrt row#}
 {#    <div class="row">#}
 		<div class="container">
@@ -42,11 +43,11 @@
                                 </div>
                                 <div class="col-md-10 d-flex mt-4 mb-4" >
                                     <div class="table-responsive" style="overflow-x:hidden; width:100%">
-{#                                    <form name = "RegForm" id = "RegForm" method  = "POST" action = "{% url 'order:SaveToCart' %}" enctype = "multipart/form-data">#}
-{#                                        {% csrf_token %}#}
+                                    <form name = "RegForm" id = "RegForm" method  = "POST" action = "{% url 'order:cart_add' %}" enctype = "multipart/form-data">
+                                        {% csrf_token %}
 
                                             <table class="table" style="border-collapse: collapse;table-layout: fixed;word-break: break-all;">
-                                            <thead class=" align-items-center mx-auto" style="">
+                                            <thead class=" align-items-center mx-auto" style="width:100%">
                                             <tr >
                                               <th class= "text-center" scope="col" style ="width: 5%"></th>
                                               <th class= "text-center" scope="col" style ="width: 15%"></th>
@@ -55,8 +56,9 @@
                                               <th class= "text-center" scope="col" style ="width: 10%">Gender</th>
                                               <th class= "text-center" scope="col" style ="width: 10%" >Color</th>
                                               <th class= "text-center"  style ="width: 10%" scope="col">Quantity</th>
+                                              <th class= "text-center"  style ="width: 10%" scope="col">Price</th>
                                               <th class= "text-center " scope="col" style ="width: 20%" >Special Requirement</th>
-                                              <th class= "text-center " scope="col" style ="width: 10%" ></th>
+                                        
                                             </tr>
                                           </thead>
 
@@ -64,25 +66,20 @@
 
                                                 <tbody>
                                         {% for items in Cartlist %}
-                                            <tr id ="cart-header" >
-
-                                               <td class= "text-center" ><div id = {{ items.cart_id }} class="close1"><li class="ring-in"></li></div>
-						            <input id = 'checktocart' name = 'checktocart' value="{{ items.quotation_id }}" type="checkbox" checked> </td>
-                                              <td class= "text-center" id = "img"{{ items.quotation_id  }}> <div ><img style="max-width: 100px" src="../../media/{{ items.req_image }}"  alt="Generic placeholder image"></div></td>
-                                              <td class= "text-center" id = "sleeve"{{ items.quotation_id }} >{{ items.sleeve }}</td>
-                                              <td class= "text-center" id = "size"{{ items.quotation_id }}>{{ items.size }}</td>
-                                              <td class= "text-center" id = "gender"{{ items.quotation_id }}> {{ items.gender }}</td>
+                                            <tr id ={{ items.cart_id }} >
+                                               <td class= "text-center" ><div id = {{ items.cart_id }} class="close" onclick="fadeout(this)"></div>
+						                         <input id = 'checktocart' name = 'checktocart' value="{{ items.cart_id }}" type="checkbox" style="display:none" checked/></input> </td>
+                                              <td class= "text-center" id = "img{{ items.quotation_id  }}"> <div ><img style="max-width: 100px" src="../../media/{{ items.req_image }}"  alt="Generic placeholder image"></div></td>
+                                              <td class= "text-center" id = "sleeve{{ items.quotation_id }}" >{{ items.sleeve }}</td>
+                                              <td class= "text-center" id = "size{{ items.quotation_id }}">{{ items.size }}</td>
+                                              <td class= "text-center" id = "gender{{ items.quotation_id }}"> {{ items.gender }}</td>
                                               <td class= "text-center"  ><ul class = "product-colors">
-                                                    <li><a id = "color"{{ items.quotation_id }} class = {{ items.color }}><span> </span></a></li></ul></td>
-                                              <td class= "text-center"  id = "" > <input style ="overflow:hidden;width: 50px" id = "qty{{ items.quotation_id }}" type="number"   value =1 /></td>
+                                                    <li><a id = "color{{ items.quotation_id }}" class = {{ items.color }}><span> </span></a></li></ul></td>
+                                              <td class= "text-center"  id = "" > <input style ="overflow:hidden;width: 50px" name = "qty{{ items.cart_id }}" type="number"   value =1 /></td>
                                               {% comment %} <td class= "text-center " style ="overflow:hidden" id = "desc"{{ items.quotation_id }} > {{ items.description }}</td> {% endcomment %}
-                                              <td class= "text-center" id = "size"{{ items.quotation_id }} >{{ items.description }}</td>
-                                              <td class= "text-center" id = "size"{{ items.quotation_id }} >
-                                                  <form onSubmit="if(!confirm('Do you want to delete the item?')){return false;}" id="safe_delete" action="{% url 'order:deletecartitem' items.cart_id %}" method="POST" >
-                                                  {% csrf_token %}
-                                                  <button class="button-c " type="submit" value="Delete" style ="font-size: xx-small;">Delete</button>
-                                                 </form>
-                                              </td>
+                                              <td class= "text-center" id = "price{{ items.quotation_id }} ">{{ items.price }}</td>
+                                              <td class= "text-center" id = "size{{ items.quotation_id }} ">{{ items.description }}</td> 
+
                                             </tr>
                                                 {% endfor %}
                                           </tbody>
@@ -106,8 +103,7 @@
                      <h3 class="address">Subtotal:</h3>
                  </div>
                  <hr>
-                    <form id="safe_delete" action="{% url 'order:checkout' %}" method="POST" >
-                                            {% csrf_token %}
+                  
                        <input class="border-r pull-right" type="submit" value="Check Out" >
                 </form>
              </div>

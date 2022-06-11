@@ -48,7 +48,16 @@
 						});
 					})
 				};
+                // Can also be used with $(document).ready()
+$(window).load(function() {
+    $('.flexslider').flexslider({
+      animation: "slide",
+      controlNav: "thumbnails"
+    });
+  });
 			   </script>
+
+               
     {% endblock %}
 </head>
 
@@ -75,10 +84,10 @@
                 <li class="grid"><a href="{% url 'common:products' %}">VEST</a></li>
                 <li class="grid"><a href="{% url 'common:products' %}">T shirt</a></li>
                 <li class="grid"><a href="{% url 'common:products' %}">Sports</a></li>
-                <li class="grid"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
+                {% comment %} <li class="grid"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
                 <li class="grid"><a href="{% url 'accounts:dashboardn' %}">Dashboardn</a></li>
                 <li class="grid"><a href="{% url 'accounts:test' %}">Test</a></li>
-                <li class="grid"><a href="{% url 'order:checkout' %}">checkout</a></li>
+                <li class="grid"><a href="{% url 'order:checkout' %}">checkout</a></li> {% endcomment %}
                 {#                        if it's staff, then show quotation list#}
                 {% if user.is_authenticated %}
                     <li class="grid"><a class="address" href="{% url 'customize:quotationlist' %}">Quotation</a></li>
@@ -196,7 +205,7 @@
 {% block special_introduction %}{% endblock %}
 
 {% block cart_content %}{% endblock %}
-</div>
+
 {% block footer %}
 
 {% endblock %}

@@ -44,22 +44,30 @@ def addtocart(request):
     return  render(request,'order/cart.html',context)
 
 
-def cart_add(request, product_id):
-    print("product_id in add",product_id)
-    cartmaster= Cartmaster.objects.filter(customer_id=request.user.id)
+def cart_add(request):
+    
+    checkedlist = request.POST.getlist('checktocart')
+    cart = Cart(request)
+    for cartitem in checkedlist:
+        cartmaster= Cartmaster.objects.get(cart_id=cartitem)
+        qtyid="qty" + str(cartmaster.quotation_id)
+        cartqty=request.POST.get(qtyid)       
+        cart.add(product=cartmaster, quantity=cartqty, update_quantity=cartqty)
+    print("product_id in add",cart)    
+        
     context = {'Cartlist': cartmaster}
-    cart = Cart(request)  # create a new cart object passing it the request object
-    print("cart_add", request) 
-    print("=====>cart",cart.session)
-    incart = get_object_or_404(Cartmaster, cart_id=product_id) 
+      # create a new cart object passing it the request object
+    # print("cart_add", request) 
+    # print("=====>cart",cart.session)
+    #  
     # form = CartAddProductForm(request.POST)
     # print("product_id in add",form.errors)
     # if form.is_valid():
         # cd = form.cleaned_data
-    cart.add(product=incart, quantity=10, update_quantity=10)
-    print("product_id in add",cart)
+    
+    
     # return redirect('shop:list.html')
-    return redirect('order:cart_detail')
+    return redirect('order:savetoorder')
 
 def cart_detail(request):
     cart = Cart(request)
@@ -100,7 +108,7 @@ def SaveToCart(request):
         return redirect("order:cartmaster", user_id=request.user.id)
 
 
-def Checkout(request):
+def SaveToOrder(request):
     checkedlist = request.POST.getlist('checktoorder')
     # print("ouser_name", type(ouser_name))
 
