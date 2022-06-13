@@ -562,7 +562,7 @@ ul.callbacks_tabs.callbacks2_tabs {
 	font-family: 'Lato', sans-serif;
 }
 .address label {
-	font-size: 1.5em;
+	font-size: 16px;
 	color: #8c2830;
 	display: block;
 	padding-bottom: 4px;
@@ -573,7 +573,7 @@ ul.callbacks_tabs.callbacks2_tabs {
 	outline: none;
 	width: 100%;
 	font-size: 14px;
-	padding: 10px 10px;
+	/*padding: 10px 10px;*/
 	font-family: 'Lato', sans-serif;
 }
 

@@ -3,48 +3,50 @@
 
 {% block main_content %}
 {#<div class="account">#}
-<div class="checkout mt-10">
-    <div class="containter"> 
+<div class="checkout ">
+    <div class="container justify-content-center  align-items-center" >
     <!--left shipping information -->
-    
-    
-    <div class=" col-md-8 col-sm-offset-2">
-
-            <h4 class=" mb-3">Shipping address</h4>
-
+    <div class="row">
+    <div class=" col-md-8 col-sm-offset-2" >
+                    <ul class="nav nav-tabs memenu skyblue">
+                  <li class="active">
+                      <a href="">Shipping address</a></li>
+            </ul>
                 <div class="row">
-                    <div class="address col-md-6  mb-3">
+                    <div class="address col-md-6 ">
                         <label for="firstName">First name</label>
                         <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
                         <div class="invalid-feedback"> Valid first name is required. </div>
                     </div>
-                    <div class=" address col-md-6 mb-3">
+                    <div class=" address col-md-6 ">
                         <label for="lastName">Last name</label>
                         <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
                         <div class="invalid-feedback"> Valid last name is required. </div>
                     </div>
                 </div>
-                <div class="address mb-3">
-                    <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                    <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                    <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                <div class="row">
+                    <div class="address col-md-6">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                        <div class="invalid-feedback"> Please enter a valid email address for shipping updates. </div>
+                    </div>
+                    <div class="address col-md-6">
+                        <label for="tel">Tel</label>
+                        <input type="email" class="form-control" id="email" placeholder="(999)-99-9999)">
+                        <div class="invalid-feedback"> Please enter a valid telphone number for shipping updates. </div>
+                    </div>
                 </div>
-                <div class="address mb-3">
-                    <label for="tel">Tel</label>
-                    <input type="email" class="form-control" id="email" placeholder="(999)-99-9999)">
-                    <div class="invalid-feedback"> Please enter a valid telphone number for shipping updates. </div>
-                </div>
-                <div class="address mb-3">
+                <div class="address ">
                     <label for="address">Address</label>
                     <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
                     <div class="invalid-feedback"> Please enter your shipping address. </div>
                 </div>
-                <div class="address mb-3">
+                <div class="address ">
                     <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
                     <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
                 </div>
                 <div class="row">
-                    <div class="address col-md-5 mb-3">
+                    <div class="address col-md-5">
                         <label for="country">Country</label>
                         <select class="custom-select d-block w-100" id="country" required="">
                             <option value="">Choose...</option>
@@ -52,7 +54,7 @@
                         </select>
                         <div class="invalid-feedback"> Please select a valid country. </div>
                     </div>
-                    <div class="address col-md-4 mb-3">
+                    <div class="address col-md-4">
                         <label for="state">State</label>
                         <select class="custom-select d-block w-100" id="state" required="">
                             <option value="">Choose...</option>
@@ -60,7 +62,7 @@
                         </select>
                         <div class="invalid-feedback"> Please provide a valid state. </div>
                     </div>
-                    <div class="address col-md-3 mb-3">
+                    <div class="address col-md-3">
                         <label for="zip">Zip</label>
                         <input type="text" class="form-control" id="zip" placeholder="" required="">
                         <div class="invalid-feedback"> Zip code required. </div>
@@ -91,9 +93,13 @@
 
     <!-- right cart information-->
     <div class=" col-md-4">
-        <h4>Cart information</h4>
+        <ul class="nav nav-tabs memenu skyblue">
+            <li class="active">
+                <a href="">Order</a></li>
+            </ul>
+
         <table class="table table-striped table-hover">
-            <thead style="background-color: #5AC8FA">
+            <thead >
                 <tr>
                     <th>Image</th>
                     <th>Product</th>
@@ -104,18 +110,19 @@
                 </tr>
             </thead>
             <tbody>
-            {% for item in cart %}
-            {{ cart.count }}
+            {% for item in cartlist %}
+            {{ cartlist.count }}
                 {% with product=item.product  %}
                     <tr>
                         <td>
                             <a href="{{ product.get_absolute_url }}">
-                                <img src="{% if product.image %} {{ product.image.url }} {% else %} {% static 'img/default.jpg' %} {% endif %}" alt="..." style="height: 130px; width: auto">
+                                <img src="{% if product.req_image %} ../../media/{{ product.req_image }} {% else %} {% static 'images/default.jpg' %} {% endif %}" alt="..." style="height: auto; width: 130px">
                             </a>
                         </td>
-                        <td>{{ product.name }}</td>
+                        <td>{{ product.quotation_id }}</td>
                         <td>
-                            <form action="{% url "cart:cart_add" product.id %}" method="post">
+                            <form action="#" method="post">
+{#                            <form action="{% url "order:cart_add" product.cart_id %}" method="post">#}
                                 {% csrf_token %}
                                 {{ item.update_quantity_form.quantity }}
                                 {{ item.update_quantity_form.update }}
@@ -123,17 +130,17 @@
                             </form>
                         </td>
                         <td>
-                            <a href="{% url "cart:cart_remove" product.id %}">Remove</a>
+                            <a href="{% url "order:cart_remove" product.quotation_id %}">Remove</a>
                         </td>
-                        <td>kshs. {{ item.price }}</td>
-                        <td>kshs. {{ item.total_price }}</td>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.total_price }}</td>
                     </tr>
                 {% endwith %}
             {% endfor %}
             <tr style="background-color: #5AC8FA">
                 <td><b>Total</b></td>
                 <td colspan="4"></td>
-                <td colspan="num"><b>kshs. {{ cart.get_total_price }}</b></td>
+                <td colspan="num"><b> {{ cart.get_total_price }}</b></td>
             </tr>
             </tbody>
         </table>
@@ -141,5 +148,5 @@
     <!-- end cart information-->
 </div>
 </div>
-
+</div>
 {% endblock main_content %}

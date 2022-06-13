@@ -21,53 +21,43 @@ def cartmasterview(request,user_id):
 class checkout(generic.TemplateView):
     template_name = "order/checkout.html"
     
-def addtocart(request):
-    checkedlist = request.POST.getlist('checktocart')
-    
-    for i in checkedlist :
-        
-        quotation= Quotation.objects.get(quotation_id=i) 
-        execstr = Cartmaster.objects.create(cart_id=quotation.quotation_id,
-                                           quotation_id=quotation.quotation_id,
-                                           sleeve=quotation.sleeve,
-                                           color=quotation.color,
-                                           size=quotation.size,
-                                           req_image=quotation.req_image,
-                                           gender=quotation.gender,
-                                           part_number=quotation.part_number,
-                                           quantity=quotation.quantity,
-                                           description=quotation.description,
-                                           category_name=quotation.category_name,
-                                           customer_id=quotation.customer_id,
-                                           rep_id=rep_id)
-        execstr.save()
-    return  render(request,'order/cart.html',context)
+# def addtocart(request):
+#     checkedlist = request.POST.getlist('checktocart')
+#
+#     for i in checkedlist :
+#
+#         quotation= Quotation.objects.get(quotation_id=i)
+#         execstr = Cartmaster.objects.create(cart_id=quotation.quotation_id,
+#                                            quotation_id=quotation.quotation_id,
+#                                            sleeve=quotation.sleeve,
+#                                            color=quotation.color,
+#                                            size=quotation.size,
+#                                            req_image=quotation.req_image,
+#                                            gender=quotation.gender,
+#                                            part_number=quotation.part_number,
+#                                            quantity=quotation.quantity,
+#                                            description=quotation.description,
+#                                            category_name=quotation.category_name,
+#                                            customer_id=quotation.customer_id,
+#                                            rep_id=rep_id)
+#         execstr.save()
+#     return  render(request,'order/cart.html',context)
 
 
 def cart_add(request):
     
     checkedlist = request.POST.getlist('checktocart')
     cart = Cart(request)
+    # cartmaster = get_object_or_404(Cartmaster, cart_id=checkedlist)
     for cartitem in checkedlist:
-        cartmaster= Cartmaster.objects.get(cart_id=cartitem)
+        cartmaster = get_object_or_404(Cartmaster, cart_id=cartitem)
         qtyid="qty" + str(cartmaster.quotation_id)
-        cartqty=request.POST.get(qtyid)       
+        cartqty=request.POST.get(qtyid)
         cart.add(product=cartmaster, quantity=cartqty, update_quantity=cartqty)
-    print("product_id in add",cart)    
-        
-    context = {'Cartlist': cartmaster}
-      # create a new cart object passing it the request object
-    # print("cart_add", request) 
-    # print("=====>cart",cart.session)
-    #  
-    # form = CartAddProductForm(request.POST)
-    # print("product_id in add",form.errors)
-    # if form.is_valid():
-        # cd = form.cleaned_data
-    
-    
-    # return redirect('shop:list.html')
-    return redirect('order:savetoorder')
+
+    context = {'cartlist': cart}
+    print("success")
+    return render(request,'order/checkout.html',context)
 
 def cart_detail(request):
     cart = Cart(request)
@@ -78,6 +68,7 @@ def cart_detail(request):
 
 def checkcart(request):
     cart = Cart(request)
+    cart.clear()
     print("======>cart",Cart.__iter__)
     print("======>cart1",Cart.__len__)
     # print("======>product_ids",cart.key())
@@ -109,29 +100,37 @@ def SaveToCart(request):
 
 
 def SaveToOrder(request):
-    checkedlist = request.POST.getlist('checktoorder')
+    # checkedlist = request.POST.getlist('checktoorder')
     # print("ouser_name", type(ouser_name))
-
-    for i in checkedlist:
-        quotation = Quotation.objects.get(quotation_id=i)
-        # ouser_name=Ouser.objects.get(username=quotation.rep_id)
-        execstr = Cartmaster.objects.create(cart_id=quotation.quotation_id,
-                                            quotation_id=quotation.quotation_id,
-                                            sleeve=quotation.sleeve,
-                                            color=quotation.color,
-                                            size=quotation.size,
-                                            req_image=quotation.req_image,
-                                            gender=quotation.gender,
-                                            part_number=quotation.part_number,
-                                            quantity=quotation.quantity,
-                                            description=quotation.description,
-                                            category_name=quotation.category_name,
-                                            customer_id=quotation.customer_id,
-                                            )
-        execstr.save()
-        return redirect("order:cartmaster", user_id=request.user.id)
+    cart= Cart(request)
+    print("======>in save to order",cart)
+    # for i in checkedlist:
+    #     quotation = Quotation.objects.get(quotation_id=i)
+    #     # ouser_name=Ouser.objects.get(username=quotation.rep_id)
+    #     execstr = Cartmaster.objects.create(cart_id=quotation.quotation_id,
+    #                                         quotation_id=quotation.quotation_id,
+    #                                         sleeve=quotation.sleeve,
+    #                                         color=quotation.color,
+    #                                         size=quotation.size,
+    #                                         req_image=quotation.req_image,
+    #                                         gender=quotation.gender,
+    #                                         part_number=quotation.part_number,
+    #                                         quantity=quotation.quantity,
+    #                                         description=quotation.description,
+    #                                         category_name=quotation.category_name,
+    #                                         customer_id=quotation.customer_id,
+    #                                         )
+    #     execstr.save()
+    context={'cartlist':cart}
+    return redirect("order:checkout", context)
 
 def Deletecartitem(request, slug):
     Cartdelitem = Cartmaster.objects.get(cart_id=slug)
     Cartdelitem.delete()
     return redirect("order:cartmaster",user_id=request.user.id)
+
+def cart_remove(request, product_id):
+    cart = Cart(request)
+    product = get_object_or_404(Cartmaster, id=product_id)
+    cart.remove(product)
+    return redirect('order:SaveToCart')

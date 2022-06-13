@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.admindocs import views
 from django.urls import path, include
 # from account.views import dashboard
-from order.views import cartmasterview, SaveToCart, Deletecartitem, checkout, checkcart, cart_add, cart_detail,SaveToOrder
+from order.views import cartmasterview, SaveToCart, Deletecartitem, checkout, checkcart, cart_add, cart_remove, cart_detail,SaveToOrder
 from common import Views
 from common.Views import Index
 from accounts.views import dashboard,test,dashboardn
@@ -34,6 +34,7 @@ urlpatterns = [
     path('checkout/', checkout.as_view(), name='checkout'),
     path('checkcart/', checkcart, name='checkcart'),
     path('cartadd/', cart_add, name='cart_add'),
+    path('remove/<slug:product_id>', cart_remove, name='cart_remove'),
     path('cart_detail/', cart_detail, name='cart_detail'),
 
     # path(r'xadmin/', xadmin.site.urls)

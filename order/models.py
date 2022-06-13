@@ -48,16 +48,16 @@ class Ordermaster(models.Model):
         return Ordermaster.objects.filter(order_id=self)
 
 class Cartmaster(models.Model):
-    cart_id = models.IntegerField('购物车号码')
+    cart_id = models.CharField(max_length=100, default='购物车号码')
     price = models.CharField(max_length=100, default='货款')
-    quotation_id = models.IntegerField('询价号')
+    quotation_id = models.CharField(max_length=100, default='quotation号码')
     customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
     sleeve = models.CharField(max_length=50, default='袖子')
     color = models.CharField(max_length=50, default='颜色')
     size = models.CharField(max_length=50, default='尺寸')
     gender = models.CharField(max_length=50, default='性别')
     part_number = models.CharField(max_length=50, default='物料编码')
-    quantity = models.IntegerField(max_length=50,default=0)
+    quantity = models.CharField(max_length=50,default=0)
     req_image = models.ImageField(verbose_name="定制样式图片")
     description = models.CharField('需求描述', max_length=230, default='需求描述',blank=True,null=True)
     create_date = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
@@ -72,11 +72,11 @@ class Cartmaster(models.Model):
         ordering = ['cart_id']
 
     def __str__(self):
-        return str(self.quotation_id)
+        return self.cart_id
 
     # def get_absolute_url(self):
     #     return reverse('order:cartmaster', args=[self.cart_id])
 
     def get_order_list(self):
         '''返回当前标签下所有购物车列表'''
-        return Ordermaster.objects.filter(cart_id=self)
+        return Cartmaster.objects.filter(cart_id=self)
