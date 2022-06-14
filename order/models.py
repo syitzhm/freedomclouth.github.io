@@ -15,7 +15,7 @@ class Ordermaster(models.Model):
     ship_to_zipcode = models.CharField(max_length=300, default='发货zipcode')
     receiver_name = models.CharField(max_length=100, default='收货人')
     receiver_tel = models.CharField(max_length=100, default='收货人电话')
-    price = models.CharField(max_length=100, default='货款')
+    price = models.CharField(max_length=100)
     quotation_id = models.IntegerField('询价号')
     customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
     sleeve = models.CharField(max_length=50, default='袖子')
@@ -49,7 +49,7 @@ class Ordermaster(models.Model):
 
 class Cartmaster(models.Model):
     cart_id = models.CharField(max_length=100, default='购物车号码')
-    price = models.CharField(max_length=100, default='货款')
+    price = models.CharField(max_length=100)
     quotation_id = models.CharField(max_length=100, default='quotation号码')
     customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
     sleeve = models.CharField(max_length=50, default='袖子')

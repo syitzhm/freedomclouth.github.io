@@ -1,3 +1,5 @@
+import copy
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect,get_object_or_404
 from .cart import Cart
@@ -14,8 +16,12 @@ from order.models import Cartmaster
 
 
 def cartmasterview(request,user_id):
+    cart = Cart(request)
     cartmaster= Cartmaster.objects.filter(customer_id=user_id)
-    context = {'Cartlist': cartmaster}
+    for item in cart:
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
+    context = {'Cartlist': cartmaster,
+               'cart': cart}
     return render(request,'order/cart.html',context)
 
 class checkout(generic.TemplateView):
@@ -47,7 +53,8 @@ class checkout(generic.TemplateView):
 def cart_add(request):
     
     checkedlist = request.POST.getlist('checktocart')
-    cart = Cart(request)
+    cart=Cart(request)
+
     # cartmaster = get_object_or_404(Cartmaster, cart_id=checkedlist)
     for cartitem in checkedlist:
         cartmaster = get_object_or_404(Cartmaster, cart_id=cartitem)
@@ -55,8 +62,16 @@ def cart_add(request):
         cartqty=request.POST.get(qtyid)
         cart.add(product=cartmaster, quantity=cartqty, update_quantity=cartqty)
 
-    context = {'cartlist': cart}
-    print("success")
+    for item in cart:
+        print("======cart1111", item)
+        item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
+        print("======cart2222", item)
+
+
+    print("in_cart_add",cart.cart.values())
+    total_price = cart.get_total_price()
+    context = {'cartlist': cart,
+               'total_price': total_price}
     return render(request,'order/checkout.html',context)
 
 def cart_detail(request):
@@ -69,8 +84,7 @@ def cart_detail(request):
 def checkcart(request):
     cart = Cart(request)
     cart.clear()
-    print("======>cart",Cart.__iter__)
-    print("======>cart1",Cart.__len__)
+
     # print("======>product_ids",cart.key())
     return render(request,'order/checkout.html')
 
@@ -103,7 +117,7 @@ def SaveToOrder(request):
     # checkedlist = request.POST.getlist('checktoorder')
     # print("ouser_name", type(ouser_name))
     cart= Cart(request)
-    print("======>in save to order",cart)
+
     # for i in checkedlist:
     #     quotation = Quotation.objects.get(quotation_id=i)
     #     # ouser_name=Ouser.objects.get(username=quotation.rep_id)

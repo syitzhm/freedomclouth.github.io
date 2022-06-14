@@ -129,25 +129,25 @@
                                             <thead class=" align-items-center mx-auto" style="">
                                             <tr >
                                               <th class= "text-center" scope="col" style ="width: 5%"></th>
-                                              <th class= "text-center" scope="col" style ="width: 15%">Sleeve</th>
+                                              <th class= "text-center" scope="col" style ="width: 10%">Sleeve</th>
                                               <th class= "text-center" scope="col" style ="width: 15%">Size</th>
-                                              <th class= "text-center" scope="col" style ="width: 15%">Gender</th>
+                                              <th class= "text-center" scope="col" style ="width: 10%">Gender</th>
                                               <th class= "text-center" scope="col" style ="width: 15%" >Color</th>
-                                              <th class= "text-center"  style ="width: 15%" scope="col">Quantity</th>
-                                              <th class= "text-center " scope="col" style ="width: 30%" >Special Requirement</th>
+                                              <th class= "text-center" scope="col" style ="width: 15%">Quantity</th>
+                                              <th class= "text-center" scope="col" style ="width: 30%" >Special Requirement</th>
                                             </tr>
                                           </thead> 
                                           <tbody>
                                             <tr>
                                                <td class= "text-center" style ="max-width: 5%"><input id = 'checktocart' name = 'checktocart' value="{{ items.quotation_id }}" type="checkbox"> </td>
-                                              <td class= "text-center" id = "sleeve"{{ items.quotation_id }} style ="max-width: 15%" >{{ items.sleeve }}</td>
+                                              <td class= "text-center" id = "sleeve"{{ items.quotation_id }} style ="max-width: 10%" >{{ items.sleeve }}</td>
                                               
                                               <td class= "text-center" id = "size"{{ items.quotation_id }} style ="max-width: 15%">{{ items.size }}</td>
-                                              <td class= "text-center" id = "gender"{{ items.quotation_id }} style ="max-width: 15%"> {{ items.gender }}</td>
-                                              <td class= "text-center" style ="max-width: 30%" ><ul class = "product-colors">
+                                              <td class= "text-center" id = "gender"{{ items.quotation_id }} style ="max-width: 10%"> {{ items.gender }}</td>
+                                              <td class= "text-center" style ="max-width: 15%" ><ul class = "product-colors">
                                                     <li><a id = "color"{{ items.quotation_id }} class = {{ items.color }}><span> </span></a></li></ul></td>
-                                              <td class= "text-center"  style ="max-width: 30%"  id = "" > <input style ="overflow:hidden;max-width: 25% " id = "qty{{ items.quotation_id }}" type="number"   value =1 /></td>
-                                              {% comment %} <td class= "text-center " style ="overflow:hidden" id = "desc"{{ items.quotation_id }} > {{ items.description }}</td> {% endcomment %}
+                                              <td class= "text-center"  style ="max-width: 15%"  id = "" > <input style ="overflow:hidden;max-width: 25% " id = "qty{{ items.quotation_id }}" type="number"   value =1 /></td>
+                                              <td class= "text-center " style ="overflow:hidden" id = "desc"{{ items.quotation_id }} > {{ items.description }}</td>
 
                                             </tr>
                                           </tbody>

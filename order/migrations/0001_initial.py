@@ -26,7 +26,7 @@ class Migration(migrations.Migration):
                 ('ship_to_zipcode', models.CharField(default='发货zipcode', max_length=300)),
                 ('receiver_name', models.CharField(default='收货人', max_length=100)),
                 ('receiver_tel', models.CharField(default='收货人电话', max_length=100)),
-                ('price', models.CharField(default='货款', max_length=100)),
+                ('price', models.CharField(max_length=100)),
                 ('quotation_id', models.IntegerField(verbose_name='询价号')),
                 ('sleeve', models.CharField(default='袖子', max_length=50)),
                 ('color', models.CharField(default='颜色', max_length=50)),
@@ -54,7 +54,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('cart_id', models.IntegerField(verbose_name='购物车号码')),
-                ('price', models.CharField(default='货款', max_length=100)),
+                ('price', models.CharField( max_length=100)),
                 ('quotation_id', models.IntegerField(verbose_name='询价号')),
                 ('sleeve', models.CharField(default='袖子', max_length=50)),
                 ('color', models.CharField(default='颜色', max_length=50)),

@@ -104,15 +104,16 @@
                     <th>Image</th>
                     <th>Product</th>
                     <th>Quantity</th>
-                    <th>Remove</th>
+
                     <th>Unit Price</th>
                     <th>Price</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
             {% for item in cartlist %}
-            {{ cartlist.count }}
-                {% with product=item.product  %}
+            {{ item.count }}
+                {% with product=item.product %}
                     <tr>
                         <td>
                             <a href="{{ product.get_absolute_url }}">
@@ -120,27 +121,33 @@
                             </a>
                         </td>
                         <td>{{ product.quotation_id }}</td>
-                        <td>
+
                             <form action="#" method="post">
-{#                            <form action="{% url "order:cart_add" product.cart_id %}" method="post">#}
+                          <td >
+{#                             <form action="{% url "order:cart_add" product.cart_id %}" method="post">#}
                                 {% csrf_token %}
-                                {{ item.update_quantity_form.quantity }}
+
+                                <span><input style="width: 50px" type="number" value="{{ item.quantity }}" ></span>
                                 {{ item.update_quantity_form.update }}
-                                <input type="submit" value="Update" class="btn btn-info">
-                            </form>
+
+
                         </td>
-                        <td>
-                            <a href="{% url "order:cart_remove" product.quotation_id %}">Remove</a>
-                        </td>
+
+
+
                         <td>{{ item.price }}</td>
                         <td>{{ item.total_price }}</td>
+                     <td>
+                            <button type="submit" value="Update" class=" mt-2" ><i class="bi bi-pencil-fill"></i></button></span>
+{#                            <a href="{% url "order:cart_remove" product.quotation_id %}">Remove</a>#}
+                        </td></form>
                     </tr>
                 {% endwith %}
             {% endfor %}
-            <tr style="background-color: #5AC8FA">
+            <tr class= "border-r " style="background-color: #8c2830; color:white" >
                 <td><b>Total</b></td>
                 <td colspan="4"></td>
-                <td colspan="num"><b> {{ cart.get_total_price }}</b></td>
+                <td colspan="num"><b> ${{ cartlist.get_total_price }}</b></td>
             </tr>
             </tbody>
         </table>
