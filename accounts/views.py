@@ -11,6 +11,7 @@ from django.views.generic import TemplateView,ListView
 
 from accounts.models import Ouser
 from customize.models import Category, Quotation
+from order.forms import save_order_form
 import os
 # Create your views here.
 
@@ -27,11 +28,9 @@ def dashboardn(request):
     context = {'quotationlist':quotationlist}
     return render(request,'account/dashboard_n.html',context)
 
-class test(ListView):
-    model = Category
-    form_class= TestModelform
-    template_name = "order/account.html"
-    # context_object_name = {'form':form }
+def test(request):
+
+    return render(request,'account/test.html')
 
 def test_json(request):
     quotations = Quotation.objects.all()

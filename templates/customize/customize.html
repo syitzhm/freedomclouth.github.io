@@ -43,7 +43,7 @@ function preview_image(event)
 {#            <div class="breadcrumbs-main">#}
 {#                <ol class="breadcrumb">#}
 {#                    <li><a href="{% url 'common:index' %}">Home</a></li>#}
-                    {% block breadcrumb %}<li class="active">Customize</li>{% endblock %}
+{#                    {% block breadcrumb %}<li class="active">Customize</li>{% endblock %}#}
 {#                </ol>#}
 {#            </div>#}
 {#        </div>#}
@@ -65,65 +65,68 @@ function preview_image(event)
                 <form method="POST" action="{% url 'customize:save' catename %}" enctype="multipart/form-data">
                     <!-- Django中需要POST数据的地方都必须有csrf_token -->
                     {% csrf_token %}
-                    <div class="address">
+                    <div class="row">
                         <!-- 标签 -->
 
                         <label class ="size text-info">Sleeve:</label>
-                        <div class="radio radio-info radio-inline">
-                            <input type="radio" id="sleeve-long" value="Long" name="sleeve" checked>
-                            <label for="sleeve-long"> Long Sleeve </label>
+                        <ul class="product-colors" style="padding-left:30px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="sleeve-long" value="Long" name="sleeve" checked>
+                            <label class="form-check-label" for="sleeve-long"> Long </label>
                         </div>
-                        <div class="radio radio-info radio-inline">
-                            <input type="radio" id="sleeve-short" value="short" name="sleeve">
-                            <label for="sleeve-short"> Short Sleeve </label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="sleeve-short" value="short" name="sleeve">
+                            <label class="form-check-label" for="sleeve-short"> Short </label>
                         </div>
-                        <div class="radio radio-info radio-inline">
-                            <input type="radio" id="sleeve-no" value="no" name="sleeve">
-                            <label for="sleeve-no"> No Sleeve </label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="sleeve-no" value="no" name="sleeve">
+                            <label class="form-check-label" for="sleeve-no"> No</label>
                         </div>
+                        </ul>
                     </div>
-                    <div class="address">
+                    <div class="row">
                         <!-- 标签 -->
                         <label class ="size text-info">Color：</label>
-                        <ul class="product-colors">
-                            <div class="radio radio-info radio-inline">
-                            <input type="radio" id="color1" value="color1" name="color" checked>
-                            <label for="color1">  <li><a class="color1" ><span> </span></a></li> </label>
+
+                        <ul class="product-colors" style="padding-left:30px">
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="color1" value="color1" name="color" checked>
+                            <label class="form-check-label" for="color1">  <li><a class="color1" ><span> </span></a></li> </label>
 
                         </div>
-                            <div class="radio radio-info radio-inline">
-                            <input type="radio" id="color2" value="color2" name="color">
-                            <label for="color2"> <li><a class="color2" ><span> </span></a></li> </label>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="color2" value="color2" name="color">
+                            <label class="form-check-label" for="color2"> <li><a class="color2" ><span> </span></a></li> </label>
 
                         </div>
-                            <div class="radio radio-info radio-inline">
-                            <input type="radio" id="color3" value="color3" name="color">
-                            <label for="color3"> <li><a class="color3" ><span> </span></a></li> </label>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="color3" value="color3" name="color">
+                            <label class="form-check-label" for="color3"> <li><a class="color3" ><span> </span></a></li> </label>
 
                         </div>                  
-                            <div class="radio radio-info radio-inline">
-                            <input type="radio" id="color4" value="color4" name="color">
-                            <label for="color4"> <li><a class="color4" ><span> </span></a></li> </label>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="color4" value="color4" name="color">
+                            <label class="form-check-label" for="color4"> <li><a class="color4" ><span> </span></a></li> </label>
 
                         </div>                            
-                            <div class="radio radio-info radio-inline">
-                            <input type="radio" id="color5" value="color5" name="color">
-                            <label for="color5"> <li><a class="color5" ><span> </span></a></li> </label>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="color5" value="color5" name="color">
+                            <label class="form-check-label" for="color5"> <li><a class="color5" ><span> </span></a></li> </label>
 
                         </div>
-                            <div class="radio radio-info radio-inline">
-                            <input type="radio" id="color6" value="color6" name="color">
-                            <label for="color6"> <li><a class="color6" ><span> </span></a></li> </label>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="color6" value="color6" name="color">
+                            <label class="form-check-label" for="color6"> <li><a class="color6" ><span> </span></a></li> </label>
 
                         </div>                            
-                            <div class="radio radio-info radio-inline">
-                            <input type="radio" id="color7" value="color7" name="color">
-                            <label for="color7"> <li><a class="color7" ><span> </span></a></li> </label>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="color7" value="color7" name="color">
+                            <label class="form-check-label" for="color7"> <li><a class="color7" ><span> </span></a></li> </label>
 
                         </div>                          
-                            <div class="radio radio-info radio-inline">
-                            <input type="radio" id="color8" value="color8" name="color">
-                            <label for="color8"> <li><a class="color8" ><span> </span></a></li> </label>
+                            <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" id="color8" value="color8" name="color">
+                            <label class="form-check-label" for="color8"> <li><a class="color8" ><span> </span></a></li> </label>
 
                         </div>
 
@@ -131,116 +134,116 @@ function preview_image(event)
                         </ul>
                     </div>
 
-                    <div class="address">
+                    <div class="row">
                         <!-- 标签 -->
                         <label class ="size text-info">Size：</label>
-                        <ul class="size">
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="XS" value="XS" name="size">
-                                <label for="XS"> XS </label>
+                        <ul class="product-colors" style="padding-left:30px">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="XS" value="XS" name="size">
+                                <label class="form-check-label" for="XS"> XS </label>
                             </div>
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="S" value="S" name="size">
-                                <label for="S"> S </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="S" value="S" name="size">
+                                <label class="form-check-label" for="S"> S </label>
                             </div>
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="M" value="M" name="size">
-                                <label for="M"> M </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="M" value="M" name="size">
+                                <label class="form-check-label" for="M"> M </label>
                             </div>
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="L" value="L" name="size">
-                                <label for="L"> L </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="L" value="L" name="size">
+                                <label class="form-check-label" for="L"> L </label>
                             </div>
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="XL" value="XL" name="size">
-                                <label for="XL"> XL </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="XL" value="XL" name="size">
+                                <label class="form-check-label" for="XL"> XL </label>
                             </div>
 
                         </ul>
 
                     </div>
 
-                    <div class="address">
+                    <div class="row">
                         <!-- 标签 -->
                          <label class ="size text-info">Gender：</label>
-                        <ul class="size">
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="Male" value="Male" name="gender">
-                                <label for="Male"> Male </label>
+                        <ul class="product-colors" style="padding-left:30px">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="Male" value="Male" name="gender">
+                                <label class="form-check-label" for="Male"> Male </label>
                             </div>
-                            <div class="radio radio-info radio-inline">
-                                <input type="radio" id="Female" value="Female" name="gender">
-                                <label for="Female"> Female </label>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="Female" value="Female" name="gender">
+                                <label class="form-check-label" for="Female"> Female </label>
                             </div>
                         </ul>
                     </div>
 
 
-                    <div class="address">
+                    <div class="row">
                         <!-- 标签 -->
-                        <label class ="size text-info">Style：</label>
-
-                        <div class="col-8">
+                            <label class ="size text-info">Style：</label>
+                            <ul class="product-colors" style="padding-left:30px">
                             <!-- 文本框 -->
-                            <div class="row">
 
                                 {% for imagelist in catelist %}
 
-                                    <div class="radio radio-info radio-inline">
-                                        <input type="radio" id={{ imagelist.style }} name="imagelist" tabindex="0" class="hidden" value={{ imagelist.part_number }}>
-                                        <label for={{ imagelist.style }}> {{ imagelist.part_number }} </label>
+                                   <input class="form-check-input" type="radio" id={{ imagelist.style }} name="imagelist" tabindex="0" class="hidden" value={{ imagelist.part_number }}>
+
+                                    <div class="form-check form-check-inline">
+
                                         <div class="shadow card" style="padding:5px;" id="image">
+                                            <label for={{ imagelist.style }}> {{ imagelist.part_number }} </label>
                                             <img src="../../media/{{ imagelist.style }}" style="width:120px;height:80px;" alt="">
                                         </div>
                                     </div>
                                 {% endfor %}
 
-                            </div>
 
-                        </div>
+                            </ul>
                     </div>
 
-                  <div class="address">
-{#                        <div class="col-8">#}
+                  <div class="row">
+                        <div class="col-md-8" >
                             <!-- 标签 -->
                             <label class ="size text-info">Quantity：</label>
-                           <div class="col-8">
+                      <ul class="product-colors" style="padding-left:30px">
+
                                 <!-- 文本框 -->
-                                <input class="form-control" type="text" id="quantity" name="quantity"
-                                       style="max-width: 50%">
-                            </div>
+                                <input class="form-control" type="number" id="quantity" name="quantity" >
 
-{#                        </div>#}
+                      </ul>
+                    </div>
                     </div>
 
-                    <div class="address">
+                    <div class="row">
                             <!-- 标签 -->
+                        <div class="col-md-8" >
                         <label class ="size text-info">Upload Style or Logo：</label>
-
-                        <div id="wrapper">
-                            <input type="file" id="file" name="images" multiple="multiple"
+                        <ul class="product-colors" style="padding-left:30px">
+{#                        <div id="wrapper">#}
+                            <input class="form-control form-control-sm"  type="file" id="file" name="images" multiple="multiple"
                                        accept="image/*" aria-describedby="inputGroupFileAddon04" aria-label="Upload"
-                                       style="max-width: 50%" onchange="preview_image(event)">
-                            <img id="output_image"/>
-                            </div>
-
+                                        onchange="preview_image(event)">
+                            <img id="output_image" style="padding: 10px"/>
+{#                            </div>#}
+                        </ul>
 
                     </div>
-                    <div class="address">
-                        <div class="col-8">
+                    </div>
+                    <div class="row">
+                         <div class="col-md-12">
+                        <label class ="size text-info">Desciption</label>
+                        <ul class="product-colors" style="padding-left:30px">
                             <!-- 标签 -->
-                            <span>Desciption</span>
-                            <textarea class="shadow form-control " type="text" id="body" name="description" rows="8"
-                                      style=" width: 100%"></textarea>
-
+                            <textarea class="shadow form-control " type="text" id="body" name="description" rows="8"></textarea>
+                        </ul>
                         </div>
-                    </div>
+                        </div>
+
                     <br>
-                    <div class="col-2">
-                        <!-- 标签 -->
-                    </div>
+
                     <div class="address">
-                        <input type="submit" value="submit"/>
+                        <input class="button-c" type="submit" value="submit"/>
                     </div>
 
 

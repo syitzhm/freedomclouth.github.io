@@ -1,9 +1,10 @@
 import copy
+from datetime import datetime
 
 from django.http import HttpResponse
 from django.shortcuts import render, redirect,get_object_or_404
 from .cart import Cart
-from .forms import CartAddProductForm
+from .forms import CartAddProductForm,save_order_form
 
 # Create your views here.
 
@@ -12,7 +13,7 @@ from django.views import generic
 from accounts.models import Ouser
 from customize.forms import save_quotation_form
 from customize.models import Quotation, Category
-from order.models import Cartmaster
+from order.models import Cartmaster,Ordermaster
 
 
 def cartmasterview(request,user_id):
@@ -63,12 +64,9 @@ def cart_add(request):
         cart.add(product=cartmaster, quantity=cartqty, update_quantity=cartqty)
 
     for item in cart:
-        print("======cart1111", item)
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
-        print("======cart2222", item)
 
 
-    print("in_cart_add",cart.cart.values())
     total_price = cart.get_total_price()
     context = {'cartlist': cart,
                'total_price': total_price}
@@ -116,27 +114,66 @@ def SaveToCart(request):
 def SaveToOrder(request):
     # checkedlist = request.POST.getlist('checktoorder')
     # print("ouser_name", type(ouser_name))
-    cart= Cart(request)
-
+    # order_id
+    # ship_to_address
+    # ship_to_city
+    # ship_to_state
+    # ship_to_zipcode
+    # receiver_name
+    # receiver_tel
+    # price
+    # quotation_id =
+    # customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
+    # sleeve =
+    # color =
+    # size =
+    # gender =
+    # part_number =
+    # quantity =
+    # req_image =
+    # description =
+    #
+    # is_open =
+    # category_name = models.ForeignKey(Category, max_length=20, on_delete=models.CASCADE)
+    # quotation_id=quotation.quotation_id,
+    # sleeve=quotation.sleeve,
+    # color=quotation.color,
+    # size=quotation.size,
+    # req_image=quotation.req_image,
+    # gender=quotation.gender,
+    # part_number=quotation.part_number,
+    # quantity=quotation.quantity,
+    # description=quotation.description,
+    # category_name=quotation.category_name,
+    # customer_id=quotation.customer_id,
     # for i in checkedlist:
     #     quotation = Quotation.objects.get(quotation_id=i)
-    #     # ouser_name=Ouser.objects.get(username=quotation.rep_id)
-    #     execstr = Cartmaster.objects.create(cart_id=quotation.quotation_id,
-    #                                         quotation_id=quotation.quotation_id,
-    #                                         sleeve=quotation.sleeve,
-    #                                         color=quotation.color,
-    #                                         size=quotation.size,
-    #                                         req_image=quotation.req_image,
-    #                                         gender=quotation.gender,
-    #                                         part_number=quotation.part_number,
-    #                                         quantity=quotation.quantity,
-    #                                         description=quotation.description,
-    #                                         category_name=quotation.category_name,
-    #                                         customer_id=quotation.customer_id,
-    #                                         )
-    #     execstr.save()
-    context={'cartlist':cart}
-    return redirect("order:checkout", context)
+        # ouser_name=Ouser.objects.get(username=quotation.rep_id)
+
+    if request.method=="POST":
+        save_order = save_order_form(data=request.POST)
+        print("----->debuging  ",save_order,request.POST['ship_to_address'] )
+        # print("----->debuging  ", request.POST['address'],request.POST['state'],request.POST['zip'],request.POST['firstName'],request.POST['tel'])
+        if save_order.is_valid():
+            save_order = save_order.save(commit=False)
+            execstr = Ordermaster.objects.create(order_id ="12312312",
+                                             ship_to_address=request.POST['ship_to_address'],
+                                             # ship_to_state =request.POST['State'],
+                                             # ship_to_zipcode=request.POST['zip'],
+                                             # receiver_name = request.POST['firstName'],
+                                             # receiver_tel= request.POST['tel'],
+                                            )
+            execstr.save()
+            return redirect("common:index")
+        else:
+            print(save_order.errors)
+            return HttpResponse(save_order.errors)
+
+    else:
+        save_order = save_order_form()
+        context = {'save_order': save_order,
+                    }
+        return render(request, 'customize/customize.html', context)
 
 def Deletecartitem(request, slug):
     Cartdelitem = Cartmaster.objects.get(cart_id=slug)

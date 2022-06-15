@@ -32,7 +32,7 @@ urlpatterns = [
     path('profile/change/', change_profile_view, name='change_profile'),
     path('dashboard/', dashboard, name='dashboard'),
     path('dashboardn/', dashboardn, name='dashboardn'),
-    path('test1/', test.as_view(), name='test'),
+    path('test1/', test, name='test'),
     path('json/', test_json, name='json_test'),
     # path(r'xadmin/', xadmin.site.urls)
 ]

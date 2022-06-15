@@ -5,17 +5,20 @@
 {% load crispy_forms_tags %}
 {%  block test %}
 
-    <div class="account">
+    <div class="account" style="margin-top: 1200px">
 		<div class="container">
 			<div class="account-bottom">
                 <div class="col-md-6 account-left">
-            <form method="POST" action="" enctype="multipart/form-data">
-                {% csrf_token %}
+                ttt
+ <table>
+                    <tr><th><label for="id_ship_to_address">Ship to address:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><input type="text" name="ship_to_address" maxlength="300" required id="id_ship_to_address"></td></tr>
+<tr><th><label for="id_ship_to_city">Ship to city:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><input type="text" name="ship_to_city" maxlength="100" required id="id_ship_to_city"></td></tr>
+<tr><th><label for="id_ship_to_state">Ship to state:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><input type="text" name="ship_to_state" maxlength="50" required id="id_ship_to_state"></td></tr>
+<tr><th><label for="id_ship_to_zipcode">Ship to zipcode:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><input type="text" name="ship_to_zipcode" maxlength="300" required id="id_ship_to_zipcode"></td></tr>
+<tr><th><label for="id_receiver_name">Receiver name:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><input type="text" name="receiver_name" maxlength="100" required id="id_receiver_name"></td></tr>
+<tr><th><label for="id_receiver_tel">Receiver tel:</label></th><td><ul class="errorlist"><li>This field is required.</li></ul><input type="text" name="receiver_tel" maxlength="100" required id="id_receiver_tel"></td></tr>
+</table>
 
-                  {{ form.as_p }}
-
-
-            </form>
                 </div>
                 </div>
                 </div>

@@ -114,23 +114,23 @@ $(window).load(function() {
                             {#                          </a></li>#}
 
                             <li><a class=" dropdown-item pl-3" href="{% url 'accounts:profile' %}">
-                                <i class="fa fa-fw fa-user text-info mr-2"></i>个人资料</a></li>
+                                <i class="bi bi-person mr-2"></i> Porfile</a></li>
 
                             <li>{% if user.is_staff %}
-                                <a class=" dropdown-item pl-3 mt-0 rounded-0 border-0" href="/xadmin/"><i
-                                        class="fa fa-fw fa-key text-info mr-2"></i>后台管理</a>
+                                <a class=" dropdown-item pl-3 mt-0 rounded-0 border-0" href="/xadmin/">
+                                    <i class="bi bi-wrench mr-2"></i>Management</a>
                             {% endif %}</li>
 
                             <li><a class="dropdown-item pl-3  mt-0 rounded-0 border-0" href="#">
-                                <i class="fa fa-fw fa-bell text-info mr-2"></i>消息
+                                <i class="bi bi-envelope mr-2"></i>Message
 {#                                {% if msgnum > 0 %}#}
 {#                                    <i class="fa fa-fw fa-key text-info mr-2">{{ msgnum }}</i>#}
 {#                                {% endif %}#}
                             </a></li>
 
-                            <li><a class="dropdown-item pl-4  mt-0 rounded-0 border-0"
+                            <li><a class="dropdown-item pl-3  mt-0 rounded-0 border-0"
                                    href="{% url 'account_logout' %}">
-                                <i class="fa fa-fw fa-sign-out text-info mr-2"></i>退出</a></li>
+                                <i class="bi bi-door-open mr-2"></i>Log out</a></li>
                         </ul>
 
                         <div class="clearfix"></div>
