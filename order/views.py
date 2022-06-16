@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect,get_object_or_404
 from .cart import Cart
 from .forms import CartAddProductForm,save_order_form
+from decimal import Decimal
 
 import random
 import time
@@ -118,6 +119,7 @@ def SaveToCart(request):
 
 def SaveToOrder(request):
     cart=Cart(request)
+
     product_ids = cart.cart.keys()
     cartproducts = Cartmaster.objects.filter(cart_id__in=product_ids)
     
@@ -125,17 +127,20 @@ def SaveToOrder(request):
     
     if request.method=="POST":
         save_order = save_order_form(data=request.POST)
-        print("_+_+_+_+_+_items",cart.cart.values())
+        print("_+_+_+_+_+_i SaveToOrder",cart.cart.values())
+        bb = cart.__iter__()
+        print("=========>", next(bb))
         # print("----->debuging  ", request.POST['address'],request.POST['state'],request.POST['zip'],request.POST['firstName'],request.POST['tel'])
         # address=request.POST['ship_to_address']
         # execstr = Ordermaster.objects.create(order_id ="12312312",address=request.POST['ship_to_address'], )                                  
         # execstr.save()
         # return redirect("common:index")
+        order_id=slugstr()
         if save_order.is_valid():
             save_order = save_order.save(commit=False)
             for cartproduct in cartproducts:
-     
-                execstr = Ordermaster.objects.create(order_id =slugstr(),
+
+                execstr = Ordermaster.objects.create(order_id =order_id,
                                                     firstName=request.POST['firstName'],
                                                     lastName =request.POST['lastName'],
                                                     email=request.POST['email'],
@@ -154,6 +159,7 @@ def SaveToOrder(request):
                                                     part_number=cartproduct.part_number,
                                                     quantity=cart.cart[cartproduct.cart_id]['quantity'],
                                                     price=cart.cart[cartproduct.cart_id]['price'],
+                                                    total_price=Decimal(cart.cart[cartproduct.cart_id]['price'])*int(cart.cart[cartproduct.cart_id]['quantity']),
                                                     description=cartproduct.description,
                                                     category_name=cartproduct.category_name,
                                                     customer_id=cartproduct.customer_id,

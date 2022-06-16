@@ -7,37 +7,37 @@
 {% block login %}
 
 	<!--start-breadcrumbs-->
-	<div class="breadcrumbs">
-		<div class="container">
-			<div class="breadcrumbs-main">
-				<ol class="breadcrumb">
-					<li><a href="{% url 'common:index' %}">Home</a></li>
-					<li class="active">Account</li>
-				</ol>
-			</div>
-		</div>
-	</div>
+{#	<div class="breadcrumbs">#}
+{#		<div class="container">#}
+{#			<div class="breadcrumbs-main">#}
+{#				<ol class="breadcrumb">#}
+{#					<li><a href="{% url 'common:index' %}">Home</a></li>#}
+{#					<li class="active">Account</li>#}
+{#				</ol>#}
+{#			</div>#}
+{#		</div>#}
+{#	</div>#}
 	<!--end-breadcrumbs-->
 	<!--start-account-->
 	<div class="account">
-		<div class="container">
-			<div class="account-bottom">
-				<div class="col-md-6 account-left">
+		<div class="container col-md-6 offset-md-3">
+{#			<div class="account-bottom">#}
+				<div class=" card-header bg-white py-2">
                 	<div class="account-top heading">
-						<h3>REGISTERED CUSTOMERS</h3>
+						<h3 class="font-weight-bold text-info">REGISTERED CUSTOMERS</h3>
 					</div>
                     <div class="card-body">
-                    <div class="address">
+                    <div class="product-colors">
 					<form class="login" method="POST" action="{% url 'account_login' %}">
                          {% csrf_token %}
                           {{ form|crispy }}
                     {% if redirect_field_value %}
                     <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
                     {% endif %}
-					<div class="address">
-						<a class="forgot" href="#">Forgot Your Password?</a>
-                        <input type="submit" value="Login" style ="font-size: xx-small">
-					</div>
+{#					<div class="address">#}
+{#						<a class="forgot" href="#">Forgot Your Password?</a>#}
+                        <input class="button-c"  type="submit" value="Login" style ="width: 100%">
+{#					</div>#}
 {#                        <form class="login" method="POST" action="{% url 'account_login' %}">#}
 {##}
 {#                {% if redirect_field_value %}#}
@@ -51,7 +51,6 @@
                 </div>
 				<div class="clearfix"> </div>
 			</div>
-		</div>
 		</div>
 
 	<!--end-account-->

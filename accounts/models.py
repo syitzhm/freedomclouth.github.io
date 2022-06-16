@@ -11,7 +11,7 @@ class Ouser(AbstractUser):
                                  verbose_name='头像',
                                  processors=[ResizeToFill(80, 80)]
                                  )
-
+    email = models.EmailField('email address')
     class Meta:
         verbose_name = '用户'
         verbose_name_plural = verbose_name

@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='ordermaster',
             name='category_name',
-            field=models.ForeignKey(default=1, max_length=20, on_delete=django.db.models.deletion.CASCADE, to='customize.category'),
+            field=models.ForeignKey(default=2, max_length=20, on_delete=django.db.models.deletion.CASCADE, to='customize.category'),
             preserve_default=False,
         ),
         migrations.AddField(

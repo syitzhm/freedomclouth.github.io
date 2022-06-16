@@ -132,7 +132,7 @@
 
 
                                         <td>
-                       {#}                     <form action="{% url "order:cart_add" product.cart_id %}" method="post">#}
+{#                                            <form action="{% url "order:cart_add" product.cart_id %}" method="post">#}
                                             <span><input style="width: 50px" type="number" value="{{ item.quantity }}"></span>
                                             {{ item.update_quantity_form.update }}
 

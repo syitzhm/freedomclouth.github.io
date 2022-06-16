@@ -44,6 +44,7 @@ class Cart(object):
 
     def __iter__(self):
         cart=copy.deepcopy(self.cart)
+
         product_ids = cart.keys()
         products = Cartmaster.objects.filter(cart_id__in=product_ids)
 
@@ -53,6 +54,7 @@ class Cart(object):
         for item in cart.values():
             item['price'] = Decimal(item['price'])
             item['total_price'] = item['price'] * int(item['quantity'])
+            # print("_+_+_+_+_+",cart.values())
             yield item
 
     def __len__(self):

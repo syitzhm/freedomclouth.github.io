@@ -20,12 +20,13 @@
 
     <!--end-breadcrumbs-->
 	<!--start-account-->
-    <div class="account">
-		<div class="container">
-			<div class="account-bottom">
-				<div class="col-md-6 account-left">
+<div class="account">
+		<div class="container col-md-6 offset-md-3">
+{#			<div class="account-bottom">#}
+{#				<div class="col-md-6 account-left">#}
 					<div class="account-top heading">
-						<h3>Are you sure you want to sign out?</h3>
+                        <h3 class="font-weight-bold text-info">Are you sure you want to sign out?</h3>
+
 					</div>
                     <form class="login" method="POST" action="{% url 'account_logout' %}">
                         {% csrf_token %}
@@ -34,7 +35,7 @@
                         {% endif %}
                         <div class="address">
 {#						<a class="forgot" href="#">Forgot Your Password?</a>#}
-						<input type="submit" value="Sign out">
+						<input class="button-c" type="submit" value="Sign out">
 					</div>
                     </form>
 
