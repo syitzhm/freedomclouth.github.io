@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from accounts.forms import TestModelform, ProfileForm
 from django.contrib import messages
 from django.views.generic import TemplateView,ListView
+from django.views.decorators.csrf import csrf_protect
 
 from accounts.models import Ouser
 from customize.models import Category, Quotation
@@ -40,7 +41,9 @@ def test_json(request):
 
 
 @login_required
+@csrf_protect
 def change_profile_view(request):
+    print("inside change profile view")
     if request.method == 'POST':
         old_avatar_file = request.user.avatar.path
         old_avatar_url = request.user.avatar.url

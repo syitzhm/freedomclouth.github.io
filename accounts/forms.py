@@ -16,6 +16,7 @@ class TestModelform(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Ouser
-        fields = ['link','avatar']
+        fields = ['tel','address','address2','country','state','zipcode']
+        # fields = ['link','avatar','tel','address','address2','country','state','zipcode']
 
 

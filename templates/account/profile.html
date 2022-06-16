@@ -12,7 +12,9 @@
 
 <!------ Include the above in your HEAD tag ---------->
 
-           <form method="post">
+            {% comment %} <form  method="post" enctype="multipart/form-data"  action="">
+                {% csrf_token %} {% endcomment %}
+
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-img">
@@ -177,7 +179,7 @@
                         </div>
                     </div>
                 </div>
-            </form>           
+            {% comment %} </form>            {% endcomment %}
         </div>
             {#			<div class="account-bottom">#}
 
