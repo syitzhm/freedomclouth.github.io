@@ -8,40 +8,43 @@ from customize.models import Category
 
 
 class Ordermaster(models.Model):
-    order_id = models.IntegerField('询价号')
-    ship_to_address = models.CharField(max_length=300, default='发货地址',null=True)
-    # ship_to_city = models.CharField(max_length=100, default='发货城市',null=True)
-    # ship_to_state = models.CharField(max_length=50, default='发货州',null=True)
-    # ship_to_zipcode = models.CharField(max_length=300, default='发货zipcode',null=True)
-    # receiver_name = models.CharField(max_length=100, default='收货人',null=True)
-    # receiver_tel = models.CharField(max_length=100, default='收货人电话',null=True)
-    # price = models.CharField(max_length=100,null=True)
-    # quotation_id = models.IntegerField('询价号')
-    # # customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
-    # sleeve = models.CharField(max_length=50, default='袖子',null=True)
-    # color = models.CharField(max_length=50, default='颜色',null=True)
-    # size = models.CharField(max_length=50, default='尺寸',null=True)
-    # gender = models.CharField(max_length=50, default='性别',null=True)
-    # part_number = models.CharField(max_length=50, default='物料编码',null=True)
-    # quantity = models.IntegerField(max_length=50,default=0,null=True)
-    # req_image = models.ImageField(verbose_name="定制样式图片",null=True)
-    # description = models.CharField('需求描述', max_length=230, default='需求描述',blank=True,null=True)
-    # create_date = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
-    # update_date = models.DateTimeField(verbose_name='修改时间', auto_now=True)
-    # is_open = models.BooleanField(default=True)
-    # rep_id = models.BooleanField(settings.AUTH_USER_MODEL,default=False)
-    # category_name = models.ForeignKey(Category, max_length=20,on_delete=models.CASCADE)
+    order_id = models.IntegerField('Order id')
+    firstName = models.CharField(max_length=300, default='First Name')
+    lastName = models.CharField(max_length=300, default='Last Name')
+    email = models.CharField(max_length=300, default='email@email.com')
+    tel = models.CharField(max_length=100, default='Telphone')
+    ship_to_address = models.CharField(max_length=100, default='address')
+    ship_to_address2 = models.CharField(max_length=100, default='address2',null=True,blank=True)
+    ship_to_country = models.CharField(max_length=100, default='Country')
+    ship_to_state = models.CharField(max_length=50, default='State')
+    ship_to_zipcode = models.CharField(max_length=300, default='Zipcode',null=True)
+    price = models.CharField(max_length=100,null=True)
+    quotation_id = models.IntegerField('询价号')
+    customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
+    sleeve = models.CharField(max_length=50, default='袖子',null=True)
+    color = models.CharField(max_length=50, default='颜色',null=True)
+    size = models.CharField(max_length=50, default='尺寸',null=True)
+    gender = models.CharField(max_length=50, default='性别',null=True)
+    part_number = models.CharField(max_length=50, default='物料编码',null=True)
+    quantity = models.IntegerField(max_length=50,default=0,null=True)
+    req_image = models.ImageField(verbose_name="定制样式图片",null=True)
+    description = models.CharField('需求描述', max_length=230, default='需求描述',blank=True,null=True)
+    create_date = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
+    update_date = models.DateTimeField(verbose_name='修改时间', auto_now=True)
+    is_open = models.BooleanField(default=True)
+    rep_id = models.BooleanField(settings.AUTH_USER_MODEL,default=False)
+    category_name = models.ForeignKey(Category, max_length=20,on_delete=models.CASCADE)
 
     class Meta:
-        verbose_name = '订单'
+        verbose_name = 'Order'
         verbose_name_plural = verbose_name
         ordering = ['order_id']
 
     def __str__(self):
-        return str(self.quotation_id)
+        return str(self.order_id)
 
     def get_absolute_url(self):
-        return reverse('order:cartmaster', args=[self.order_id])
+        return reverse('order:ordermaster', args=[self.order_id])
 
     def get_order_list(self):
         '''返回当前标签下所有发表的文章列表'''

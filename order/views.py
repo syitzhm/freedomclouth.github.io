@@ -112,58 +112,35 @@ def SaveToCart(request):
 
 
 def SaveToOrder(request):
-    # checkedlist = request.POST.getlist('checktoorder')
-    # print("ouser_name", type(ouser_name))
-    # order_id
-    # ship_to_address
-    # ship_to_city
-    # ship_to_state
-    # ship_to_zipcode
-    # receiver_name
-    # receiver_tel
-    # price
-    # quotation_id =
-    # customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
-    # sleeve =
-    # color =
-    # size =
-    # gender =
-    # part_number =
-    # quantity =
-    # req_image =
-    # description =
-    #
-    # is_open =
-    # category_name = models.ForeignKey(Category, max_length=20, on_delete=models.CASCADE)
-    # quotation_id=quotation.quotation_id,
-    # sleeve=quotation.sleeve,
-    # color=quotation.color,
-    # size=quotation.size,
-    # req_image=quotation.req_image,
-    # gender=quotation.gender,
-    # part_number=quotation.part_number,
-    # quantity=quotation.quantity,
-    # description=quotation.description,
-    # category_name=quotation.category_name,
-    # customer_id=quotation.customer_id,
-    # for i in checkedlist:
-    #     quotation = Quotation.objects.get(quotation_id=i)
-        # ouser_name=Ouser.objects.get(username=quotation.rep_id)
-
+    cart=Cart(request)
+    product_ids = cart.keys()
+    products = Cartmaster.objects.filter(cart_id__in=product_ids)
     if request.method=="POST":
         save_order = save_order_form(data=request.POST)
-        print("----->debuging  ",save_order,request.POST['ship_to_address'] )
+
         # print("----->debuging  ", request.POST['address'],request.POST['state'],request.POST['zip'],request.POST['firstName'],request.POST['tel'])
+        # address=request.POST['ship_to_address']
+        # execstr = Ordermaster.objects.create(order_id ="12312312",address=request.POST['ship_to_address'], )                                  
+        # execstr.save()
+        # return redirect("common:index")
         if save_order.is_valid():
             save_order = save_order.save(commit=False)
-            execstr = Ordermaster.objects.create(order_id ="12312312",
-                                             ship_to_address=request.POST['ship_to_address'],
-                                             # ship_to_state =request.POST['State'],
-                                             # ship_to_zipcode=request.POST['zip'],
-                                             # receiver_name = request.POST['firstName'],
-                                             # receiver_tel= request.POST['tel'],
-                                            )
-            execstr.save()
+            
+            for items in cart.cart.keys():
+                print("_+_+_+_+_+_items",items['product'])
+                    
+            # execstr = Ordermaster.objects.create(order_id ="12312312",
+            #                                     firstName=request.POST['firstName'],
+            #                                     lastName =request.POST['lastName'],
+            #                                     email=request.POST['email'],
+            #                                     tel = request.POST['tel'],
+            #                                     ship_to_address=request.POST['ship_to_address'],
+            #                                     ship_to_address2=request.POST['ship_to_address2'],
+            #                                     ship_to_country=request.POST['ship_to_country'],
+            #                                     ship_to_state=request.POST['ship_to_state'],
+            #                                     ship_to_zipcode=request.POST['ship_to_zipcode'],
+            #                                     )
+            # execstr.save()
             return redirect("common:index")
         else:
             print(save_order.errors)
@@ -173,7 +150,7 @@ def SaveToOrder(request):
         save_order = save_order_form()
         context = {'save_order': save_order,
                     }
-        return render(request, 'customize/customize.html', context)
+    return render(request, 'customize/customize.html', context)
 
 def Deletecartitem(request, slug):
     Cartdelitem = Cartmaster.objects.get(cart_id=slug)
