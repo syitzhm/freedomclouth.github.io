@@ -12,6 +12,13 @@ class Ouser(AbstractUser):
                                  processors=[ResizeToFill(80, 80)]
                                  )
     email = models.EmailField('email address')
+    tel = models.CharField(max_length=100, default='Telphone',null=True,blank=True)
+    address = models.CharField(max_length=100, default='address')
+    address2 = models.CharField(max_length=100, default='address2',null=True,blank=True)
+    country = models.CharField(max_length=100, default='Country',null=True,blank=True)
+    state = models.CharField(max_length=50, default='State',null=True,blank=True)
+    zipcode = models.CharField(max_length=300, default='Zipcode',null=True)
+    
     class Meta:
         verbose_name = '用户'
         verbose_name_plural = verbose_name
