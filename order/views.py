@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect,get_object_or_404
 from .cart import Cart
 from .forms import CartAddProductForm,save_order_form
 
+import random
+import time
 # Create your views here.
 
 from django.views import generic
@@ -15,6 +17,9 @@ from customize.forms import save_quotation_form
 from customize.models import Quotation, Category
 from order.models import Cartmaster,Ordermaster
 
+def slugstr():
+    slugstrn = int(time.time())+random.randint(0, 10000)
+    return slugstrn
 
 def cartmasterview(request,user_id):
     cart = Cart(request)
@@ -113,11 +118,14 @@ def SaveToCart(request):
 
 def SaveToOrder(request):
     cart=Cart(request)
-    product_ids = cart.keys()
-    products = Cartmaster.objects.filter(cart_id__in=product_ids)
+    product_ids = cart.cart.keys()
+    cartproducts = Cartmaster.objects.filter(cart_id__in=product_ids)
+    
+    
+    
     if request.method=="POST":
         save_order = save_order_form(data=request.POST)
-
+        print("_+_+_+_+_+_items",cart.cart.values())
         # print("----->debuging  ", request.POST['address'],request.POST['state'],request.POST['zip'],request.POST['firstName'],request.POST['tel'])
         # address=request.POST['ship_to_address']
         # execstr = Ordermaster.objects.create(order_id ="12312312",address=request.POST['ship_to_address'], )                                  
@@ -125,22 +133,32 @@ def SaveToOrder(request):
         # return redirect("common:index")
         if save_order.is_valid():
             save_order = save_order.save(commit=False)
-            
-            for items in cart.cart.keys():
-                print("_+_+_+_+_+_items",items['product'])
-                    
-            # execstr = Ordermaster.objects.create(order_id ="12312312",
-            #                                     firstName=request.POST['firstName'],
-            #                                     lastName =request.POST['lastName'],
-            #                                     email=request.POST['email'],
-            #                                     tel = request.POST['tel'],
-            #                                     ship_to_address=request.POST['ship_to_address'],
-            #                                     ship_to_address2=request.POST['ship_to_address2'],
-            #                                     ship_to_country=request.POST['ship_to_country'],
-            #                                     ship_to_state=request.POST['ship_to_state'],
-            #                                     ship_to_zipcode=request.POST['ship_to_zipcode'],
-            #                                     )
-            # execstr.save()
+            for cartproduct in cartproducts:
+     
+                execstr = Ordermaster.objects.create(order_id =slugstr(),
+                                                    firstName=request.POST['firstName'],
+                                                    lastName =request.POST['lastName'],
+                                                    email=request.POST['email'],
+                                                    tel = request.POST['tel'],
+                                                    ship_to_address=request.POST['ship_to_address'],
+                                                    ship_to_address2=request.POST['ship_to_address2'],
+                                                    ship_to_country=request.POST['ship_to_country'],
+                                                    ship_to_state=request.POST['ship_to_state'],
+                                                    ship_to_zipcode=request.POST['ship_to_zipcode'],
+                                                    quotation_id=cartproduct.quotation_id,
+                                                    sleeve=cartproduct.sleeve,
+                                                    color=cartproduct.color,
+                                                    size=cartproduct.size,
+                                                    req_image=cartproduct.req_image,
+                                                    gender=cartproduct.gender,
+                                                    part_number=cartproduct.part_number,
+                                                    quantity=cart.cart[cartproduct.cart_id]['quantity'],
+                                                    price=cart.cart[cartproduct.cart_id]['price'],
+                                                    description=cartproduct.description,
+                                                    category_name=cartproduct.category_name,
+                                                    customer_id=cartproduct.customer_id,
+                                                    )
+                execstr.save()
             return redirect("common:index")
         else:
             print(save_order.errors)
