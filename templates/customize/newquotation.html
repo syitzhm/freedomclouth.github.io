@@ -103,7 +103,8 @@
                         <input id="categoryname" type="text" value="{{ items.category_name }}" style="display: none"/>
                         <h3 class="card-title font-weight-bold text-info">Part Number: {{ category }}</h3>
                         <div class="table-responsive" style="overflow-x:hidden;">
-                            <form name="RegForm" id="RegForm" method="POST" action="#"
+                            {% comment %} <form name="RegForm" id="RegForm" method="POST" action="#" {% endcomment %}
+                            <form name="RegForm" method="POST" action="{% url "customize:quotation_add" %}"
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <table class="table" style="width: 100%">
@@ -153,11 +154,11 @@
                                     Add to cart
                                 </button>
                                 <button id="additem" name="button-c" class="button-c pull-right"
-                                        style="font-size: x-small;"  type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                        style="font-size: x-small;"  type="submit" >
                                     Add a item
                                 </button>
                                 <!-- Modal -->
-                                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                {% comment %} <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                     <div class="modal-content">
                                       <div class="modal-header">
@@ -173,7 +174,7 @@
                                       </div>
                                     </div>
                                   </div>
-                                </div>
+                                </div> {% endcomment %}
                             </form>
 
                         </div>
@@ -188,7 +189,7 @@
             <!-- start presend feedback row -->
 
             {#                                <form method  = "POST" action     = "{% url 'customize:quotation_feedback' items.quotation_id %}"#}
-            <form method="POST" action="{% url 'customize:save' category %}" enctype="multipart/form-data">
+            <form method="POST" action="{% url 'customize:quotation_add'  %}" enctype="multipart/form-data">
                     <!-- Django中需要POST数据的地方都必须有csrf_token -->
                     {% csrf_token %}
                     <div class="row">

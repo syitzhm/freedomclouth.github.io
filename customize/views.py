@@ -12,6 +12,9 @@ from django.urls import reverse
 from django.views import generic
 from django.views.generic import CreateView, UpdateView
 from markdown.extensions.toc import TocExtension
+from .quotation import addQuotation
+
+from .quotation import *
 
 import common.models
 import customize.models
@@ -67,19 +70,30 @@ def quofeedback_detail(request,slug):
     return render(request,'customize/quofeedback_detail.html', context)
 
 
-# class QuoListDetailView(LoginRequiredMixin, generic.ListView):
-#     model = Quotation
-#     template_name = 'customize/quotationdetail.html'
-#     context_object_name = 'Quotationdetail'
-#     fields = '__all__'
-#
-#     def get_queryset(self, **kwargs):
-#         queryset = super(QuoListDetailView, self).get_queryset()
-#         print("queryset",queryset)
-#         # return queryset.filter(categoryid=slug)
-#         # return super().get_queryset().filter(quotationid=self.kwargs.get('slug'))
-#         return queryset.filter(quotationid=self.kwargs.get('quotationid'))
 
+def quotation_add(request):
+    
+    quotation=addQuotation(request)
+    
+    # cartmaster = get_object_or_404(Cartmaster, cart_id=checkedlist)
+
+    if request.method == "POST":
+        formsleeve = request.POST['sleeve'],
+        formcolor=request.POST['color'],
+        print("_++_+_+_+_+_+:",formsleeve,formcolor)
+    
+    category = get_object_or_404(Category, category_name='categoryA')
+    quotation.add(category, sleeve=formsleeve,color=formcolor )
+
+
+
+    # total_price = cart.get_total_price()
+    context = {'quotation': quotation,
+               }
+    
+    print("_++_+_+_+_+_+:",quotation.quotation.values())
+    print("_++_+_+_+_+_+:",quotation.quotation.keys())
+    return render(request,'customize/newquotation.html',context)
 
 @login_required
 def addNewQuotation(request,category):
