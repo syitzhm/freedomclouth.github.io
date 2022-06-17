@@ -81,17 +81,12 @@ def quofeedback_detail(request,slug):
 #         return queryset.filter(quotationid=self.kwargs.get('quotationid'))
 
 
-# @login_required
-# class CustomizeView(LoginRequiredMixin, generic.ListView):
-#     model = customize.models.Category
-#     template_name = 'customize/customize.html'
-#     context_object_name = 'Category'
-#     fields = '__all__'
-#
-#     def get_queryset(self, **kwargs):
-#         queryset = super(CustomizeView, self).get_queryset()
-#         # return queryset.filter(categoryid=slug)
-#         return queryset.filter(categoryname=self.kwargs.get('categoryid'))
+@login_required
+def addNewQuotation(request,category):
+    model = customize.models.Category
+    context = {'category':category}
+
+    return render(request,'customize/newquotation.html', context)
 
 @login_required
 def CustomizeView(request,slug):

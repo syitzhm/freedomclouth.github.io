@@ -15,20 +15,8 @@
     <!--start-breadcrumbs-->
     {% for items in quotationdetail %}
         {% if forloop.first %}
-
-            <div class="breadcrumbs">
-                <div class="container">
-                    <div class="breadcrumbs-main">
-                        <ol class="breadcrumb">
-                            <li><a href="{% url 'common:index' %}">Home</a></li>
-                            <li class="active">Quotation:{{ items.quotationid }} feedback</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-            <!--end-breadcrumbs-->
             <!--start-single-->
-            <div class="single contact">
+            <div class="single contact mt-10">
                 <div class="container">
 
                     <div class="single-main">
@@ -109,6 +97,9 @@
                                             </div>
 
                                         {% endif %}
+                                           {% if forloop.last %}
+                                          <h1>new line</h1>
+                                        {% endif %}
                                     {% endfor %}
 
                                             </div> {# end row#}
@@ -138,7 +129,9 @@
 
                                             <div class="clearfix"></div>
 
-                                        </ul>     {% endfor %}
+                                        </ul>
+
+                                    {% endfor %}
                                 </div>
 
                                 <div class="clearfix"></div>

@@ -17,7 +17,7 @@ import xadmin
 
 from django.urls import path, include, re_path
 from customize.views import \
-    CustomizeView, SaveQuotation, QuotationListView, QuoListDetailView, SaveQuoFeedback,quofeedback_detail,MyQuotationListView
+    CustomizeView, SaveQuotation, QuotationListView, QuoListDetailView, SaveQuoFeedback,quofeedback_detail,MyQuotationListView,addNewQuotation
 
 urlpatterns = [
     path('customize/<slug:slug>/', CustomizeView, name='customize'),
@@ -29,4 +29,5 @@ urlpatterns = [
     path('quotationdetail/<slug:slug>/', QuoListDetailView, name='quotationlist_detail'),
     path('quofeedback/<slug:slug>/', SaveQuoFeedback, name='quotation_feedback'),
     path('quofeedback_detail/<slug:slug>/', quofeedback_detail, name='quofeedback_detail'),
+    path('addnewquotation/<slug:category>', addNewQuotation, name='addnewquotation'),
 ]

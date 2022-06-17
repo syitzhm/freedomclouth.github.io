@@ -15,25 +15,29 @@
 
 {% block base_content %}
 <div class="account">
-    <div class="container  col-md-6 offset-md-3">
-        <div class="row">
+		<div class="container col-md-6 offset-md-3">
+            <div class="account-top heading mb-3">
+                 <h3 class="font-weight-bold text-info">Update your profile</h3>
+            </div>
+        <div class="row ">
 
-                <div class="card rounded-0 px-3 px-lg-4">
-                    <div class="card-header text-center bg-white py-2"><h3 class="my-1 text-info">修改资料</h3></div>
+                <div class="card rounded-0 px-3 px-lg-4 ">
+
                     <div class="card-body">
                         <form class="change_profile" method="post" enctype="multipart/form-data"  action="{% url 'account:change_profile'%}">
                             {% csrf_token %}
-                            <div class="product-colors" sytle= "backaground-color=red">
+                            <div class="product-colors" >
                             {{ form|crispy }}
                             </div>
-                            <button class="btn btn-info btn-sm rounded-0" type="submit">更新资料</button>
+                            <button class=" button-c" type="submit" style="width: 100%">Update</button>
                         </form>
                     </div>
                     <div class="text-center mb-5" id="social-login">
-                        <div class="login-title"><span>更多操作</span></div>
+                        <div class="login-title">
+                            <hr>
                         <div class="more-link mt-3">
-                            <a class="btn btn-info btn-sm rounded-0 mx-3" href="{% url 'account:profile' %}">查看资料</a>
-                            <a class="btn btn-info btn-sm rounded-0 mx-3" href="{% url 'account_change_password' %}">修改密码</a>
+                            <a class=" button-c"  href="{% url 'account:profile' %}">查看资料</a>
+                            <a class=" button-c"  href="{% url 'account_change_password' %}">修改密码</a>
                         </div>
                     </div>
                 </div>

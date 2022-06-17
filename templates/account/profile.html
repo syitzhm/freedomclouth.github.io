@@ -6,12 +6,9 @@
 {% block head_title %}个人资料{% endblock %}
 
 {% block base_content %}
-
     <div class="account">
         <div class="container  col-md-6 offset-md-3">
-
 <!------ Include the above in your HEAD tag ---------->
-
             {% comment %} <form  method="post" enctype="multipart/form-data"  action="">
                 {% csrf_token %} {% endcomment %}
 
@@ -21,7 +18,7 @@
                             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
                             <div class="file btn btn-lg btn-primary">
                                 Change Photo
-                                <input class buttong type="file" name="file"/>
+                                <input type="file" name="file"/>
                             </div>
                         </div>
                     </div>
@@ -105,28 +102,35 @@
                                                     </li>
                                                 {% endif %}
                                             {% endfor %}
+
                                             <div class="col-md-6">
                                                 <p>{{user.email}}</p>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="card">address</div>
-
-                                            <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
                                                 <label>Phone</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>123 456 7890</p>
+                                                <p>{{ user.tel}}</p>
                                             </div>
-                                        </div>
+                                    </div>
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Profession</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
+                                            <label>address</label>
+                                            <div class="card">
+                                            <address>
+                                              <strong>{{user.first_name}}&nbsp;{{user.last_name}}</strong><br>
+                                             {{ user.address }}<br>
+                                                {% if  user.address2 %} }}
+                                                    {{ user.address2 }}<br>
+                                                {% endif %}
+                                                {{ user.country}}, {{ user.state}} {{ user.zipcode}}<br>
+                                              <abbr title="Phone">P:</abbr> {{ user.tel}}<br>
+                                              <a href="mailto:#">{{user.email}}</a>
+                                            </address>
                                             </div>
                                         </div>
+
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                         <div class="row">
