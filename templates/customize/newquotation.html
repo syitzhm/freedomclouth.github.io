@@ -88,303 +88,279 @@
     {#    })}#}
     {#    </script>#}
 
-    <div class="ckeckout mt-10 pb-3" style="padding-bottom: 30px">{#  single contract#}
-        <div class="container justify-content-center  align-items-center">{#  container #}
-
-            {% comment %} start middle column {% endcomment %}
-            <div class="col-md-12 col-sm-offset-2 ">
-                {# title of quotation #}
-                <div class="row"> {# content middle row1 #}
-                    {#start quotation pic middle middle1 column of row 1#}
-                    {# end quotation pic middle middle1 column of row 1 #}
-
-                    {# start quotation detail middle middle 2 column of row 1#}
-                    <div class="col-md-8 " style="padding:10px;">{# right quotation detail column #}
-                        <input id="categoryname" type="text" value="{{ items.category_name }}" style="display: none"/>
-                        <h3 class="card-title font-weight-bold text-info">Part Number: {{ category }}</h3>
-                        <div class="table-responsive" style="overflow-x:hidden;">
-                            {% comment %} <form name="RegForm" id="RegForm" method="POST" action="#" {% endcomment %}
-                            <form name="RegForm" method="POST" action="{% url "customize:quotation_add" %}"
-                                  enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <table class="table" style="width: 100%">
-                                    <thead class=" align-items-center mx-auto" style="">
-                                    <tr>
-                                        <th class="text-center" scope="col" style="width: 5%"></th>
-                                        <th class="text-center" scope="col" style="width: 10%">Sleeve</th>
-                                        <th class="text-center" scope="col" style="width: 15%">Size</th>
-                                        <th class="text-center" scope="col" style="width: 10%">Gender</th>
-                                        <th class="text-center" scope="col" style="width: 15%">Color</th>
-                                        <th class="text-center" scope="col" style="width: 15%">Quantity</th>
-                                        <th class="text-center" scope="col" style="width: 30%">Special Requirement</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr id="newitem">
-                                        <td class="text-center" style="max-width: 5%"><input id='checktocart'
-                                                                                             name='checktocart'
-                                                                                             value="{{ items.quotation_id }}"
-                                                                                             type="checkbox"></td>
-                                        <td class="text-center" id="sleeve"{{ items.quotation_id }}
-                                            style="max-width: 10%">{{ items.sleeve }}</td>
-
-                                        <td class="text-center" id="size"{{ items.quotation_id }}
-                                            style="max-width: 15%">{{ items.size }}</td>
-                                        <td class="text-center" id="gender"{{ items.quotation_id }}
-                                            style="max-width: 10%"> {{ items.gender }}</td>
-                                        <td class="text-center" style="max-width: 15%">
-                                            <ul class="product-colors">
-                                                <li><a id="color"{{ items.quotation_id }}
-                                                       class= {{ items.color }}><span> </span></a></li>
-                                            </ul>
-                                        </td>
-                                        <td class="text-center" style="max-width: 15%" id=""><input
-                                                style="overflow:hidden;max-width: 25% " id="qty{{ items.quotation_id }}"
-                                                type="number" value=1/></td>
-                                        <td class="text-center " style="overflow:hidden"
-                                            id="desc"{{ items.quotation_id }} > {{ items.description }}</td>
-
-                                    </tr>
-                                    </tbody>
-                                </table>
-                                <!-- Django中需要POST数据的地方都必须有csrf_token -->
-
-                                <button id="btncart" name="button-c" class="button-c pull-right"
-                                        style="font-size: x-small;" onclick="SveFrm()" type="button">
-                                    Add to cart
-                                </button>
-                                <button id="additem" name="button-c" class="button-c pull-right"
-                                        style="font-size: x-small;"  type="submit" >
-                                    Add a item
-                                </button>
-                                <!-- Modal -->
-                                {% comment %} <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                      </div>
-                                      <div class="modal-body">
-                                        ...
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Understood</button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div> {% endcomment %}
-                            </form>
-
-                        </div>
-                    </div>
-
-                </div>
-                {# end right quotation detail column #}
-
-            </div>
-            {# end  quotation detail row #}
-
-            <!-- start presend feedback row -->
-
-            {#                                <form method  = "POST" action     = "{% url 'customize:quotation_feedback' items.quotation_id %}"#}
-            <form method="POST" action="{% url 'customize:quotation_add'  %}" enctype="multipart/form-data">
-                    <!-- Django中需要POST数据的地方都必须有csrf_token -->
-                    {% csrf_token %}
-                    <div class="row">
-                        <!-- 标签 -->
-
-                        <label class ="size text-info">Sleeve:</label>
-                        <ul class="product-colors" style="padding-left:30px">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="sleeve-long" value="Long" name="sleeve" checked>
-                            <label class="form-check-label" for="sleeve-long"> Long </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="sleeve-short" value="short" name="sleeve">
-                            <label class="form-check-label" for="sleeve-short"> Short </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="sleeve-no" value="no" name="sleeve">
-                            <label class="form-check-label" for="sleeve-no"> No</label>
-                        </div>
-                        </ul>
-                    </div>
-                    <div class="row">
-                        <!-- 标签 -->
-                        <label class ="size text-info">Color：</label>
-
-                        <ul class="product-colors" style="padding-left:30px">
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="color1" value="color1" name="color" checked>
-                            <label class="form-check-label" for="color1">  <li><a class="color1" ><span> </span></a></li> </label>
-
-                        </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="color2" value="color2" name="color">
-                            <label class="form-check-label" for="color2"> <li><a class="color2" ><span> </span></a></li> </label>
-
-                        </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="color3" value="color3" name="color">
-                            <label class="form-check-label" for="color3"> <li><a class="color3" ><span> </span></a></li> </label>
-
-                        </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="color4" value="color4" name="color">
-                            <label class="form-check-label" for="color4"> <li><a class="color4" ><span> </span></a></li> </label>
-
-                        </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="color5" value="color5" name="color">
-                            <label class="form-check-label" for="color5"> <li><a class="color5" ><span> </span></a></li> </label>
-
-                        </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="color6" value="color6" name="color">
-                            <label class="form-check-label" for="color6"> <li><a class="color6" ><span> </span></a></li> </label>
-
-                        </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="color7" value="color7" name="color">
-                            <label class="form-check-label" for="color7"> <li><a class="color7" ><span> </span></a></li> </label>
-
-                        </div>
-                            <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" id="color8" value="color8" name="color">
-                            <label class="form-check-label" for="color8"> <li><a class="color8" ><span> </span></a></li> </label>
-
-                        </div>
-
-                            <div class="clear"></div>
-                        </ul>
-                    </div>
-
-                    <div class="row">
-                        <!-- 标签 -->
-                        <label class ="size text-info">Size：</label>
-                        <ul class="product-colors" style="padding-left:30px">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="XS" value="XS" name="size">
-                                <label class="form-check-label" for="XS"> XS </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="S" value="S" name="size">
-                                <label class="form-check-label" for="S"> S </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="M" value="M" name="size">
-                                <label class="form-check-label" for="M"> M </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="L" value="L" name="size">
-                                <label class="form-check-label" for="L"> L </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="XL" value="XL" name="size">
-                                <label class="form-check-label" for="XL"> XL </label>
-                            </div>
-
-                        </ul>
-
-                    </div>
-
-                    <div class="row">
-                        <!-- 标签 -->
-                         <label class ="size text-info">Gender：</label>
-                        <ul class="product-colors" style="padding-left:30px">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="Male" value="Male" name="gender">
-                                <label class="form-check-label" for="Male"> Male </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="Female" value="Female" name="gender">
-                                <label class="form-check-label" for="Female"> Female </label>
-                            </div>
-                        </ul>
-                    </div>
-
-
-                    <div class="row">
-                        <!-- 标签 -->
-                            <label class ="size text-info">Style：</label>
+    <div class="ckeckout mt-10 pb-3"  >{#  single contract#}
+        <div class="container-fluid " style="padding-bottom: 30px">{#  container #}
+                <!-- Top row-->
+            <div class="row"  style="padding-left: 30px">
+                <!-- start left build area-->
+                <div class="col-md-6 offset-md-1" >
+                    <input id="categoryname" type="text" value="{{ items.category_name }}" style="display: none"/>
+                    <h3 class="card-title font-weight-bold text-info">Part Number: {{ category }}</h3>
+                    <form method="POST" action="{% url 'customize:quotation_add'  %}" enctype="multipart/form-data">
+                        <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                        {% csrf_token %}
+                        <div class="row" >
+                            <!-- 标签 -->
+    
+                            <label class ="size text-info">Sleeve:</label>
                             <ul class="product-colors" style="padding-left:30px">
-                            <!-- 文本框 -->
-
-                                {% for imagelist in catelist %}
-
-                                   <input class="form-check-input" type="radio" id={{ imagelist.style }} name="imagelist" tabindex="0" class="hidden" value={{ imagelist.part_number }}>
-
-                                    <div class="form-check form-check-inline">
-
-                                        <div class="shadow card" style="padding:5px;" id="image">
-                                            <label for={{ imagelist.style }}> {{ imagelist.part_number }} </label>
-                                            <img src="../../media/{{ imagelist.style }}" style="width:120px;height:80px;" alt="">
-                                        </div>
-                                    </div>
-                                {% endfor %}
-
-
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="sleeve-long" value="Long" name="sleeve" checked>
+                                    <label class="form-check-label" for="sleeve-long"> Long </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="sleeve-short" value="short" name="sleeve">
+                                    <label class="form-check-label" for="sleeve-short"> Short </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="sleeve-no" value="no" name="sleeve">
+                                    <label class="form-check-label" for="sleeve-no"> No</label>
+                                </div>
                             </ul>
-                    </div>
-
-                  <div class="row">
-                        <div class="col-md-8" >
+                        </div>
+                        <div class="row">
                             <!-- 标签 -->
-                            <label class ="size text-info">Quantity：</label>
-                      <ul class="product-colors" style="padding-left:30px">
-
-                                <!-- 文本框 -->
+                            <label class ="size text-info">Color：</label>
+    
+                            <ul class="product-colors" style="padding-left:30px">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color1" value="color1" name="color" checked>
+                                <label class="form-check-label" for="color1">  <li><a class="color1" ><span> </span></a></li> </label>
+    
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color2" value="color2" name="color">
+                                <label class="form-check-label" for="color2"> <li><a class="color2" ><span> </span></a></li> </label>
+    
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color3" value="color3" name="color">
+                                <label class="form-check-label" for="color3"> <li><a class="color3" ><span> </span></a></li> </label>
+    
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color4" value="color4" name="color">
+                                <label class="form-check-label" for="color4"> <li><a class="color4" ><span> </span></a></li> </label>
+    
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color5" value="color5" name="color">
+                                <label class="form-check-label" for="color5"> <li><a class="color5" ><span> </span></a></li> </label>
+    
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color6" value="color6" name="color">
+                                <label class="form-check-label" for="color6"> <li><a class="color6" ><span> </span></a></li> </label>
+    
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color7" value="color7" name="color">
+                                <label class="form-check-label" for="color7"> <li><a class="color7" ><span> </span></a></li> </label>
+    
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color8" value="color8" name="color">
+                                <label class="form-check-label" for="color8"> <li><a class="color8" ><span> </span></a></li> </label>
+    
+                            </div>
+    
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+    
+                        <div class="row">
+                            <!-- 标签 -->
+                            <label class ="size text-info">Size：</label>
+                            <ul class="product-colors" style="padding-left:30px">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="XS" value="XS" name="size">
+                                    <label class="form-check-label" for="XS"> XS </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="S" value="S" name="size">
+                                    <label class="form-check-label" for="S"> S </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="M" value="M" name="size">
+                                    <label class="form-check-label" for="M"> M </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="L" value="L" name="size">
+                                    <label class="form-check-label" for="L"> L </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="XL" value="XL" name="size">
+                                    <label class="form-check-label" for="XL"> XL </label>
+                                </div>
+    
+                            </ul>
+    
+                        </div>
+    
+                        <div class="row">
+                            <!-- 标签 -->
+                             <label class ="size text-info">Gender：</label>
+                            <ul class="product-colors" style="padding-left:30px">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="Male" value="Male" name="gender">
+                                    <label class="form-check-label" for="Male"> Male </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="Female" value="Female" name="gender">
+                                    <label class="form-check-label" for="Female"> Female </label>
+                                </div>
+                            </ul>
+                        </div>
+    
+    
+                        <div class="row">
+                            <!-- 标签 -->
+                                <label class ="size text-info">Style：</label>
+                                <ul class="product-colors" style="padding-left:30px">
+                                     {% for imagelist in catelist %}
+    
+                                       <input class="form-check-input" type="radio" id={{ imagelist.style }} name="imagelist" tabindex="0" class="hidden" value={{ imagelist.part_number }}>
+    
+                                        <div class="form-check form-check-inline">
+    
+                                            <div class="shadow card" style="padding:5px;" id="image">
+                                                <label for={{ imagelist.style }}> {{ imagelist.part_number }} </label>
+                                                <img src="../../media/{{ imagelist.style }}" style="width:120px;height:80px;" alt="">
+                                            </div>
+                                        </div>
+                                    {% endfor %}  
+                                </ul>
+                        </div>
+    
+                      <div class="row">
+                            <div class="col-md-8" >
+                                <!-- 标签 -->
+                                <label class ="size text-info">Quantity：</label>
+                          <ul class="product-colors" style="padding-left:30px">
+                                    <!-- 文本框 -->
                                 <input class="form-control" type="number" id="quantity" name="quantity" >
-
-                      </ul>
-                    </div>
-                    </div>
-
-                    <div class="row">
-                            <!-- 标签 -->
-                        <div class="col-md-8" >
-                        <label class ="size text-info">Upload Style or Logo：</label>
-                        <ul class="product-colors" style="padding-left:30px">
-{#                        <div id="wrapper">#}
-                            <input class="form-control form-control-sm"  type="file" id="file" name="images" multiple="multiple"
-                                       accept="image/*" aria-describedby="inputGroupFileAddon04" aria-label="Upload"
-                                        onchange="preview_image(event)">
-                            <img id="output_image" style="padding: 10px"/>
-{#                            </div>#}
-                        </ul>
-
-                    </div>
-                    </div>
-                    <div class="row">
-                         <div class="col-md-12">
-                        <label class ="size text-info">Desciption</label>
-                        <ul class="product-colors" style="padding-left:30px">
-                            <!-- 标签 -->
-                            <textarea class="shadow form-control " type="text" id="body" name="description" rows="8"></textarea>
-                        </ul>
+    
+                          </ul>
                         </div>
                         </div>
+    
+                        <div class="row">
+                                <!-- 标签 -->
+                            <div class="col-md-8" >
+                            <label class ="size text-info">Upload Style or Logo：</label>
+                            <ul class="product-colors" style="padding-left:30px">
+    {#                        <div id="wrapper">#}
+                                <input class="form-control form-control-sm"  type="file" id="file" name="images" multiple="multiple"
+                                           accept="image/*" aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                            onchange="preview_image(event)">
+                                <img id="output_image" style="padding: 10px"/>
+    {#                            </div>#}
+                            </ul>
+    
+                        </div>
+                        </div>
+                        <div class="row">
+                             <div class="col-md-12">
+                            <label class ="size text-info">Desciption</label>
+                            <ul class="product-colors" style="padding-left:30px">
+                                <!-- 标签 -->
+                                <textarea class="shadow form-control " type="text" id="body" name="description" rows="8"></textarea>
+                            </ul>
+                            </div>
+                            </div>
+    
+                        <br>
+    
+                        <div class="address">
+                            <input class="button-c" type="submit" value="Add Item"/>
+                        </div>
+    
+    
+                    </form>
+                </div>
+                <!-- End left build area-->
 
-                    <br>
+                 <!-- start right list area-->
+                 <div class="col-md-5 ">
 
-                    <div class="address">
-                        <input class="button-c" type="submit" value="submit"/>
+                        <div class="row"> {# content middle row1 #}
+                           
+                                <div class="table-responsive" style="overflow-x:hidden;">
+                                    {% comment %} <form name="RegForm" id="RegForm" method="POST" action="#" {% endcomment %}
+                                    <form name="RegForm" method="POST" action="{% url "customize:quotation_add" %}"
+                                          enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <table class="table" >
+                                            <thead class=" align-items-center mx-auto" style="">
+                                            <tr>
+                                                <th class="text-center" scope="col" style="width: 5%"></th>
+                                                <th class="text-center" scope="col" style="width: 10%">Sleeve</th>
+                                                <th class="text-center" scope="col" style="width: 15%">Size</th>
+                                                <th class="text-center" scope="col" style="width: 10%">Gender</th>
+                                                <th class="text-center" scope="col" style="width: 15%">Color</th>
+                                                <th class="text-center" scope="col" style="width: 15%">Quantity</th>
+                                                <th class="text-center" scope="col" style="width: 30%">Special Requirement</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for items in quotation %}
+                                                {{ items.count }}
+                                            <tr id="newitem">
+                                                <td class="text-center"><input id='checktocart'
+                                                                                                     name='checktocart'
+                                                                                                     value="{{ items.quotation_id }}"
+                                                                                                     type="checkbox"></td>
+                                                <td class="text-center" id="sleeve"{{ items.quotation_id }}
+                                                    style="max-width: 10%">{{ items.sleeve }}</td>
+        
+                                                <td class="text-center" id="size"{{ items.quotation_id }}
+                                                    style="max-width: 15%">{{ items.size }}</td>
+                                                <td class="text-center" id="gender"{{ items.quotation_id }}
+                                                    style="max-width: 10%"> {{ items.gender }}</td>
+                                                <td class="text-center" style="max-width: 15%">
+                                                    <ul class="product-colors">
+                                                        <li><a id="color"{{ items.quotation_id }}
+                                                               class= {{ items.color }}><span> </span></a></li>
+                                                    </ul>
+                                                </td>
+                                                <td class="text-center" style="max-width: 15%" id=""><input
+                                                        style="overflow:hidden;max-width: 25% " id="qty{{ items.quotation_id }}"
+                                                        type="number" value=1/></td>
+                                                <td class="text-center " style="overflow:hidden"
+                                                    id="desc"{{ items.quotation_id }} > {{ items.description }}</td>
+        
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        <!-- Django中需要POST数据的地方都必须有csrf_token -->
+        
+                                        <button id="btncart" name="button-c" class="button-c pull-right"
+                                                style="font-size: x-small;" onclick="SveFrm()" type="button">
+                                            Add to cart
+                                        </button>
+
+                                        <!-- Modal -->
+                                    
+                                    </form>
+        
+                                </div>
+                            </div>
+        
+                        </div>
+                        {# end right quotation detail column #}
+        
                     </div>
+                    {# end  quotation detail row #}
+                </div>
+                <!-- End right list  area-->
+            </div>
+            <!-- End Top row-->
 
-
-                </form>
-            {% comment %} start historic feedback row {% endcomment %}
-
-            {% comment %} end historic feedback row {% endcomment %}
         </div>
         {#  end middle quotation detail and feedback#}
 
     </div>
     {#  end right col-md-6#}
 
-
-    {#        {% endif %}#}
-    {#    {% endfor %}#}
 {% endblock %}

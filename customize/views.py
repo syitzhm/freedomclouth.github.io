@@ -72,7 +72,8 @@ def quofeedback_detail(request,slug):
 
 
 def quotation_add(request):
-    
+    categorylist = Category.objects.filter(category_name="categoryA")
+    print("categorylist",categorylist)
     quotation=addQuotation(request)
     
     # cartmaster = get_object_or_404(Cartmaster, cart_id=checkedlist)
@@ -89,7 +90,7 @@ def quotation_add(request):
 
     # total_price = cart.get_total_price()
     context = {'quotation': quotation,
-               }
+               'catelist': categorylist,}
     
     print("_++_+_+_+_+_+:",quotation.quotation.values())
     print("_++_+_+_+_+_+:",quotation.quotation.keys())
@@ -99,7 +100,10 @@ def quotation_add(request):
 def addNewQuotation(request,category):
     model = customize.models.Category
     context = {'category':category}
-
+    categorylist = Category.objects.filter(category_name=category)
+    print("categorylist",categorylist)
+    context = {'catelist': categorylist,
+               }
     return render(request,'customize/newquotation.html', context)
 
 @login_required
