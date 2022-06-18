@@ -93,7 +93,7 @@
                 <!-- Top row-->
             <div class="row"  style="padding-left: 30px">
                 <!-- start left build area-->
-                <div class="col-md-6 offset-md-1" >
+                <div class="col-md-5 offset-md-1" >
                     <input id="categoryname" type="text" value="{{ items.category_name }}" style="display: none"/>
                     <h3 class="card-title font-weight-bold text-info">Part Number: {{ category }}</h3>
                     <form method="POST" action="{% url 'customize:quotation_add'  %}" enctype="multipart/form-data">
@@ -281,11 +281,12 @@
                 <!-- End left build area-->
 
                  <!-- start right list area-->
-                 <div class="col-md-5 ">
+                 <div class="col-md-4 ">
 
                         <div class="row"> {# content middle row1 #}
                            
                                 <div class="table-responsive" style="overflow-x:hidden;">
+
                                     {% comment %} <form name="RegForm" id="RegForm" method="POST" action="#" {% endcomment %}
                                     <form name="RegForm" method="POST" action="{% url "customize:quotation_add" %}"
                                           enctype="multipart/form-data">
@@ -302,19 +303,21 @@
                                                 <th class="text-center" scope="col" style="width: 30%">Special Requirement</th>
                                             </tr>
                                             </thead>
+                                             {% for items in newquotation %}
+
                                             <tbody>
-                                                {% for items in quotation %}
-                                                {{ items.count }}
+
+
                                             <tr id="newitem">
                                                 <td class="text-center"><input id='checktocart'
                                                                                                      name='checktocart'
                                                                                                      value="{{ items.quotation_id }}"
                                                                                                      type="checkbox"></td>
                                                 <td class="text-center" id="sleeve"{{ items.quotation_id }}
-                                                    style="max-width: 10%">{{ items.sleeve }}</td>
+                                                    style="max-width: 10%">{{ items.sleeve}}</td>
         
                                                 <td class="text-center" id="size"{{ items.quotation_id }}
-                                                    style="max-width: 15%">{{ items.size }}</td>
+                                                    style="max-width: 15%">{{ items.id }}</td>
                                                 <td class="text-center" id="gender"{{ items.quotation_id }}
                                                     style="max-width: 10%"> {{ items.gender }}</td>
                                                 <td class="text-center" style="max-width: 15%">

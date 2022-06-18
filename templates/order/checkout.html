@@ -117,7 +117,7 @@
                         </thead>
                         <tbody>
                         {% for item in cartlist %}
-                            {{ item.count }}
+                            {{ cartlist }}
                             {% with product=item.product %}
                                 <form action="#" method="post">
                                     {% csrf_token %}
@@ -140,7 +140,7 @@
                                         </td>
 
 
-                                        <td>{{ item.price }}</td>
+                                        <td>{{ items.price }}</td>
                                         <td>{{ item.total_price }}</td>
                                         <td>
                                             <button class="button-wor" value="Update"><i class="bi bi-pencil-fill"></i>

@@ -12,9 +12,8 @@ from django.urls import reverse
 from django.views import generic
 from django.views.generic import CreateView, UpdateView
 from markdown.extensions.toc import TocExtension
-from .quotation import addQuotation
+from .addquotation import addQuotation
 
-from .quotation import *
 
 import common.models
 import customize.models
@@ -74,36 +73,35 @@ def quofeedback_detail(request,slug):
 def quotation_add(request):
     categorylist = Category.objects.filter(category_name="categoryA")
     print("categorylist",categorylist)
-    quotation=addQuotation(request)
-    
+
+    newquotation=addQuotation(request)
+    newquotation.clear()
     # cartmaster = get_object_or_404(Cartmaster, cart_id=checkedlist)
 
     if request.method == "POST":
-        formsleeve = request.POST['sleeve'],
-        formcolor=request.POST['color'],
-        print("_++_+_+_+_+_+:",formsleeve,formcolor)
-    
-    category = get_object_or_404(Category, category_name='categoryA')
-    quotation.add(category, sleeve=formsleeve,color=formcolor )
+        formsleeve = str(request.POST['sleeve'])
+        formcolor= str(request.POST['color'])
+        # print("_++_+_+_+_+_+:",str(request.POST['sleeve']),str(request.POST['color']))
+        category = get_object_or_404(Category, category_name='categoryA')
+        newquotation.add(category, sleeve=formsleeve, color=formcolor)
 
-
-
+    # print("_++_+_+_+_+_+:", newquotation.newquotation.values())
+    # print("_++_+_+_+_+_+:", newquotation.newquotation.keys())
     # total_price = cart.get_total_price()
-    context = {'quotation': quotation,
+    context = {'newquotation': newquotation.newquotation.values(),
                'catelist': categorylist,}
     
-    print("_++_+_+_+_+_+:",quotation.quotation.values())
-    print("_++_+_+_+_+_+:",quotation.quotation.keys())
+
     return render(request,'customize/newquotation.html',context)
 
 @login_required
 def addNewQuotation(request,category):
     model = customize.models.Category
-    context = {'category':category}
+    newquotation = addQuotation(request)
     categorylist = Category.objects.filter(category_name=category)
-    print("categorylist",categorylist)
+    print("categorylist",categorylist,newquotation)
     context = {'catelist': categorylist,
-               }
+               'newquotation':newquotation.newquotation.values()}
     return render(request,'customize/newquotation.html', context)
 
 @login_required

@@ -27,6 +27,8 @@ def cartmasterview(request,user_id):
     cartmaster= Cartmaster.objects.filter(customer_id=user_id)
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
+
+    print("==========>>> in cartmasterview",cartmaster,cart)
     context = {'Cartlist': cartmaster,
                'cart': cart}
     return render(request,'order/cart.html',context)
@@ -72,8 +74,10 @@ def cart_add(request):
     for item in cart:
         item['update_quantity_form'] = CartAddProductForm(initial={'quantity': item['quantity'], 'update': True})
 
-
     total_price = cart.get_total_price()
+    print("_+_+_+_+_+ in cart",cart.cart.values())
+    print("_+_+_+_+_+ in cart",cart.cart.keys())
+    print("_+_+_+_+_+ in cart",cart)
     context = {'cartlist': cart,
                'total_price': total_price}
     return render(request,'order/checkout.html',context)
