@@ -1,3 +1,4 @@
+import json
 import random
 import time
 
@@ -75,23 +76,29 @@ def quotation_add(request):
     print("categorylist",categorylist)
 
     newquotation=addQuotation(request)
-    newquotation.clear()
+    # newquotation.clear()
     # cartmaster = get_object_or_404(Cartmaster, cart_id=checkedlist)
 
     if request.method == "POST":
         formsleeve = str(request.POST['sleeve'])
-        formcolor= str(request.POST['color'])
-        # print("_++_+_+_+_+_+:",str(request.POST['sleeve']),str(request.POST['color']))
+        formsize= str(request.POST['size'])
+        formgender= str(request.POST['gender'])
+        formcolor = str(request.POST['color'])
+        formpartnum=str(request.POST['imagelist'])
+        formquantity = request.POST['quantity']
+        formimages = request.FILES['images']
+        # formimages = str(request.POST['images'])
+        formdescription = str(request.POST['description'])
+        # print("_++_+_+_+_+_+:",formimages.image.name)
         category = get_object_or_404(Category, category_name='categoryA')
-        newquotation.add(category, sleeve=formsleeve, color=formcolor)
+        newquotation.add(category, sleeve=formsleeve, size=formsize, gender=formgender, color=formcolor,
+                         imagelist=formpartnum, quantity=formquantity, images="", description=formdescription)
 
-    # print("_++_+_+_+_+_+:", newquotation.newquotation.values())
+    print("_++_+_+_+_+_+:", newquotation.newquotation.values())
     # print("_++_+_+_+_+_+:", newquotation.newquotation.keys())
     # total_price = cart.get_total_price()
     context = {'newquotation': newquotation.newquotation.values(),
                'catelist': categorylist,}
-    
-
     return render(request,'customize/newquotation.html',context)
 
 @login_required
@@ -124,41 +131,35 @@ class QuoinprogView(generic.ListView):
 @login_required
 def SaveQuotation(request,slug):
     ouser_name=Ouser.objects.get(id=request.user.id)
-    print("ouser_name", type(ouser_name))
+    checkedlist = request.POST.getlist('savetoquotation')
 
-    # quotationlist = Quotation.objects.filter(quotation_id=slug)
-    # quoinprog = Quoinprog.objects.all()
+    newquotation = addQuotation(request)
+    print("=========> checkedlist", checkedlist)
     catelist = Category.objects.get(category_name=slug)
     # print("catelist", quotationlist)
     catelistid= slug
     # print("catelistid", catelist.category_id)
-    # quotationid = slugstr()
+    quotationid = slugstr()
     if request.method=="POST":
-        save_quotation = save_quotation_form(data=request.POST)
-        # print("----->debuging %s " % ("request.POST['tag']"), datetime.time)
-        if save_quotation.is_valid():
-            new_Quotation = save_quotation.save(commit=False)
-            # categoryid = Category.objects.get(id=request.POST['category'])
-            # print("----->debuging %s " % (request.FILES.getlist('images')))
-            execstr = Quotation.objects.create(quotation_id=slugstr(),
-                                               sleeve = request.POST['sleeve'],
-                                               color=request.POST['color'],
-                                               size=request.POST['size'],
-                                               req_image=request.FILES.get('images'),
-                                               gender=request.POST['gender'],
-                                               part_number=request.POST['imagelist'],
-                                               quantity=request.POST['quantity'],
-                                               description=request.POST['description'],
+
+        for items in checkedlist:
+            print("----->debuging2 %s " % (newquotation.newquotation[items]))
+            execstr = Quotation.objects.create(quotation_id=quotationid,
+                                               sleeve = newquotation.newquotation[items]['sleeve'],
+                                               color=newquotation.newquotation[items]['color'],
+                                               size=newquotation.newquotation[items]['size'],
+                                               req_image="",
+                                               gender=newquotation.newquotation[items]['gender'],
+                                               part_number=newquotation.newquotation[items]['imagelist'],
+                                               quantity=int(newquotation.newquotation[items]['quantity']),
+                                               description=newquotation.newquotation[items]['description'],
                                                category_name=catelist,
                                                customer_id = ouser_name,
                                                )
             execstr.save()
 
 
-            return redirect("common:index")
-        else:
-            print(save_quotation.errors)
-            return HttpResponse("表单内容有误，请重新填写。")
+        return redirect("common:index")
     else:
         save_quotation = save_quotation_form()
         context = { 'save_quotation':save_quotation,

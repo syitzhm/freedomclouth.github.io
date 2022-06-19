@@ -92,7 +92,7 @@ class Quotation(models.Model):
     gender = models.CharField(max_length=50, default='性别')
     part_number = models.CharField(max_length=50, default='物料编码')
     quantity = models.IntegerField(default=0)
-    req_image = models.ImageField(upload_to=quotation_directory_path,verbose_name="定制样式图片")
+    req_image = models.ImageField(upload_to=quotation_directory_path,verbose_name="定制样式图片",null=True,blank=True)
     description = models.CharField('需求描述', max_length=230, default='需求描述',blank=True,null=True)
     create_date = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     update_date = models.DateTimeField(verbose_name='修改时间', auto_now=True)
