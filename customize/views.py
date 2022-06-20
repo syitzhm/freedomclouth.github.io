@@ -18,7 +18,7 @@ from .addquotation import addQuotation
 
 import common.models
 import customize.models
-from customize.models import Quotation, Category,Quoinprog
+from customize.models import Quotation, Category,Quoinprog,tempQuotation
 from accounts.models import Ouser
 from customize.forms import save_quotation_form, save_quofeedback_form
 from django.contrib import messages
@@ -106,17 +106,23 @@ def addNewQuotation(request,category):
     model = customize.models.Category
     newquotation = addQuotation(request)
     categorylist = Category.objects.filter(category_name=category)
+    tempQuotationlist = tempQuotation.objects.filter(customer_id=request.user.id)
     print("categorylist",categorylist,newquotation)
     context = {'catelist': categorylist,
-               'newquotation':newquotation.newquotation.values()}
+               'newquotation':newquotation.newquotation.values(),
+               'catename':category,
+               'tempQuotationlist':tempQuotationlist
+               }
     return render(request,'customize/newquotation.html', context)
 
 @login_required
 def CustomizeView(request,slug):
     categorylist = Category.objects.filter(category_name=slug)
+    tempQuotationlist=tempQuotation.objects.filter(customer_id=request.user.id)
     print("categorylist",categorylist)
     context = {'catelist': categorylist,
-               'catename': slug}
+               'catename': slug,
+               'tempQuotationlist':tempQuotationlist}
     return render(request,'customize/customize.html', context)
 
 class QuoinprogView(generic.ListView):
@@ -130,6 +136,7 @@ class QuoinprogView(generic.ListView):
 
 @login_required
 def SaveQuotation(request,slug):
+    categoryname=slug
     ouser_name=Ouser.objects.get(id=request.user.id)
     checkedlist = request.POST.getlist('savetoquotation')
 
@@ -159,12 +166,54 @@ def SaveQuotation(request,slug):
             execstr.save()
 
 
-        return redirect("common:index")
+        return redirect("common:index",slug=categoryname)
     else:
         save_quotation = save_quotation_form()
         context = { 'save_quotation':save_quotation,
                     'catelist':catelistid,}
         return render(request,'customize/customize.html', context)
+
+@login_required
+def SavetempQuotation(request,slug):
+    ouser_name=Ouser.objects.get(id=request.user.id)
+    checkedlist = request.POST.getlist('savetoquotation')
+
+    newquotation = addQuotation(request)
+    print("=========> checkedlist", checkedlist)
+    catelist = Category.objects.get(category_name=slug)
+    # print("catelist", quotationlist)
+    catelistid= slug
+    catename=slug
+    print("<><><><><><><>catelistid", str(slug))
+    quotationid = slugstr()
+    if request.method=="POST":
+
+        # for items in checkedlist:
+        print("----->debuging2 %s " % (request.POST))
+        execstr = tempQuotation.objects.create(quotation_id=quotationid,
+                                                             sleeve = request.POST['sleeve'],
+                                                             color=request.POST['color'],
+                                                             size=request.POST['size'],
+                                                             req_image=request.FILES['images'],
+                                                             gender=request.POST['gender'],
+                                                             part_number=request.POST['imagelist'],
+                                                             quantity=int(request.POST['quantity']),
+                                                             description=request.POST['description'],
+                                                             category_name=catelist,
+                                                             customer_id = ouser_name,
+                                                             )
+        execstr.save()
+        tempQuotationlist = tempQuotation.objects.all()
+
+        return redirect("customize:addnewquotation",category=catelistid)
+    else:
+        save_quotation = save_quotation_form()
+        context = { 'save_quotation':save_quotation,
+                    'catelist':catelistid,
+                    'catename':catename,
+                    }
+        return render(request,'customize/customize.html', context)
+
 
 @login_required
 def SaveQuoFeedback(request,slug):

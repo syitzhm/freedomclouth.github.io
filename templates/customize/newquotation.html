@@ -95,8 +95,8 @@
                 <!-- start left build area-->
                 <div class="col-md-5 offset-md-1" >
                     <input id="categoryname" type="text" value="{{ items.category_name }}" style="display: none"/>
-                    <h3 class="card-title font-weight-bold text-info">Part Number: {{ category }}</h3>
-                    <form method="POST" action="{% url 'customize:quotation_add'  %}" enctype="multipart/form-data">
+                    <h3 class="card-title font-weight-bold text-info">Part Number: {{ catename }}</h3>
+                    <form method="POST" action="{% url 'customize:savetempquotation' catename %}" enctype="multipart/form-data">
                         <!-- Django中需要POST数据的地方都必须有csrf_token -->
                         {% csrf_token %}
                         <div class="row" >
@@ -304,11 +304,12 @@
 
 
                                             <tbody>
+
                                             <form name="RegForm" method="POST" action="{% url 'customize:save' 'categoryA' %}"
                                           enctype="multipart/form-data">
                                         {% csrf_token %}
-                                                {% for items in newquotation %}
-
+{#                                                {% for items in newquotation %}#}
+                                            {% for items in tempQuotationlist %}
                                             <tr id="{{ items.id }}">
                                                 <td class="text-center"><input id='savetoquotation'
                                                                                                      name='savetoquotation'

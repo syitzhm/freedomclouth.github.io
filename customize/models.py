@@ -84,7 +84,7 @@ class Category(models.Model):
 
 
 class Quotation(models.Model):
-    quotation_id = models.IntegerField('分类')
+    quotation_id = models.IntegerField('id')
     customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
     sleeve = models.CharField(max_length=50, default='袖子')
     color = models.CharField(max_length=50, default='颜色')
@@ -118,13 +118,55 @@ class Quotation(models.Model):
                 'gender': self.gender,
                 }
 
+    def get_absolute_url(self):
+        return reverse('customize:quotationlist_detail', args=[self.quotation_id])
+
+    def get_article_list(self):
+        '''返回当前标签下所有发表的文章列表'''
+        return Quotation.objects.filter(quotation_id=self)
+
+
+class tempQuotation(models.Model):
+    quotation_id = models.IntegerField('id')
+    customer_id = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='客户', on_delete=models.PROTECT)
+    sleeve = models.CharField(max_length=50, default='袖子')
+    color = models.CharField(max_length=50, default='颜色')
+    size = models.CharField(max_length=50, default='尺寸')
+    gender = models.CharField(max_length=50, default='性别')
+    part_number = models.CharField(max_length=50, default='物料编码')
+    quantity = models.IntegerField(default=0)
+    req_image = models.ImageField(upload_to=quotation_directory_path, verbose_name="定制样式图片", null=True, blank=True)
+    description = models.CharField('需求描述', max_length=230, default='需求描述', blank=True, null=True)
+    create_date = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
+    update_date = models.DateTimeField(verbose_name='修改时间', auto_now=True)
+    is_open = models.BooleanField(default=True)
+    is_assigned = models.BooleanField(default=False)
+    category_name = models.ForeignKey(Category, max_length=20, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'tempquotation'
+        verbose_name_plural = verbose_name
+        ordering = ['quotation_id']
+
+    def __str__(self):
+        return str(self.quotation_id)
+
+    # Json
+    def get_data(self):
+        return {'quotation_id': self.quotation_id,
+                # 'customer_id': self.customer_id,
+                'sleeve': self.sleeve,
+                'color': self.color,
+                'size': self.size,
+                'gender': self.gender,
+                }
 
     def get_absolute_url(self):
         return reverse('customize:quotationlist_detail', args=[self.quotation_id])
 
     def get_article_list(self):
         '''返回当前标签下所有发表的文章列表'''
-        return Quotation.objects.filter(quotationid=self)
+        return Quotation.objects.filter(quotation_id=self)
 
 class Quoinprog(models.Model):
     quotation_id = models.ForeignKey(Quotation,  max_length=20,on_delete=models.PROTECT)

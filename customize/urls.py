@@ -19,13 +19,14 @@ from django.urls import path, include, re_path
 from customize.views import \
     CustomizeView, SaveQuotation, QuotationListView, QuoListDetailView, \
     SaveQuoFeedback,quofeedback_detail,MyQuotationListView,addNewQuotation,\
-    quotation_add
+    quotation_add,SavetempQuotation
 
 urlpatterns = [
     path('customize/<slug:slug>/', CustomizeView, name='customize'),
     # path('customize/', CustomizeView.as_view(), name='customize'),
     # path('article/<slug:slug>/', DetailView.as_view(), name='detail'),  # 文章内容页
     path('savequotation/<slug:slug>', SaveQuotation, name='save'),
+    path('savetempquotation/<slug:slug>', SavetempQuotation, name='savetempquotation'),
     path('addquotation/', quotation_add, name='quotation_add'),
     path('quotationlist/', QuotationListView, name='quotationlist'),
     path('myquotationlist/', MyQuotationListView, name='myquotationlist'),
