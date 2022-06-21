@@ -12,13 +12,18 @@ from django.views.decorators.csrf import csrf_protect
 
 from accounts.models import Ouser
 from customize.models import Category, Quotation
+from order.models import Ordermaster
 from order.forms import save_order_form
 import os
 # Create your views here.
 
 @login_required
 def profile_view(request):
-    return render(request,'account/profile.html')
+    quotation = Quotation.objects.filter(customer_id=request.user.id)
+    ordermaster = Ordermaster.objects.filter(customer_id=request.user.id)
+    context= {'quotation':quotation,
+              'ordermaster':ordermaster}
+    return render(request,'account/profile.html',context)
 
 
 def dashboard(request):
@@ -31,7 +36,7 @@ def dashboardn(request):
 
 def test(request):
 
-    return render(request,'account/test.html')
+    return render(request,'account/test1.html')
 
 def test_json(request):
     quotations = Quotation.objects.all()
@@ -62,3 +67,11 @@ def change_profile_view(request):
         form = ProfileForm(instance=request.user)
     return render(request,'account/change_profile.html',context={'form':form})
 
+@login_required
+@csrf_protect
+def change_avatar(request):
+   avatar = Ouser.objects.filter(pk=request.user.id)
+   if request.method == "POST":
+        avatar.avatar= request.FILES['avatar']
+        avatar.save()  
+   return redirect("accounts:profile")

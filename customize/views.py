@@ -70,43 +70,45 @@ def quofeedback_detail(request,slug):
     return render(request,'customize/quofeedback_detail.html', context)
 
 
+# don't use
+# def quotation_add(request):
+#     categorylist = Category.objects.filter(category_name="categoryA")
+#     print("categorylist",categorylist)
 
-def quotation_add(request):
-    categorylist = Category.objects.filter(category_name="categoryA")
-    print("categorylist",categorylist)
+#     newquotation=addQuotation(request)
+#     # newquotation.clear()
+#     # cartmaster = get_object_or_404(Cartmaster, cart_id=checkedlist)
 
-    newquotation=addQuotation(request)
-    # newquotation.clear()
-    # cartmaster = get_object_or_404(Cartmaster, cart_id=checkedlist)
+#     if request.method == "POST":
+#         formsleeve = str(request.POST['sleeve'])
+#         formsize= str(request.POST['size'])
+#         formgender= str(request.POST['gender'])
+#         formcolor = str(request.POST['color'])
+#         formpartnum=str(request.POST['imagelist'])
+#         formquantity = request.POST['quantity']
+#         formimages = request.FILES['images']
+#         # formimages = str(request.POST['images'])
+#         formdescription = str(request.POST['description'])
+#         # print("_++_+_+_+_+_+:",formimages.image.name)
+#         category = get_object_or_404(Category, category_name='categoryA')
+#         newquotation.add(category, sleeve=formsleeve, size=formsize, gender=formgender, color=formcolor,
+#                          imagelist=formpartnum, quantity=formquantity, images="", description=formdescription)
 
-    if request.method == "POST":
-        formsleeve = str(request.POST['sleeve'])
-        formsize= str(request.POST['size'])
-        formgender= str(request.POST['gender'])
-        formcolor = str(request.POST['color'])
-        formpartnum=str(request.POST['imagelist'])
-        formquantity = request.POST['quantity']
-        formimages = request.FILES['images']
-        # formimages = str(request.POST['images'])
-        formdescription = str(request.POST['description'])
-        # print("_++_+_+_+_+_+:",formimages.image.name)
-        category = get_object_or_404(Category, category_name='categoryA')
-        newquotation.add(category, sleeve=formsleeve, size=formsize, gender=formgender, color=formcolor,
-                         imagelist=formpartnum, quantity=formquantity, images="", description=formdescription)
+#     print("_++_+_+_+_+_+:", newquotation.newquotation.values())
+#     # print("_++_+_+_+_+_+:", newquotation.newquotation.keys())
+#     # total_price = cart.get_total_price()
+#     context = {'newquotation': newquotation.newquotation.values(),
+#                'catelist': categorylist,}
+#     return render(request,'customize/newquotation.html',context)
 
-    print("_++_+_+_+_+_+:", newquotation.newquotation.values())
-    # print("_++_+_+_+_+_+:", newquotation.newquotation.keys())
-    # total_price = cart.get_total_price()
-    context = {'newquotation': newquotation.newquotation.values(),
-               'catelist': categorylist,}
-    return render(request,'customize/newquotation.html',context)
+
 
 @login_required
 def addNewQuotation(request,category):
     model = customize.models.Category
     newquotation = addQuotation(request)
     categorylist = Category.objects.filter(category_name=category)
-    tempQuotationlist = tempQuotation.objects.filter(customer_id=request.user.id)
+    tempQuotationlist = tempQuotation.objects.filter(customer_id=request.user.id,is_open=True)
     print("categorylist",categorylist,newquotation)
     context = {'catelist': categorylist,
                'newquotation':newquotation.newquotation.values(),
@@ -150,23 +152,28 @@ def SaveQuotation(request,slug):
     if request.method=="POST":
 
         for items in checkedlist:
-            print("----->debuging2 %s " % (newquotation.newquotation[items]))
+            tempQuotationid = tempQuotation.objects.get(quotation_id = items )
+            print("----->debuging2 %s " % (tempQuotationid.quotation_id))
             execstr = Quotation.objects.create(quotation_id=quotationid,
-                                               sleeve = newquotation.newquotation[items]['sleeve'],
-                                               color=newquotation.newquotation[items]['color'],
-                                               size=newquotation.newquotation[items]['size'],
-                                               req_image="",
-                                               gender=newquotation.newquotation[items]['gender'],
-                                               part_number=newquotation.newquotation[items]['imagelist'],
-                                               quantity=int(newquotation.newquotation[items]['quantity']),
-                                               description=newquotation.newquotation[items]['description'],
-                                               category_name=catelist,
+                                               sleeve = tempQuotationid.sleeve,
+                                                color=tempQuotationid.color,
+                                                size=tempQuotationid.size,
+                                                req_image=tempQuotationid.req_image,
+                                                gender=tempQuotationid.gender,
+                                                part_number=tempQuotationid.part_number,
+                                                quantity=tempQuotationid.quantity,
+                                                description=tempQuotationid.description,
+                                                category_name=tempQuotationid.category_name,
+                                            #    category_name=catelist,
                                                customer_id = ouser_name,
                                                )
             execstr.save()
+            
+            tempQuotationid.is_open = False
+            tempQuotationid.save() 
+            
 
-
-        return redirect("common:index",slug=categoryname)
+        return redirect("customize:addnewquotation",category=catelistid)
     else:
         save_quotation = save_quotation_form()
         context = { 'save_quotation':save_quotation,

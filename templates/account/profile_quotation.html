@@ -1,0 +1,247 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{#{% load oauth_tags %}#}
+{% load static %}
+
+{% block head_title %}个人资料{% endblock %}
+
+{% block base_content %}
+    <div class="account">
+        <div class="container  col-md-6 offset-md-3">
+<!------ Include the above in your HEAD tag ---------->
+            {% comment %} <form  method="post" enctype="multipart/form-data"  action="">
+                {% csrf_token %} {% endcomment %}
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-img">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                            <div class="file btn btn-lg btn-primary">
+                                Change Photo
+                                <input type="file" name="file"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="profile-head">
+                                    <h5 class=ml-3>
+                                   {{user.first_name}}&nbsp;{{user.last_name}}
+                                    </h5>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-md-12 ">
+                                            <a href="{% url 'accounts:change_profile' %}">
+                                                <input  style= "margin:5px;" class="button-profile"  type="submit"  value="Edit Profile"></a>
+                                            <a href="{% url 'accounts:account_change_password' %}">
+                                                <input  style= "margin:5px;" class="button-profile" type="submit" value="Change Password"></a>
+                                            <a href="{% url 'accounts:account_email' %}">
+                                                 <input  style= "margin:5px;" class="button-profile" type="submit" value="Verify Email"></a>
+                                        </div>
+                                    </div>
+                                    <p class="proile-rating"></p>
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Quotations</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="profile-work">
+                            {% comment %} <p>WORK LINK</p> {% endcomment %}
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content profile-tab" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Id</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ user.username }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>User Role</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                {%if user.is_staff %}
+                                                <p>Administrator</p>
+                                                {%endif%}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{user.first_name}}&nbsp;{{user.last_name}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Email</label>
+                                            </div>
+                                            {% for emailaddress in user.emailaddress_set.all %}
+                                                {% if emailaddress.primary or user.emailaddress_set.count == 1 %}
+                                                    <li class="list-group-item ml-5 border-0" title="提示：已验证邮箱的用户有更多特权！">
+                                                        <span class="font-weight-bold">Email：</span>
+                                                        <span>{{ emailaddress.email }}</span>
+                                                        {% if emailaddress.verified %}Verified{% else %}Not Verified{% endif %}
+                                                    </li>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                            <div class="col-md-6">
+                                                <p>{{user.email}}</p>
+                                            </div>
+                                        </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                                <label>Phone</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ user.tel}}</p>
+                                            </div>
+                                    </div>
+                                        <div class="row">
+                                            <label>address</label>
+                                            <div class="card">
+                                            <address>
+                                              <strong>{{user.first_name}}&nbsp;{{user.last_name}}</strong><br>
+                                             {{ user.address }}<br>
+                                                {% if  user.address2 %} 
+                                                    {{ user.address2 }}<br>
+                                                {% endif %}
+                                                {{ user.country}}, {{ user.state}} {{ user.zipcode}}<br>
+                                              <abbr title="Phone">P:</abbr> {{ user.tel}}<br>
+                                              <a href="mailto:#">{{user.email}}</a>
+                                            </address>
+                                            </div>
+                                        </div>
+
+                            </div>
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Experience</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Expert</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Hourly Rate</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>10$/hr</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Total Projects</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>230</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>English Level</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>Expert</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Availability</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>6 months</p>
+                                            </div>
+                                        </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label>Your Bio</label><br/>
+                                        <p>Your detail description</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% comment %} </form>            {% endcomment %}
+        </div>
+            {#			<div class="account-bottom">#}
+
+            {% comment %} <div class=" card-header bg-white py-2">
+                <div class="account-top heading mb-3">
+                    <h3 class="font-weight-bold text-info">Profile</h3>
+                </div>
+                <div class="card rounded-0 px-3 px-lg-4 border-1 shadow">
+                    <div class="product-colors">
+                        {#					<div class="card-body">#}
+                        <ul class="list-group">
+                            <li class="list-group-item text-center border-0" id="profile-avatar">
+                                {#                            {% get_user_avatar_tag user %}#}
+                            </li>
+
+                            <li class=" address ">
+                                <span class="font-weight-bold">Username：{{ user.username }}</span>
+                                {#                            <span>{{ user.is_staff }}</span>#}
+                            </li>
+                            {% for emailaddress in user.emailaddress_set.all %}
+                                {% if emailaddress.primary or user.emailaddress_set.count == 1 %}
+                                    <li class="list-group-item ml-5 border-0" title="提示：已验证邮箱的用户有更多特权！">
+                                        <span class="font-weight-bold">邮&emsp;箱：</span>
+                                        <span>{{ emailaddress.email }}</span>
+                                        {% if emailaddress.verified %}已验证{% else %}未验证{% endif %}
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            <li class="list-group-item ml-5 border-0">
+                                <span class="font-weight-bold">Email：{{ user.email }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="text-center mb-5" id="social-login">
+                        <div class="account-top heading mb-3">
+                            <hr>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4"><a href="{% url 'accounts:change_profile' %}"><input class="button-c"
+                                                                                                       type="submit"
+                                                                                                       value="Edit Profile"></a>
+                            </div>
+                            <div class="col-md-4"><a href="{% url 'accounts:account_change_password' %}"><input
+                                    class="button-c" type="submit" value="Change Password"></a></div>
+                            <div class="col-md-4"><a href="{% url 'accounts:account_email' %}"><input class="button-c"
+                                                                                                      type="submit"
+                                                                                                      value="Verify Email"></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div> {% endcomment %}
+
+{% endblock %}
+
+

@@ -27,6 +27,8 @@ def category_directory_path(instance, filename):
     # return the whole path to the file
     return os.path.join(str(instance.category_name),filename)
 
+
+
 # 文章分类
 class Category(models.Model):
     category_name = models.CharField(verbose_name='分类', max_length=20)

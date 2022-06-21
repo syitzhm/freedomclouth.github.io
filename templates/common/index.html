@@ -29,47 +29,48 @@
 {#                    <div class="col-md-2 center-block" style="background-color: red"></div>#}
                     <div class="row " >
 
-
-                        <div class="col-md-4 " >
+                        <div class="col-md-4 product-left " >
                                     <div class="bnr-one">
-                                        <div class="">
-                                            <img src="{% static '/images/b-1.jpg' %}" alt="" />
+                                        <div class="p-one profile-img">
+											<a href="{% url 'customize:addnewquotation' "categoryA" %}">
+                                            <img src="{% static '/images/b-2.jpg' %}" alt="" style="width:100%"/>
+											<div class="file btn btn-lg btn-primary">
+												Select Your Style
+											</div>
+										</a>
                                         </div>
-                                        <div class="b-btn" style="padding-right: 15px; float:right" >
-                                                <a href="{% url 'customize:addnewquotation' "categoryA" %}" >SHOP NOW</a>
-                                            </div>
                                         <div class="clearfix"> </div>
                                     </div>
                         </div>
-                        <div class="col-md-4 ">
-                            <div class="bnr-one">
-                                <div class="">
-                                    <img src="{% static '/images/b-2.jpg' %}" alt="" />
-                                </div>
-                                <div class="" >
-                                    <div class="b-btn" style="padding-right: 15px; float:right">
-                                        <a href="{% url 'customize:addnewquotation' "categoryB" %}">SHOP NOW</a>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
 
-                            </div>
-                        </div>
-                        <div class="col-md-4 ">
-                            <div class="bnr-one">
-                                <div class="">
-                                    <img src="{% static '/images/b-1.jpg' %}" alt="" />
-                                </div>
-                                <div class="" >
-                                    <div class="b-btn" style="padding-right: 15px; float:right">
-                                        <a href="{% url 'customize:addnewquotation' "categoryC" %}">SHOP NOW</a>
-                                    </div>
-                                    <div class="clearfix"> </div>
-                                </div>
+						<div class="col-md-4 product-left " >
+							<div class="bnr-one">
+								<div class="p-one profile-img">
+									<a href="{% url 'customize:addnewquotation' "categoryB" %}">
+									<img src="{% static '/images/b-1.jpg' %}" alt="" style="width:100%"/>
+									<div class="file btn btn-lg btn-primary">
+										Select Your Style
+									</div>
+								</a>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
 
-                            </div>
-                            </div>
-                        </div>
+					<div class="col-md-4 product-left " >
+					<div class="bnr-one">
+						<div class="p-one profile-img">
+							<a href="{% url 'customize:addnewquotation' "categoryC" %}">
+								<img src="{% static '/images/b-1.jpg' %}" alt="" style="width:100%"/>
+								<div class="file btn btn-lg btn-primary">
+									Select Your Style
+							</div>
+							</a>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+
 				    </div>
                 </div>{#end col-10#}
 
