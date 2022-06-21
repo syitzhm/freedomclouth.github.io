@@ -35,6 +35,6 @@ xadmin.site.register(Carousel, CarouselAdmin)
 
 class MainClouthAdmin(object):
     # IMG_LINK = '/static/blog/img/summary.png'
-    list_display = ('productname', 'description','price', 'orig_price', 'img_link','available_inv', 'is_main', 'image','size', 'create_date','update_date','views','slug')
+    list_display = ('product_name', 'description','price', 'orig_price', 'img_link','available_inv', 'is_main', 'image','size', 'create_date','update_date','views','slug')
 
 xadmin.site.register(mainclouth, MainClouthAdmin)

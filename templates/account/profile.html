@@ -3,9 +3,22 @@
 {#{% load oauth_tags %}#}
 {% load static %}
 
-{% block head_title %}个人资料{% endblock %}
+{% block head_title %}Profile{% endblock %}
 
 {% block base_content %}
+    <script>
+        function preview_image(event)
+        {
+
+         var reader = new FileReader();
+         reader.onload = function()
+         {
+          var output = document.getElementById('output_image');
+          output.src = reader.result;
+         }
+         reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
     <div class="account">
         <div class="container  col-md-8 offset-md-2">
 <!------ Include the above in your HEAD tag ---------->
@@ -13,57 +26,38 @@
                 {% csrf_token %} {% endcomment %}
 
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-4" >
                         <form class="change_profile" method="post" enctype="multipart/form-data"  action="{% url 'account:changeavatar'%}">
                             {% csrf_token %}
-                            <div class="profile-img"  style="max-width:80">
-                                <img src= "../../media/{{ user.avatar }}" alt=""/>
-                                <div class="file btn btn-lg btn-primary">
+                            <div class="profile-img "  style="max-width:300px;">
+                                <img  src= "../../media/{{ user.avatar }}" alt=""/>
+                                <div class="file btn btn-lg btn-primary" data-bs-toggle="modal" href="#ModalToggle" role="button">
                                     Change Photo
-                                    <input type="file" name="avatar"/>
                                 </div>
                                 <!-- Change avatar-->
-                                <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                                <div class="modal fade" id="ModalToggle" aria-hidden="true" aria-labelledby="ModalToggleLabel" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
                                       <div class="modal-content">
                                         <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalToggleLabel">Modal 1</h5>
+                                          <h5 class="modal-title" id="ModalToggleLabel">Change Your Photo</h5>
                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                          Show a second modal and hide this one with the button below.
+                                          <div class="profile-img "  style="max-width:300px;">
+                                                <img id= "output_image" src= "../../media/{{ user.avatar }}" alt=""/>
+                                                <div class="file btn btn-lg btn-primary" onchange = "preview_image(event)" role="button">
+                                                    Change Photo
+                                                    <input type="file" name="avatar">
+                                                </div>
+                                          </div>
                                         </div>
                                         <div class="modal-footer">
-                                          <button class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Open second modal</button>
+                                          <button class="button-c" data-bs-target="#ModalToggle2" data-bs-toggle="modal" data-bs-dismiss="modal">Update</button>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                      <div class="modal-content">
-                                        <div class="modal-header">
-                                          <h5 class="modal-title" id="exampleModalToggleLabel2">Modal 2</h5>
-                                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                          Hide this modal and show the first with the button below.
-                                        </div>
-                                        <div class="modal-footer">
-                                          <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">Back to first</button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <a class="btn btn-primary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">Open first modal</a>
-
                                 <!--End Change avatar-->
-
-
-
-
-
-
                             </div>
                         </form>
                     </div>
@@ -121,7 +115,7 @@
                                                 <label>User Role</label>
                                             </div>
                                             <div class="col-md-6">
-                                                {%if user.is_staff %}
+                                                {% if user.is_staff %}
                                                 <p>Administrator</p>
                                                 {%endif%}
                                             </div>
@@ -335,63 +329,6 @@
                 </div>
             {% comment %} </form>            {% endcomment %}
         </div>
-            {#			<div class="account-bottom">#}
 
-            {% comment %} <div class=" card-header bg-white py-2">
-                <div class="account-top heading mb-3">
-                    <h3 class="font-weight-bold text-info">Profile</h3>
-                </div>
-                <div class="card rounded-0 px-3 px-lg-4 border-1 shadow">
-                    <div class="product-colors">
-                        {#					<div class="card-body">#}
-                        <ul class="list-group">
-                            <li class="list-group-item text-center border-0" id="profile-avatar">
-                                {#                            {% get_user_avatar_tag user %}#}
-                            </li>
-
-                            <li class=" address ">
-                                <span class="font-weight-bold">Username：{{ user.username }}</span>
-                                {#                            <span>{{ user.is_staff }}</span>#}
-                            </li>
-                            {% for emailaddress in user.emailaddress_set.all %}
-                                {% if emailaddress.primary or user.emailaddress_set.count == 1 %}
-                                    <li class="list-group-item ml-5 border-0" title="提示：已验证邮箱的用户有更多特权！">
-                                        <span class="font-weight-bold">邮&emsp;箱：</span>
-                                        <span>{{ emailaddress.email }}</span>
-                                        {% if emailaddress.verified %}已验证{% else %}未验证{% endif %}
-                                    </li>
-                                {% endif %}
-                            {% endfor %}
-                            <li class="list-group-item ml-5 border-0">
-                                <span class="font-weight-bold">Email：{{ user.email }}</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="text-center mb-5" id="social-login">
-                        <div class="account-top heading mb-3">
-                            <hr>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-4"><a href="{% url 'accounts:change_profile' %}"><input class="button-c"
-                                                                                                       type="submit"
-                                                                                                       value="Edit Profile"></a>
-                            </div>
-                            <div class="col-md-4"><a href="{% url 'accounts:account_change_password' %}"><input
-                                    class="button-c" type="submit" value="Change Password"></a></div>
-                            <div class="col-md-4"><a href="{% url 'accounts:account_email' %}"><input class="button-c"
-                                                                                                      type="submit"
-                                                                                                      value="Verify Email"></a>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="clearfix"></div>
-    </div> {% endcomment %}
 
 {% endblock %}
-
-

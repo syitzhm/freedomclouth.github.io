@@ -70,8 +70,10 @@ def change_profile_view(request):
 @login_required
 @csrf_protect
 def change_avatar(request):
-   avatar = Ouser.objects.filter(pk=request.user.id)
+   avatar = Ouser.objects.get(pk=request.user.id)
+   print("inside avatar save",avatar.avatar)
    if request.method == "POST":
-        avatar.avatar= request.FILES['avatar']
-        avatar.save()  
+       avatar.avatar = request.FILES['avatar']
+       avatar.save()
+
    return redirect("accounts:profile")
