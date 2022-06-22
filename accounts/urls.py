@@ -21,7 +21,7 @@ from django.urls import path, include
 from accounts.views import profile_view, change_profile_view
 from common import Views
 from common.Views import Index
-from accounts.views import dashboard,test,dashboardn,test_json,change_avatar
+from accounts.views import dashboard,test,dashboardn,test_json,change_avatar,NotificationView,mark_to_read,mark_to_delete
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
@@ -35,5 +35,8 @@ urlpatterns = [
     path('dashboardn/', dashboardn, name='dashboardn'),
     path('test1/', test, name='test'),
     path('json/', test_json, name='json_test'),
+    path('notification/', NotificationView, name='notification'),
+    path('notification/mark-to-read/', mark_to_read, name='mark_to_read'),
+    path('notification/mark-to-delete/', mark_to_delete, name='mark_to_delete'),
     # path(r'xadmin/', xadmin.site.urls)
 ]

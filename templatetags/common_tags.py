@@ -6,7 +6,7 @@ from common.models import Carousel
 from django.db.models.aggregates import Count
 from django.utils.html import mark_safe
 import re
-from accounts.templatetags import common_tags
+
 register = template.Library()
 
 
