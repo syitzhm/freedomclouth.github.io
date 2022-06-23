@@ -12,6 +12,7 @@ from clouth import settings
 import markdown
 
 from customize.models import Quotation
+from order.models import Ordermaster
 
 emoji_info = [
     [('aini_org', '爱你'), ('baibai_thumb', '拜拜'),
@@ -100,55 +101,17 @@ class Ouser(AbstractUser):
         return self.username
 
 
-
-class Comment(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='%(class)s_related',
-                               verbose_name='评论人', on_delete=models.CASCADE)
-    create_date = models.DateTimeField('创建时间', auto_now_add=True)
-    content = models.TextField('评论内容')
-    parent = models.ForeignKey('self', verbose_name='父评论', related_name='%(class)s_child_comments', blank=True,
-                               null=True, on_delete=models.CASCADE)
-    rep_to = models.ForeignKey('self', verbose_name='回复', related_name='%(class)s_rep_comments',
-                               blank=True, null=True, on_delete=models.CASCADE)
-
-    class Meta:
-        '''这是一个元类，用来继承的'''
-        abstract = True
-
-
-
-    def content_to_markdown(self):
-        to_md = markdown.markdown(self.content,
-                                  safe_mode='escape',
-                                  extensions=[
-                                      'markdown.extensions.extra',
-                                      'markdown.extensions.codehilite',
-                                  ])
-        return get_emoji_imgs(to_md)
-
-
-class ArticleComment(Comment):
-    belong = models.ForeignKey(Quotation, related_name='article_comments', verbose_name='所属文章',
-                               on_delete=models.CASCADE)
-
-    class Meta:
-        verbose_name = '文章评论'
-        verbose_name_plural = verbose_name
-        ordering = ['create_date']
-
 class Notification(models.Model):
-    create_p = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='提示创建者', related_name='notification_create',
+    from_user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='提示创建者', related_name='notification_create',
                                  on_delete=models.CASCADE)
-    get_p = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='提示接收者', related_name='notification_get',
+    to_user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name='提示接收者', related_name='notification_get',
                               on_delete=models.CASCADE)
-    comment = models.ForeignKey(ArticleComment, verbose_name='所属评论', related_name='the_comment',
-                                on_delete=models.CASCADE)
     is_read = models.BooleanField('是否已读', default=False)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='%(class)s_related',
-                               verbose_name='评论人', on_delete=models.CASCADE)
     create_date = models.DateTimeField('创建时间', auto_now_add=True)
     content = models.TextField('评论内容')
-    parent = models.ForeignKey('self', verbose_name='父评论', related_name='%(class)s_child_comments', blank=True,
+    quotation_id = models.ForeignKey(Quotation, verbose_name='Quotation', blank=True,
+                               null=True, on_delete=models.CASCADE)
+    order_id = models.ForeignKey(Ordermaster, verbose_name='Order', blank=True,
                                null=True, on_delete=models.CASCADE)
     rep_to = models.ForeignKey('self', verbose_name='回复', related_name='%(class)s_rep_comments',
                                blank=True, null=True, on_delete=models.CASCADE)
@@ -158,9 +121,9 @@ class Notification(models.Model):
         self.save(update_fields=['is_read'])
 
     class Meta:
-        verbose_name = '提示信息'
+        verbose_name = 'notification'
         verbose_name_plural = verbose_name
         ordering = ['-create_date']
 
     def __str__(self):
-        return '{}@了{}'.format(self.create_p, self.get_p)
+        return '{}@了{}'.format(self.from_user_id, self.to_user_id)

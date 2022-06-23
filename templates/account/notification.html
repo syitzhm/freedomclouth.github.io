@@ -17,21 +17,21 @@
             {% get_notifications user is_read as notifications %}
             <ul class="cbp_tmtimeline f-16">
                 {% for each in notifications %}
-                {{ each.id }}
+                {{ each.count }}
                 <li>
                     <time class="cbp_tmtime" datetime="{{ each.create_date }}">
                         <span>{{ each.create_date|date:"Y/m/d"}}</span>
                         <span>{{ each.create_date|date:"H:i"}}</span>
                     </time>
-                    <div class="cbp_tmicon"><i class="fa fa-envelope"></i></div>
+                    <div class="cbp_tmicon"><i class="bi bi-envelope"></i></div>
                     <div class="cbp_tmlabel">
                         <h2>
-                            <strong>{{ each.create_p }}</strong>&nbsp;在&nbsp;
+                            <strong>{{ each.from_user }}</strong>&nbsp;replied to you
                             <a class="text-info" title="查看评论详情"
-                               href="{{ each.comment.belong.get_absolute_url }}#com-{{ each.comment.id }}">
-                                {{ each.comment.belong.title }}</a>&nbsp;中@了你，并评论道：
+                               href="{{ each.get_absolute_url }}#com-{{ each.id }}">
+                                </a>&nbsp;：
                         </h2>
-                        <p>{{ each.comment.content|truncatechars:130 }}</p>
+                        <p>{{ each.content|truncatechars:130 }}</p>
                         {% if not each.is_read %}
                         <div class="to_read pb-1">
                             <button class="btn btn-success float-right rounded-0 f-16" data-id="{{ each.id }}"
@@ -53,7 +53,7 @@
                         <span>{{ now_date|date:"Y/m/d"}}</span>
                         <span>{{ now_date|date:"H:i"}}</span>
                     </time>
-                    <div class="cbp_tmicon"><i class="fa fa-envelope"></i></div>
+                    <div class="cbp_tmicon"><i class="bi bi-envelope"></i></div>
                     <div class="cbp_tmlabel">
                         <h2>你暂时没有任何推送消息！</h2>
                     </div>
@@ -64,7 +64,7 @@
         <div class="col-md-4 col-lg-3">
             <div class="card rounded-0 border-0" id="notes-main">
                 <div class="card-header bg-white border-0">
-                    <h4><strong><i class="fa fa-bell-o mr-1"></i>&nbsp;提示信息</strong></h4>
+                    <h4><strong><i class="bi bi-bell"></i>&nbsp;提示信息</strong></h4>
                 </div>
                 <div class="card-body pt-0 url-menu">
                     <ul class="list-group">
