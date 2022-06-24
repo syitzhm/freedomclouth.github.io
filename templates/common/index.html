@@ -83,66 +83,26 @@
 		<div class="container">
 {#			<div class="product-one">#}
             <div class="row">
-				<div class="col-md-3 product-left">
-					<div class="p-one simpleCart_shelfItem">
+                {% for clouth in mainclouths %}
+				<div class="col-md-3 product-left" >
+					<div class="p-one simpleCart_shelfItem" >
 							<a href="{% url 'common:single' %}">
-								<img src="{% static '/images/shoes-1.png' %}" alt="" />
+								<img src="../../media/{{ clouth.image }}" alt="" />
 								<div class="mask">
 									<span>Quick View</span>
 								</div>
 							</a>
-						<h4>Sample</h4>
-<!--						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>-->
+						<h5>{{ clouth.product_name }}</h5>
+					   <p><a class="item_add" href="{% url 'common:single' %}"><i></i> <span class=" item_price">{{ clouth.price }}</span></a></p>
 
 					</div>
 				</div>
-				<div class="col-md-3 product-left">
-					<div class="p-one simpleCart_shelfItem">
-						<a href="{% url 'common:single' %}">
-								<img src="{% static '/images/shoes-2.png' %}" alt="" />
-								<div class="mask">
-									<span>Quick View</span>
-								</div>
-							</a>
-						<h4>Sample</h4>
-<!--						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>-->
-
-					</div>
-				</div>
-				<div class="col-md-3 product-left">
-					<div class="p-one simpleCart_shelfItem">
-
-						<a href="{% url 'common:single' %}">
-								<img src="{% static '/images/shoes-3.png' %}" alt="" />
-								<div class="mask">
-									<span>Quick View</span>
-								</div>
-							</a>
-						<h4>Sample</h4>
-<!--						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>-->
+                {% endfor %}
 
 
-					</div>
-				</div>
-				<div class="col-md-3 product-left">
-					<div class="p-one simpleCart_shelfItem">
-
-						<a href="{% url 'common:single' %}">
-								<img src="{% static '/images/shoes-4.png' %}" alt="" />
-								<div class="mask">
-									<span>Quick View</span>
-								</div>
-							</a>
-						<h4>Sample</h4>
-<!--						<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>-->
-
-					</div>
-				</div>
-				<div class="clearfix"> </div>
 			</div>
 </div>
 		</div>
-	</div>
 {% endblock %}
 
 {% block special_introduction %}
