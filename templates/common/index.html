@@ -86,22 +86,20 @@
                 {% for clouth in mainclouths %}
 				<div class="col-md-3 product-left" >
 					<div class="p-one simpleCart_shelfItem" >
-							<a href="{% url 'common:single' %}">
+							<a href="{% url 'common:single' clouth.slug  %}">
 								<img src="../../media/{{ clouth.image }}" alt="" />
 								<div class="mask">
 									<span>Quick View</span>
 								</div>
 							</a>
 						<h5>{{ clouth.product_name }}</h5>
-					   <p><a class="item_add" href="{% url 'common:single' %}"><i></i> <span class=" item_price">{{ clouth.price }}</span></a></p>
+					   <p><a class="item_add" href="{% url 'common:single' clouth.slug   %}"><i></i> <span class=" item_price">{{ clouth.price }}</span></a></p>
 
 					</div>
 				</div>
                 {% endfor %}
-
-
-			</div>
-</div>
+            </div>
+    </div>
 		</div>
 {% endblock %}
 
@@ -114,21 +112,21 @@
                 <div class="row">
 				<div class="col-md-4 abt-shoe-left">
 					<div class="abt-one">
-						<a href="{% url 'common:single' %}}"><img src="{% static 'images/abt-1.jpg' %}" alt="" /></a>
+						<a href="#"><img src="{% static 'images/abt-1.jpg' %}" alt="" /></a>
 						<h4><a href="single.html">Special introduction</a></h4>
 						<p>Put the special introduction in this place  </p>
 					</div>
 				</div>
 				<div class="col-md-4 abt-shoe-left">
 					<div class="abt-one">
-						<a href="{% url 'common:single' %}}"><img src="{% static 'images/abt-2.jpg' %}" alt="" /></a>
+						<a href="#"><img src="{% static 'images/abt-2.jpg' %}" alt="" /></a>
 						<h4><a href="single.html">Special introduction</a></h4>
 						<p>Put the special introduction in this place </p>
 					</div>
 				</div>
 				<div class="col-md-4 abt-shoe-left">
 					<div class="abt-one">
-						<a href="{% url 'common:single' %}}"><img src="{% static 'images/abt-3.jpg' %}" alt="" /></a>
+						<a href="#"><img src="{% static 'images/abt-3.jpg' %}" alt="" /></a>
 						<h4><a href="single.html">Special introduction</a></h4>
 						<p>Put the special introduction in this place </p>
 					</div>

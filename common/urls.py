@@ -28,7 +28,7 @@ urlpatterns = [
     # path('', include(('common.urls', 'common'), namespace='common')),  # blog
     path('', Views.Index.as_view(), name='index'),  # Main page
     path('index/', Views.Index.as_view(), name='index'),  # Main page
-    path('products/', Views.Products, name='products'),  # Single product page
-    path('single/', Views.Single, name='single'),  # Single product page
+    path('products/', Views.Products.as_view(), name='products'),  # Single product page
+    path('single/<slug:slug>', Views.Single, name='single'),  # Single product page
     # path(r'xadmin/', xadmin.site.urls)
 ]

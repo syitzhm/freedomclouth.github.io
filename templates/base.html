@@ -85,7 +85,7 @@ $(window).load(function() {
                 <li class="grid"><a href="{% url 'common:products' %}">T shirt</a></li>
                 <li class="grid"><a href="{% url 'common:products' %}">Sports</a></li>
 {#                <li class="grid"><a href="{% url 'accounts:test' %}">Test</a></li>#}
-                <li class="grid"><a href="{% url 'accounts:notification' %}">Notification</a></li>
+{#                <li class="grid"><a href="{% url 'accounts:notification' %}">Notification</a></li>#}
                 {% comment %} <li class="grid"><a href="{% url 'accounts:dashboard' %}">Dashboard</a></li>
                 <li class="grid"><a href="{% url 'accounts:dashboardn' %}">Dashboardn</a></li>
                 <li class="grid"><a href="{% url 'accounts:test' %}">Test</a></li>
@@ -123,7 +123,7 @@ $(window).load(function() {
                                     <i class="bi bi-wrench mr-2"></i>Management</a>
                             {% endif %}</li>
 
-                            <li><a class="dropdown-item pl-3  mt-0 rounded-0 border-0" href="#">
+                            <li><a class="dropdown-item pl-3  mt-0 rounded-0 border-0" href="{% url 'accounts:notification' %}">
                                 <i class="bi bi-envelope mr-2"></i>Message
 {#                                {% if msgnum > 0 %}#}
 {#                                    <i class="fa fa-fw fa-key text-info mr-2">{{ msgnum }}</i>#}
