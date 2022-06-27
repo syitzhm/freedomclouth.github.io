@@ -14,6 +14,7 @@ import time
 from django.views import generic
 
 from accounts.models import Ouser
+from common.models import mainclouth
 from customize.forms import save_quotation_form
 from customize.models import Quotation, Category
 from order.models import Cartmaster,Ordermaster
@@ -117,6 +118,31 @@ def SaveToCart(request):
                                            category_name=quotation.category_name,
                                            customer_id=quotation.customer_id,
                                            )
+        execstr.save()
+        return redirect("order:cartmaster", user_id=request.user.id)
+
+
+def SaveToCartNormal(request,slug):
+    ouser_name = Ouser.objects.get(id=request.user.id)
+    category_name = Category.objects.get(category_name='categoryA')
+    clouth = mainclouth.objects.get(slug=slug)
+    # print("ouser_name", type(ouser_name))
+    cart_id=slugstr()
+    if request.method == 'POST':
+        # quotation = Quotation.objects.get(quotation_id=i)
+        # ouser_name=Ouser.objects.get(username=quotation.rep_id)
+        execstr = Cartmaster.objects.create(cart_id=cart_id,
+                                            quotation_id=cart_id,
+                                            sleeve=request.POST['sleeve'],
+                                            color=request.POST['color'],
+                                            size=request.POST['size'],
+                                            gender=request.POST['gender'],
+                                            price=request.POST['actual_price'],
+                                            part_number=request.POST['product_name'],
+                                            quantity=request.POST['quantity'],
+                                            category_name=category_name,
+                                            customer_id=ouser_name,
+                                            )
         execstr.save()
         return redirect("order:cartmaster", user_id=request.user.id)
 

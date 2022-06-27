@@ -18,17 +18,17 @@ from django.contrib import admin
 from django.contrib.admindocs import views
 from django.urls import path
 
-from common import Views
-from common.Views import Index
+from common import views
+from common.views import Index
 app_name="common"
 
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('', include(('common.urls', 'common'), namespace='common')),  # blog
-    path('', Views.Index.as_view(), name='index'),  # Main page
-    path('index/', Views.Index.as_view(), name='index'),  # Main page
-    path('products/', Views.Products.as_view(), name='products'),  # Single product page
-    path('single/<slug:slug>', Views.Single, name='single'),  # Single product page
+    path('', views.Index.as_view(), name='index'),  # Main page
+    path('index/', views.Index.as_view(), name='index'),  # Main page
+    path('products/', views.Products.as_view(), name='products'),  # Single product page
+    path('single/<slug:slug>', views.Single, name='single'),  # Single product page
     # path(r'xadmin/', xadmin.site.urls)
 ]

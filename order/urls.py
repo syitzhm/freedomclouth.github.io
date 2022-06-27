@@ -18,9 +18,9 @@ from django.contrib import admin
 from django.contrib.admindocs import views
 from django.urls import path, include
 # from account.views import dashboard
-from order.views import cartmasterview, SaveToCart, Deletecartitem, checkout, checkcart, cart_add, cart_remove, cart_detail,SaveToOrder
-from common import Views
-from common.Views import Index
+from order.views import cartmasterview, SaveToCart, Deletecartitem, checkout, checkcart, cart_add, cart_remove, cart_detail,SaveToOrder,SaveToCartNormal
+from common import views
+from common.views import Index
 from accounts.views import dashboard,test,dashboardn
 
 urlpatterns = [
@@ -29,6 +29,7 @@ urlpatterns = [
     # path('cart/<slug:slug>', cartmasterview.as_view(), name='cartmaster'),  # allauth
     path('cart/<slug:user_id>', cartmasterview, name='cartmaster'),  # allauth
     path('SaveToCart/', SaveToCart, name='SaveToCart'),  # allauth
+    path('SaveToCartNormal/<slug:slug>', SaveToCartNormal, name='SaveToCartNormal'),  # allauth
     path('SaveToOrder/', SaveToOrder, name='savetoorder'),  # allauth
     path('deletecartitem/<slug:slug>', Deletecartitem, name='deletecartitem'),  # allauth
     path('checkout/', checkout.as_view(), name='checkout'),

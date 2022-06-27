@@ -29,7 +29,7 @@ $(window).load(function() {
 				<div class="row " >
                     {% for each in clouth %}
                             {% if forloop.first %}
-					<div class="col-md-4 single-top-left  mt-1 " style="margin-left: 50px">
+					<div class="col-md-4 single-top-left offset-sm-1 mt-1 " >
 
 						<div class="flexslider">
 							<ul class="slides">
@@ -50,41 +50,28 @@ $(window).load(function() {
 
 
 	                </div>
-				    <div class="col-md-5 single-top-right mt-1" >
-					    <div class="details-left-info simpleCart_shelfItem">
+				    <div class="col-md-5 single-top-right mt-1 offset-sm-1" >
 
-						<h3>{{ each.product_name}}</h3>
-
-						<p class="availability">Availability: <span class="color">{{ each.available_inv}}</span></p>
-						<div class="price_single">
-							<span class="reducedfrom">${{ each.orig_price}}</span>
-							<span class="actual item_price">${{ each.price}}</span>
-<!--							<a href="#">click for offer</a>-->
-						</div>
-						<h2 class="quick">Quick Overview:</h2>
-						<p class="quick_desc">
-							{{ each.description }}
-						</p>
-						<ul class="product-colors">
-							<h3>available Colors ::</h3>
-							<li><a class="color1" href="#"><span> </span></a></li>
-							<li><a class="color2" href="#"><span> </span></a></li>
-							<li><a class="color3" href="#"><span> </span></a></li>
-							<li><a class="color4" href="#"><span> </span></a></li>
-							<li><a class="color5" href="#"><span> </span></a></li>
-							<li><a class="color6" href="#"><span> </span></a></li>
-							<li><a class="color7" href="#"><span> </span></a></li>
-							<li><a class="color8" href="#"><span> </span></a></li>
-							<div class="clear"> </div>
-						</ul>
-						<ul class="size">
-							<h3>Available Size</h3>
-							<li><a href="#">XS</a></li>
-							<li><a href="#">S</a></li>
-							<li><a href="#">M</a></li>
-							<li><a href="#">L</a></li>
-							<li><a href="#">XL</a></li>
-						</ul>
+{#						<ul class="product-colors">#}
+{#							<h3>available Colors :</h3>#}
+{#							<li><a class="color1" href="#"><span> </span></a></li>#}
+{#							<li><a class="color2" href="#"><span> </span></a></li>#}
+{#							<li><a class="color3" href="#"><span> </span></a></li>#}
+{#							<li><a class="color4" href="#"><span> </span></a></li>#}
+{#							<li><a class="color5" href="#"><span> </span></a></li>#}
+{#							<li><a class="color6" href="#"><span> </span></a></li>#}
+{#							<li><a class="color7" href="#"><span> </span></a></li>#}
+{#							<li><a class="color8" href="#"><span> </span></a></li>#}
+{#							<div class="clear"> </div>#}
+{#						</ul>#}
+{#						<ul class="size">#}
+{#							<h3>Available Size</h3>#}
+{#							<li><a href="#">XS</a></li>#}
+{#							<li><a href="#">S</a></li>#}
+{#							<li><a href="#">M</a></li>#}
+{#							<li><a href="#">L</a></li>#}
+{#							<li><a href="#">XL</a></li>#}
+{#						</ul>#}
 <!--						disable for furture enable-->
 <!--						<div class="quantity_box">-->
 <!--							<ul class="product-qty">-->
@@ -99,6 +86,165 @@ $(window).load(function() {
 <!--								</select>-->
 <!--							</ul>-->
 <!--						</div>-->
+
+                        <form method="POST" action="{% url 'order:SaveToCartNormal' each.slug  %}" enctype="multipart/form-data">
+                        <!-- Django中需要POST数据的地方都必须有csrf_token -->
+                        {% csrf_token %}
+                        <div class="row" >
+                            <!-- 标签 -->
+
+                            <input  type="text" id="product_name" value="{{ each.product_name }}" name="product_name" style="display:none">
+                            <div class="details-left-info simpleCart_shelfItem">
+
+						<h3>{{ each.product_name}}</h3>
+
+						<p class="availability">Availability:
+                            {% if each.available_inv > 0 %}
+                                <span class="color">In stock</span></p>
+                                {% else %}
+                                <span class="color">Out of stock</span></p>
+                                {% endif %}
+						<div class="price_single">
+                            {% if each.available_inv  %}
+							<span class="reducedfrom">${{ each.orig_price}}</span>
+                                {% endif %}
+							<span class="actual item_price">${{ each.price}}</span>
+							<input type="text" name = "actual_price" value="{{ each.price}}" style="display:none">
+<!--							<a href="#">click for offer</a>-->
+						</div>
+						<h2 class="quick">Quick Overview:</h2>
+						<p class="quick_desc">
+							{{ each.description }}
+						</p>
+
+                            <label class ="size text-info">Sleeve:</label>
+                            <ul class="product-colors" style="padding-left:30px">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="sleeve-long" value="Long" name="sleeve" checked>
+                                    <label class="form-check-label" for="sleeve-long"> Long </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="sleeve-short" value="short" name="sleeve">
+                                    <label class="form-check-label" for="sleeve-short"> Short </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="sleeve-no" value="no" name="sleeve">
+                                    <label class="form-check-label" for="sleeve-no"> No</label>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <!-- 标签 -->
+                            <label class ="size text-info">Color：</label>
+
+                            <ul class="product-colors" style="padding-left:30px">
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color1" value="color1" name="color" checked>
+                                <label class="form-check-label" for="color1">  <li><a class="color1" ><span> </span></a></li> </label>
+
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color2" value="color2" name="color">
+                                <label class="form-check-label" for="color2"> <li><a class="color2" ><span> </span></a></li> </label>
+
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color3" value="color3" name="color">
+                                <label class="form-check-label" for="color3"> <li><a class="color3" ><span> </span></a></li> </label>
+
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color4" value="color4" name="color">
+                                <label class="form-check-label" for="color4"> <li><a class="color4" ><span> </span></a></li> </label>
+
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color5" value="color5" name="color">
+                                <label class="form-check-label" for="color5"> <li><a class="color5" ><span> </span></a></li> </label>
+
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color6" value="color6" name="color">
+                                <label class="form-check-label" for="color6"> <li><a class="color6" ><span> </span></a></li> </label>
+
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color7" value="color7" name="color">
+                                <label class="form-check-label" for="color7"> <li><a class="color7" ><span> </span></a></li> </label>
+
+                            </div>
+                                <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="color8" value="color8" name="color">
+                                <label class="form-check-label" for="color8"> <li><a class="color8" ><span> </span></a></li> </label>
+
+                            </div>
+
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+
+                        <div class="row">
+                            <!-- 标签 -->
+                            <label class ="size text-info">Size：</label>
+                            <ul class="product-colors" style="padding-left:30px">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="XS" value="XS" name="size">
+                                    <label class="form-check-label" for="XS"> XS </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="S" value="S" name="size">
+                                    <label class="form-check-label" for="S"> S </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="M" value="M" name="size">
+                                    <label class="form-check-label" for="M"> M </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="L" value="L" name="size">
+                                    <label class="form-check-label" for="L"> L </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="XL" value="XL" name="size">
+                                    <label class="form-check-label" for="XL"> XL </label>
+                                </div>
+
+                            </ul>
+
+                        </div>
+
+                        <div class="row">
+                            <!-- 标签 -->
+                             <label class ="size text-info">Gender：</label>
+                            <ul class="product-colors" style="padding-left:30px">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="Male" value="Male" name="gender">
+                                    <label class="form-check-label" for="Male"> Male </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="Female" value="Female" name="gender">
+                                    <label class="form-check-label" for="Female"> Female </label>
+                                </div>
+                            </ul>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-8" >
+                                <!-- 标签 -->
+                                <label class ="size text-info">Quantity：</label>
+                                <ul class="product-colors" style="padding-left:30px">
+                                    <input type="number" id="quantity" class="input-text qty text" step="1" min="1" max="44" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric" data-no-translation-title="">
+
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="address">
+                            <input class="button-c" type="submit" value="Add To Cart"/>
+                        </div>
+
+
+                    </form>
 					<div class="clearfix"> </div>
 <!--				<div class="single-but item_add">-->
 <!--					<input type="submit" value="add to cart"/>-->
@@ -112,7 +258,7 @@ $(window).load(function() {
 	</div>
 					<div class="shoes">
 						<div class="row">
-							<div class="col-md-3 product-left single-left">
+							<div class="col-sm-3 product-left single-left">
 								<div class="p-one simpleCart_shelfItem">
                                     <a href="#">
 								<img src="{% static 'images/shoes-1.png' %}" alt="" />
@@ -150,10 +296,7 @@ $(window).load(function() {
 <!--									<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>									-->
 								</div>
 							</div>
-							<div class="clearfix"> </div>
-						</div>
-						<div class="product-one row">
-							<div class="col-md-3 product-left single-left">
+                            	<div class="col-md-3 product-left single-left">
 								<div class="p-one simpleCart_shelfItem">
 									<a href="#">
 								<img src="{% static 'images/shoes-4.png' %}" alt="" />
@@ -165,32 +308,9 @@ $(window).load(function() {
 <!--									<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>									-->
 								</div>
 							</div>
-							<div class="col-md-3 product-left single-left">
-								<div class="p-one simpleCart_shelfItem">
-									<a href="#">
-								<img src="{% static 'images/shoes-1.png' %}" alt="" />
-								<div class="mask mask1">
-									<span>Quick View</span>
-								</div>
-							</a>
-									<h4>Sample product</h4>
-<!--									<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>									-->
-								</div>
-							</div>
-							<div class="col-md-3 product-left single-left">
-								<div class="p-one simpleCart_shelfItem">
-									<a href="#">
-								<img src="{% static 'images/shoes-2.png' %}" alt="" />
-								<div class="mask mask1">
-									<span>Quick View</span>
-								</div>
-								</a>
-									<h4>Sample product</h4>
-<!--									<p><a class="item_add" href="#"><i></i> <span class=" item_price">$329</span></a></p>				-->
-								</div>
-							</div>
 							<div class="clearfix"> </div>
 						</div>
+
 					</div>
 				</div>
 <!--				<div class="col-md-3 single-right">-->

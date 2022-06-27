@@ -19,8 +19,8 @@ from django.contrib.admindocs import views
 from django.urls import path, include
 # from account.views import dashboard
 from accounts.views import profile_view, change_profile_view
-from common import Views
-from common.Views import Index
+from common import views
+from common.views import Index
 from accounts.views import dashboard,test,dashboardn,test_json,change_avatar,NotificationView,mark_to_read,mark_to_delete
 
 urlpatterns = [
