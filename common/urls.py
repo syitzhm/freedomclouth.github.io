@@ -26,8 +26,8 @@ app_name="common"
 urlpatterns = [
     # path('admin/', admin.site.urls),
     # path('', include(('common.urls', 'common'), namespace='common')),  # blog
-    path('', views.Index.as_view(), name='index'),  # Main page
-    path('index/', views.Index.as_view(), name='index'),  # Main page
+    path('', views.Index, name='index'),  # Main page
+    path('index/', views.Index, name='index'),  # Main page
     path('products/', views.Products.as_view(), name='products'),  # Single product page
     path('single/<slug:slug>', views.Single, name='single'),  # Single product page
     # path(r'xadmin/', xadmin.site.urls)

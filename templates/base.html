@@ -92,7 +92,7 @@ $(window).load(function() {
                 <li class="grid"><a href="{% url 'order:checkout' %}">checkout</a></li> {% endcomment %}
                 {#                        if it's staff, then show quotation list#}
                 {% if user.is_authenticated %}
-                    <li class="grid"><a class="address" href="{% url 'customize:quotationlist' %}">Quotation</a></li>
+{#                    <li class="grid"><a class="address" href="{% url 'customize:quotationlist' %}">Quotation</a></li>#}
                     {#                        {% endif %}#}
 
                     {#                  if it's customer or staff, then show dropdown list  #}
@@ -105,31 +105,35 @@ $(window).load(function() {
                     <!--Drop down menu-->
 
                     <li class="grid dropdown pull-right">
-                        <a class="dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown"  href="#">{{ user.username }}</a>
+                        <a class="dropdown-toggle" id="dropdownMenuLink" data-bs-toggle="dropdown"  href="#" title="{{ user.username }}，欢迎回来！">{{ user.username }}</a>
                         <ul class="dropdown-menu">
-                            {#                          <li><a href="#" id="navbarDropdown" role="button" data-toggle="dropdown"#}
-                            {#                                   aria-haspopup="true" aria-expanded="false" title="{{ user.username }}，欢迎回来！">#}
-                            {#                                    {% if msgnum > 0%}#}
-                            {#                                    <span class="get-msg text-center">{{ msgnum }}</span>#}
-                            {#                                    {% endif %}#}
-                            {#                                    {% get_user_avatar_tag user %}#}
-                            {#                          </a></li>#}
+{#                                                      <li><a href="#" id="navbarDropdown" role="button" data-toggle="dropdown"#}
+{#                                                               aria-haspopup="true" aria-expanded="false" title="{{ user.username }}，欢迎回来！">#}
+{#                                                                {{ user.avatar }}#}
+{#                                                                {% get_user_avatar_tag user %}#}
+{#                                                      </a></li>#}
 
                             <li><a class=" dropdown-item pl-3" href="{% url 'accounts:profile' %}">
                                 <i class="bi bi-person mr-2"></i> Porfile</a></li>
+                            <li><a class=" dropdown-item pl-3" href="{% url 'customize:quotationlist' %}">
+                                <i class="bi bi-chat-right-text"></i> Quotation</a></li>
 
                             <li>{% if user.is_staff %}
                                 <a class=" dropdown-item pl-3 mt-0 rounded-0 border-0" href="/xadmin/">
                                     <i class="bi bi-wrench mr-2"></i>Management</a>
                             {% endif %}</li>
-
+{#                            {% for msgnum in msgnum %}#}
+{#                            {% if forloop.first %}#}
                             <li><a class="dropdown-item pl-3  mt-0 rounded-0 border-0" href="{% url 'accounts:notification' %}">
                                 <i class="bi bi-envelope mr-2"></i>Message
 {#                                {% if msgnum > 0 %}#}
 {#                                    <i class="fa fa-fw fa-key text-info mr-2">{{ msgnum }}</i>#}
+{#                                     <span class="get-msg text-center">Message</span>#}
 {#                                {% endif %}#}
-                            </a></li>
 
+                            </a></li>
+{#                            {% endif %}#}
+{#                            {% endfor %}#}
                             <li><a class="dropdown-item pl-3  mt-0 rounded-0 border-0"
                                    href="{% url 'account_logout' %}">
                                 <i class="bi bi-door-open mr-2"></i>Log out</a></li>
