@@ -8,6 +8,7 @@ from django.views.decorators.http import require_POST
 from accounts.models import Ouser, Notification
 from customize.models import tempQuotation
 from .models import mainclouth
+# from customize.models import tempQuotation
 
 
 # def Index(request):
@@ -46,14 +47,16 @@ class Products(generic.ListView):
         return mainclouth.objects.all().order_by('-create_date')
 
 @login_required
-@require_POST
-def mark_to_delete(request):
+def mark_to_delete(request,slug,categoryname):
     '''将一个消息删除'''
-    if request.is_ajax() and request.method == "POST":
-        data = request.POST
+    print("~~~~~~~~~",request.method)
+    if  request.method == "GET":
+        catename =request.GET.get("categorynamea",None)
+        print('catename',catename)
         user = request.user
-        id = data.get('id')
-        info = get_object_or_404(tempQuotation, to_user=user, id=id)
+        info = tempQuotation.objects.filter(customer_id=user.id, quotation_id=slug)
         info.delete()
-        return JsonResponse({'msg': 'delete success'})
-    return JsonResponse({'msg': 'miss'})
+        tempQuotationlist = tempQuotation.objects.filter(customer_id=user.id,is_open=True)
+        context= {'tempQuotationlist':tempQuotationlist,
+                  'catename':categoryname}
+        return render(request,'customize/newquotation.html', context)

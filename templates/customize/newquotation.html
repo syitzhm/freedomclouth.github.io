@@ -11,6 +11,8 @@
 
 
     <script>
+
+
         function SveFrm() {
             Swal.fire({
                 title: 'Would you like to put these into cart?',
@@ -25,13 +27,13 @@
                 .then((result) => {
                     if (result.isConfirmed) {
                         Swal.fire({
-                            title: 'Thanks for shopping!',
+                            title: 'item has been deleted',
                             icon: 'success',
                             type: 'success',
                             showCancelButton: false,
                             cancelButtonText: 'No',
                             confirmButtonText:
-                                'Go To Cart',
+                                'Back',
                         }).then((result) => {
                             document.forms['RegForm'].submit();
                         })
@@ -93,7 +95,7 @@
                 <!-- Top row-->
             <div class="row"  style="padding-left: 30px">
                 <!-- start left build area-->
-                <div class="col-md-5 offset-md-1" >
+                <div class="col-md-4 offset-md-2" >
                     <input id="categoryname" type="text" value="{{ catename }}" style="display: none"/>
                     <h3 class="card-title font-weight-bold text-info">Part Number: {{ catename }}</h3>
                     <form method="POST" action="{% url 'customize:savetempquotation' catename %}" enctype="multipart/form-data">
@@ -239,7 +241,7 @@
                           <ul class="product-colors" style="padding-left:30px">
                                     <!-- 文本框 -->
                                 {% comment %} <input class="form-control" type="number" id="quantity" name="quantity" > {% endcomment %}
-                                <input type="number" id="quantity" class="input-text qty text" step="1" min="1" max="44" name="quantity" value="1" title="Qty" size="4" placeholder="" inputmode="numeric" data-no-translation-title="">
+                                <input type="number" id="quantity" class="input-text qty text" step="1" min="1" max="1000" name="quantity" value="1" title="Qty" size="  10" placeholder="" inputmode="numeric" data-no-translation-title="">
     
                           </ul>
                         </div>
@@ -289,8 +291,12 @@
                                 <div class="table-responsive" style="overflow-x:hidden;">
 
                                     {% comment %} <form name="RegForm" id="RegForm" method="POST" action="#" {% endcomment %}
-
+                                <form name="RegForm" method="POST" action="{% url 'customize:save' catename %}"
+                                            enctype="multipart/form-data">
+                                                {% csrf_token %}
+                                    <input name="categorynamea" value="{{ catename }}" style="display: none">
                                         <table class="table" >
+
                                             <thead class=" align-items-center mx-auto" style="">
                                             <tr>
                                                 <th class="text-center" scope="col" style="width: 5%"></th>
@@ -308,14 +314,12 @@
 
                                             <tbody>
 
-                                            <form name="RegForm" method="POST" action="{% url 'customize:save' catename %}"
-                                          enctype="multipart/form-data">
-                                        {% csrf_token %}
-{#                                                {% for items in newquotation %}#}
-                                            {% for items in tempQuotationlist %}
+
+                                                {% for items in tempQuotationlist %}
+
                                             <tr id="{{ items.quotation_id }}">
-                                                <td class="text-center"><input id='savetoquotation'
-                                                                                                     name='savetoquotation'
+                                                <td class="text-center">
+                                                    <input id='savetoquotation'  name='savetoquotation'
                                                                                                      value="{{ items.quotation_id }}"
                                                                                                      type="checkbox"></td>
                                                 <td class="text-center" id="sleeve"{{ items.quotation_id }}
@@ -342,23 +346,52 @@
 
                                                 </td>
                                                 <td class="text-center " style="overflow:hidden"
-                                                    id="desc"{{ items.quotation_id }} ></td>
-                                                <td class="text-center"  style="width:5%"><a class = "btn btn-secondary btn-sm" data-id="{{ items.quotation_id }}"
-                                    data-csrf="{{ csrf_token }}" href="{% url 'common:mark_to_delete'  %}"><i class="bi bi-trash button"></i></a></td>
-{#                                    data-csrf="{{ csrf_token }}" data-url="{% url 'common:mark_to_delete'  items.quotation_id  %}"><i class="bi bi-trash button"></i></button></td>#}
-                                            </tr>
-                                            {% endfor %}
-                                            </form>
-                                            </tbody>
-                                        </table>
-        
-                                        <button id="btncart" name="button-c" class="button-c pull-right"
-                                                style="font-size: x-small;" onclick="SveFrm()" type="button">
-                                            Add to cart
-                                        </button>
+                                                    id="desc"{{ items.quotation_id }} >{{ items.description }}</td>
 
+                                                <td class="text-center"  style="width:5%"><a class = "btn btn-secondary btn-sm"  data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+{#                                                    href="{% url 'common:mark_to_delete' items.quotation_id catename %}" onclick="markdetelete()"><i class="bi bi-trash button"></i></a></td>#}
+                                                   ><i class="bi bi-trash button"></i></a></td>
+
+
+                                                    <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                                      <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header">
+                                                            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                            Would you like to delete the item?
+                                                          </div>
+                                                          <div class="modal-footer">
+{#                                                              <form name="RegForm" method="POST" action="{% url 'common:mark_to_delete' items.quotation_id catename %}"#}
+{#                                            enctype="multipart/form-data">#}
+{#                                                {% csrf_token %}#}
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <input type="submit"  value="delete " class= "btn btn-danger btn-sm"  data-bs-toggle="modal" data-bs-target="#staticBackdrop"/>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+
+                                        <!---->
+                                            </tr>
+
+
+ {% endfor %}
+</tbody>
                                         <!-- Modal -->
-        
+                         <!-- Button trigger modal -->
+
+<!-- Modal -->
+
+</table><button id="btncart" name="button-c" class="button-c pull-right"
+                                                        style="font-size: x-small;" onclick="SveFrm()" type="button">
+                                                    Add to cart
+                                             </button>
+
+                                        </form>
+
                                 </div>
                             </div>
         
@@ -372,10 +405,6 @@
             </div>
             <!-- End Top row-->
 
-        </div>
-        {#  end middle quotation detail and feedback#}
-
-    </div>
     {#  end right col-md-6#}
 
 {% endblock %}

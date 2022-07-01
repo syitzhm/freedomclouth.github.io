@@ -191,7 +191,7 @@ def SavetempQuotation(request,slug):
     # print("catelist", quotationlist)
     catelistid= slug
     catename=slug
-    print("<><><><><><><>catelistid", str(slug))
+    # print("<><><><><><><>catelistid", str(slug))
     quotationid = slugstr()
     if request.method=="POST":
 

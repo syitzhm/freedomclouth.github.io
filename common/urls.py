@@ -30,5 +30,6 @@ urlpatterns = [
     path('index/', views.Index, name='index'),  # Main page
     path('products/', views.Products.as_view(), name='products'),  # Single product page
     path('single/<slug:slug>', views.Single, name='single'),  # Single product page
+    path('mark_to_delete/<slug:slug>/<slug:categoryname>', views.mark_to_delete, name='mark_to_delete'),  # Single product page
     # path(r'xadmin/', xadmin.site.urls)
 ]
